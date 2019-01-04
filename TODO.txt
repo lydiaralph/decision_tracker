@@ -1,0 +1,26 @@
+Essential:
+
+* Finish making basic screens
+
+* Research databases for apps
+
+* Write logic
+
+* Write unit tests
+
+
+Next:
+
+* Add dates
+
+* Add pie chart
+
+* Make push notifications
+
+* Test out
+
+Third:
+
+* New feature: can add more options
+
+* New feature: can change how often to be asked

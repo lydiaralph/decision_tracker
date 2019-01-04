@@ -1,0 +1,66 @@
+<resources>
+    <!-- Everywhere -->
+    <string name="app_name">Decision Tracker</string>
+    <string name="success_announcement">Success!</string>
+    <string name="placeholder">placeholder</string>
+
+    <!-- Main Activity -->
+    <string name="home_set_up_configuration">Configure questions</string>
+    <string name="home_how_to_use">How to use</string>
+    <string name="home_answer_question">Answer questions</string>
+    <string name="home_view_results">View results</string>
+
+    <!-- Ask new question -->
+    <string name="configure_decision">Set up your decision</string>
+    <string name="ask_this_question">What decision are you making?</string>
+    <string name="ask_this_question_hint">What should I do next year?</string>
+    <string name="options_text">What are the options?</string>
+    <string name="option_1_question_hint">Option 1: go to art school</string>
+    <string name="option_2_question_hint">Option 2: study economics degree</string>
+    <string name="option_3_question_hint">Option 3: become a hairdresser</string>
+    <string name="new_question_duration">For how long do you want to track your decision?</string>
+    <string name="new_question_explanation">You can\'t view the results until time is up,
+        but a longer decision will give you more accurate results</string>
+    <string name="save">Save</string>
+
+    <!-- Confirmation new question-->
+    <string name="display_new_question">I\'ll ask you:</string>
+    <string name="display_options">These are the options:</string>
+    <string name="display_timescale">Until </string>
+
+    <!-- View results -->
+    <string name="results_decision_intro">Here\'s the decision you made for: </string>
+    <string name="results_decision_statement">You decided to: </string>
+    <string name="results_second_best">The next closest option was: </string>
+
+    <!-- Results not ready -->
+    <string name="results_not_ready">Dang! Results are not ready until the decision tracking period is over, on </string>
+    <string name="results_finish">If you can\'t wait to know the answer, you can choose to finish early</string>
+
+    <!-- Confirm -->
+    <string name="are_you_sure">Are you sure you want to stop tracking your decision?</string>
+
+    <!-- Ask question -->
+    <string name="answer_intro">So. How are we feeling today? </string>
+
+    <!-- Question answered-->
+    <string name="answer_submitted">Today you decided: </string>
+    <string name="button_change_answer">Change answer</string>
+    <string name="button_finish">Finish</string>
+
+    <!-- Notification: answer question -->
+    <string name="answer_question_notification_title_template">Answer question: %1$s</string>
+
+    <!-- TODO: remove this placeholder text -->
+    <string name="answer_question_notification_placeholder_text_template">You said %1$s and lorem
+        ipsum dolor sit amet, consectetur adipiscing elit. Etiam non enim magna. Morbi dictum, velit
+        vel semper venenatis, magna odio volutpat velit, at ullamcorper nulla lacus sed turpis.
+        Pellentesque vitae metus elit, nec tincidunt tellus. Integer sed nisl sem, ullamcorper
+        ornare lacus. Duis ac mauris sed massa congue volutpat. Donec sed erat sit amet turpis
+        viverra rhoncus sit amet nec magna. Donec lacinia ligula at libero volutpat volutpat nec nec
+        tortor.
+    </string>
+
+    <string name="action_share">Share</string>
+    <string name="action_reply">Reply</string>
+</resources>
