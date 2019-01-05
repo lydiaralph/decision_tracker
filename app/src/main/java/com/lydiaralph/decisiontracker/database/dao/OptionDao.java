@@ -1,5 +1,6 @@
 package com.lydiaralph.decisiontracker.database.dao;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -12,10 +13,10 @@ import java.util.List;
 @Dao
 public interface OptionDao {
     @Query("SELECT * FROM options")
-    List<Option> getAll();
+    LiveData<List<Option>> getAll();
 
     @Query("SELECT * FROM options WHERE decision_id = :decisionId")
-    List<Option> getAllByDecisionId(Integer decisionId);
+    LiveData<List<Option>> getAllByDecisionId(Integer decisionId);
   
     @Insert
     void insertAll(Option... options);
