@@ -12,36 +12,37 @@ import java.util.List;
 
 public class OptionRepository {
 
-        private OptionDao optionDao;
-        private LiveData<List<Option>> allOptions;
+    private OptionDao optionDao;
+    private LiveData<List<Option>> allOptions;
 
-        OptionRepository(Application application) {
-            AppDatabase db = AppDatabase.getDatabase(application);
-            optionDao = db.optionsDao();
-            allOptions = optionDao.getAll();
+    public OptionRepository(Application application) {
+        AppDatabase db = AppDatabase.getDatabase(application);
+        optionDao = db.optionsDao();
+        allOptions = optionDao.getAll();
+    }
+
+    public LiveData<List<Option>> getAllOptions() {
+        return allOptions;
+    }
+
+    public void insert(Option option) {
+        new insertAsyncTask(optionDao).execute(option);
+    }
+
+    private static class insertAsyncTask extends AsyncTask<Option, Void, Void> {
+
+        private OptionDao mAsyncTaskDao;
+
+        insertAsyncTask(OptionDao dao) {
+            mAsyncTaskDao = dao;
         }
-        LiveData<List<Option>> getAllOptions() {
-            return allOptions;
+
+        @Override
+        protected Void doInBackground(final Option... params) {
+            mAsyncTaskDao.insertAll(params);
+            return null;
         }
-
-        void insert(Option option) {
-            new insertAsyncTask(optionDao).execute(option);
-        }
-
-        private static class insertAsyncTask extends AsyncTask<Option, Void, Void> {
-
-            private OptionDao mAsyncTaskDao;
-
-            insertAsyncTask(OptionDao dao) {
-                mAsyncTaskDao = dao;
-            }
-
-            @Override
-            protected Void doInBackground(final Option... params) {
-                mAsyncTaskDao.insertAll(params);
-                return null;
-            }
-        }
+    }
 }
 
 

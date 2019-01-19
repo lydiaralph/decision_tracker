@@ -20,8 +20,8 @@ public class Vote {
     @ColumnInfo(name = "option_id")
     public int optionId;
 
-    @ColumnInfo(name = "vote_date")
-    public Date voteDate;
+//    @ColumnInfo(name = "vote_date")
+//    public Date voteDate;
 
     public int getId() {
         return id;
@@ -31,14 +31,14 @@ public class Vote {
         return decisionId;
     }
 
-    public Date getVoteDate() {
-        return voteDate;
-    }
+//    public Date getVoteDate() {
+//        return voteDate;
+//    }
 
-    public Vote(int id, int decisionId, int optionId, Date voteDate){
+    public Vote(int id, int decisionId, int optionId){
         this.id = id;
         this.decisionId = decisionId;
         this.optionId = optionId;
-        this.voteDate = voteDate;
+//        this.voteDate = voteDate;
     }
 }
