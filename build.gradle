@@ -4,9 +4,15 @@ buildscript {
     repositories {
         google()
         jcenter()
+        mavenCentral()
+        mavenLocal()
+        maven {
+            name "maven-google"
+            url "https://maven.google.com/"
+        }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0'
+        classpath 'com.android.tools.build:gradle:3.3.0'
     }
 }
 
@@ -14,14 +20,29 @@ allprojects {
     repositories {
         google()
         jcenter()
+
+        project.ext {
+            roomVersion = "1.1.1"
+            androidSupportVersion = "28.0.0"
+            archLifecycleVersion = '1.1.1'
+        }
     }
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+subprojects {
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven {
+            name "maven-google"
+            url "https://maven.google.com/"
+        }
+    }
+
 }
 
-ext {
-    roomVersion = '1.1.1'
-    archLifecycleVersion = '1.1.1'
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }
