@@ -12,7 +12,7 @@ import java.util.List;
 
 @Dao
 public interface DecisionDao {
-    @Query("SELECT * FROM decision")
+    @Query("SELECT * FROM decisions")
     LiveData<List<Decision>> getAll();
 
     @Insert

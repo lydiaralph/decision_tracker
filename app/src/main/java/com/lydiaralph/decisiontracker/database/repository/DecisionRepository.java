@@ -15,16 +15,16 @@ public class DecisionRepository {
         private DecisionDao decisionDao;
         private LiveData<List<Decision>> allDecisions;
 
-        DecisionRepository(Application application) {
+        public DecisionRepository(Application application) {
             AppDatabase db = AppDatabase.getDatabase(application);
             decisionDao = db.decisionsDao();
             allDecisions = decisionDao.getAll();
         }
-        LiveData<List<Decision>> getAllDecisions() {
+        public LiveData<List<Decision>> getAllDecisions() {
             return allDecisions;
         }
 
-        void insert(Decision decision) {
+        public void insert(Decision decision) {
             new insertAsyncTask(decisionDao).execute(decision);
         }
 

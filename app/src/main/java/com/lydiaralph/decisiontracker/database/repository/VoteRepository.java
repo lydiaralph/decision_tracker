@@ -17,16 +17,17 @@ public class VoteRepository {
         private VoteDao voteDao;
         private LiveData<List<Vote>> allVotes;
 
-        VoteRepository(Application application) {
+        public VoteRepository(Application application) {
             AppDatabase db = AppDatabase.getDatabase(application);
             voteDao = db.votesDao();
             allVotes = voteDao.getAll();
         }
-        LiveData<List<Vote>> getAllVotes() {
+
+        public LiveData<List<Vote>> getAllVotes() {
             return allVotes;
         }
 
-        void insert(Vote vote) {
+        public void insert(Vote vote) {
             new insertAsyncTask(voteDao).execute(vote);
         }
 

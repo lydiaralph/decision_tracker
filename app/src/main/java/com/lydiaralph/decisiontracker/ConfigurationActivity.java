@@ -20,7 +20,7 @@ public class ConfigurationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_configuration);
     }
 
-    void sendMessage(View view) {
+    public void sendMessage(View view) {
         Intent intent = new Intent(this, ConfirmConfigurationActivity.class);
         EditText editText = (EditText) findViewById(R.id.user_input_question);
         String message = editText.getText().toString();
