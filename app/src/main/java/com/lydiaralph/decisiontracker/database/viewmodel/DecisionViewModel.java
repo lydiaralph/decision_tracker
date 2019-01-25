@@ -20,11 +20,11 @@ public class DecisionViewModel extends AndroidViewModel {
         mAllDecisions = mRepository.getAllDecisions();
     }
 
-    LiveData<List<Decision>> getAllDecisions() {
+    public LiveData<List<Decision>> getAllDecisions() {
         return mAllDecisions;
     }
 
-    void insert(Decision decision) {
+    public void insert(Decision decision) {
         mRepository.insert(decision);
     }
 }

@@ -40,8 +40,7 @@ public class Decision {
 //        return this.getEndDate();
 //    }
 
-    public Decision(int id, String decisionText){
-        this.id = id;
+    public Decision(String decisionText){
         this.decisionText = decisionText;
 //        this.startDate = startDate;
 //        this.endDate = endDate;
