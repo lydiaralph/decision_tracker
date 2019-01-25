@@ -19,7 +19,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModel;
+
 public class MainActivity extends AppCompatActivity {
+
+    public static final int NEW_DECISION_ACTIVITY_REQUEST_CODE = 1;
+
+    private DecisionViewModel decisionViewModel;
 
     public static final String EXTRA_MESSAGE = "com.ralph.lydia.MESSAGE";
 
