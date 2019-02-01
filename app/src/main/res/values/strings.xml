@@ -81,4 +81,5 @@ limitations under the License. -->
     <string name="empty_not_saved">Word not saved because it is empty.</string>
     <string name="say_bye">Say bye</string>
     <string name="bye">Bye!</string>
+    <string name="hello">Hello!</string>
 </resources>
