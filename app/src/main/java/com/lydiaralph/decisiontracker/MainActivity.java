@@ -1,47 +1,42 @@
 package com.lydiaralph.decisiontracker;
 
 
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
-import android.arch.persistence.room.Room;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
-    public static final String EXTRA_MESSAGE = "com.ralph.lydia.MESSAGE";
+    private TextView greetingView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        greetingView = findViewById(R.id.greeting);
     }
 
-    public void updateConfiguration(View view) {
-        Intent intent = new Intent(this, ConfigurationActivity.class);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.activity_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        if(item.getItemId() == R.id.action_bye){
+            greetingView.setText(R.string.bye);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    void displayResults(View view) {
+        Intent intent = new Intent(this, ViewDecisionsActivity.class);
         startActivity(intent);
     }
-
-
-//    void displayResults(View view) {
-//        Intent intent = new Intent(this, ConfigurationActivity.class);
-//        startActivity(intent);
-//    }
-//
-//    void answerQuestions(View view) {
-//        Intent intent = new Intent(this, ConfigurationActivity.class);
-//        startActivity(intent);
-//    }
 }

@@ -79,4 +79,6 @@ limitations under the License. -->
     <string name="action_reply">Reply</string>
     <string name="button_save">Save</string>
     <string name="empty_not_saved">Word not saved because it is empty.</string>
+    <string name="say_bye">Say bye</string>
+    <string name="bye">Bye!</string>
 </resources>
