@@ -35,8 +35,8 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    void displayResults(View view) {
-        Intent intent = new Intent(this, ViewDecisionsActivity.class);
-        startActivity(intent);
-    }
+//    void displayResults(View view) {
+//        Intent intent = new Intent(this, ViewDecisionsActivity.class);
+//        startActivity(intent);
+//    }
 }
