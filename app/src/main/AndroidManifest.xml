@@ -25,6 +25,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.lydiaralph.decisiontracker.MainActivity" />
         </activity>
+        <activity
+            android:name=".ConfigureNewDecisionActivity"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.lydiaralph.decisiontracker.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

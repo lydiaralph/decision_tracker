@@ -7,12 +7,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-public class ViewDecisionsActivity extends MenuBasedActivity {
+public class ConfigureNewDecisionActivity extends MenuBasedActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_decisions);
+        setContentView(R.layout.activity_configure_new_decision);
         setReturnToMainMenuButton();
     }
+
 }

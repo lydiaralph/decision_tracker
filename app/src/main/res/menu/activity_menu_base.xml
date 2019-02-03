@@ -6,4 +6,7 @@
 
     <item android:id="@+id/configure_new_decision"
         android:title="@string/configure_decision" />
+
+    <item android:id="@+id/return_to_main_menu"
+        android:title="@string/return_to_main_menu" />
 </menu>

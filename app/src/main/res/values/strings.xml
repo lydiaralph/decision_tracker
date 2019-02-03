@@ -22,7 +22,7 @@ limitations under the License. -->
     <string name="home_set_up_configuration">Configure questions</string>
     <string name="home_how_to_use">How to use</string>
     <string name="home_answer_question">Answer questions</string>
-    <string name="home_view_results">View results</string>
+    <string name="view_results">View results</string>
 
     <!-- Ask new question -->
     <string name="configure_decision">Set up your decision</string>
@@ -82,4 +82,6 @@ limitations under the License. -->
     <string name="bye">Bye!</string>
     <string name="hello">Hello!</string>
     <string name="return_to_main_menu">Return to main menu</string>
+    <string name="page_title">Placeholder page title</string>
+    <string name="main_menu">Main menu</string>
 </resources>
