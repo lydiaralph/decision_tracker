@@ -33,8 +33,8 @@ android {
         debug {
             debuggable true
             minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            useProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
         }
     }
 }
@@ -58,6 +58,7 @@ dependencies {
     testImplementation  group: 'android.arch.persistence.room',  name: 'testing',  version: "$rootProject.ext.roomVersion"
     testImplementation  group: 'junit',                          name:'junit',     version: '4.12'
 
+    androidTestImplementation group: 'com.android.support.test', name:'rules', version: '1.0.2'
     androidTestImplementation group: 'com.android.support.test', name:'runner', version: '1.0.2'
     androidTestImplementation group: 'com.android.support.test.espresso', name: 'espresso-core', version: '3.0.2'
     androidTestImplementation group: "android.arch.core", name: "core-testing", version: "$rootProject.ext.archLifecycleVersion"

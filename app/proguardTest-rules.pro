@@ -113,3 +113,62 @@ public *;
 -keep class org.sqlite.Function { public *; }
 
 
+
+
+# ------------------- TEST DEPENDENCIES -------------------
+#-dontskipnonpubliclibraryclassmembers
+#-dontskipnonpubliclibraryclasses
+
+-keep, includedescriptorclasses class com.android.support.test.**
+
+-ignorewarnings
+
+-keepattributes *Annotation*
+
+-dontnote junit.framework.**
+-dontnote junit.runner.**
+
+-dontwarn android.test.**
+-dontwarn android.support.test.**
+-dontwarn org.junit.**
+-dontwarn org.hamcrest.**
+-dontwarn com.squareup.javawriter.JavaWriter
+-dontwarn org.mockito.*
+
+-dontnote org.sqlite.core.**
+
+-keep class net.bytebuddy.* { public *; }
+-keep interface net.bytebuddy.* { public *; }
+
+-keep class edu.umd.cs.findbugs.* {public *; }
+
+-keep class org.mockito.* {public *;}
+
+-keep class android.support.test.espresso.base.InputManagerEventInjectionStrategy {
+  android.support.test.espresso.base.InputManagerEventInjectionStrategy getInstance();
+}
+
+-dontwarn org.stringtemplate.v4.**
+-dontwarn org.stringtemplate.v4.*
+
+-dontwarn net.bytebuddy.**
+-dontwarn android.graphics.**
+-dontnote org.xmlpull.v1.**
+-dontnote java.lang.invoke**
+-dontnote org.apache.commons.codec.**
+-dontwarn android.test.**
+-dontwarn android.support.test.**
+
+-keep class org.hamcrest.** {
+   *;
+}
+
+-keep class org.junit.** { *; }
+-dontwarn org.junit.**
+
+-keep class junit.** { *; }
+-dontwarn junit.**
+
+-keep class sun.misc.** { *; }
+-dontwarn sun.misc.**
+
