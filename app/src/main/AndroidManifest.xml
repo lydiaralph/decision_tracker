@@ -19,18 +19,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ConfigurationActivity"
+            android:name=".ViewDecisionsActivity"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.lydiaralph.decisiontracker.MainActivity" />
-        </activity>
-        <activity
-            android:name=".ConfirmConfigurationActivity"
-            android:parentActivityName=".ConfigurationActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.lydiaralph.decisiontracker.ConfigurationActivity" />
         </activity>
     </application>
 
