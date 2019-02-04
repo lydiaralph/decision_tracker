@@ -78,7 +78,7 @@ public abstract class MenuBasedActivity extends Activity {
     }
 
     public void configureNewDecision(View view) {
-        Intent intent = new Intent(this, ViewDecisionsActivity.class);
+        Intent intent = new Intent(this, ConfigureNewDecisionActivity.class);
         startActivity(intent);
     }
 }

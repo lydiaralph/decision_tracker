@@ -84,4 +84,5 @@ limitations under the License. -->
     <string name="return_to_main_menu">Return to main menu</string>
     <string name="page_title">Placeholder page title</string>
     <string name="main_menu">Main menu</string>
+    <string name="configure_new_decision">Configure new decision</string>
 </resources>

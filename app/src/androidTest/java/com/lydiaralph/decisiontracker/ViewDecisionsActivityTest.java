@@ -14,27 +14,22 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
-public class MainActivityTest {
+public class ViewDecisionsActivityTest {
+
     @Rule
-    public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(MainActivity.class);
+    public ActivityTestRule<ViewDecisionsActivity> activityTestRule =
+            new ActivityTestRule<>(ViewDecisionsActivity.class);
 
     @Test
     public void pageTitle() {
-        onView(withId(R.id.page_title)).check(matches(withText(R.string.main_menu)));
-    }
-
-    @Test
-    public void testViewResultsButton() {
-        onView(withId(R.id.button_view_results)).check(matches(withText(R.string.view_results)));
-        onView(withId(R.id.button_view_results)).perform(click());
         onView(withId(R.id.page_title)).check(matches(withText(R.string.view_results)));
     }
 
     @Test
     public void testConfigureDecisionButton() {
-        onView(withId(R.id.button_configure)).check(matches(withText(R.string.configure_decision)));
-        onView(withId(R.id.button_configure)).perform(click());
-        onView(withId(R.id.page_title)).check(matches(withText(R.string.configure_decision)));
+        onView(withId(R.id.button_return_to_main_menu)).check(matches(withText(R.string.return_to_main_menu)));
+        onView(withId(R.id.button_return_to_main_menu)).perform(click());
+        onView(withId(R.id.page_title)).check(matches(withText(R.string.main_menu)));
     }
 
 }

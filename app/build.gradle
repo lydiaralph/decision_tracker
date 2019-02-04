@@ -33,8 +33,8 @@ android {
         debug {
             debuggable true
             minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            useProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
         }
     }
 }
@@ -45,13 +45,11 @@ dependencies {
     annotationProcessor group: 'android.arch.persistence.room',  name: 'compiler', version: "$rootProject.ext.roomVersion"
     implementation      group: 'android.arch.persistence.room',  name: 'compiler', version: "$rootProject.ext.roomVersion"
     implementation      group: 'android.arch.persistence.room',  name: 'runtime',  version: "$rootProject.ext.roomVersion"
-    implementation      group: 'com.android.support',            name: 'appcompat-v7',      version: "28.0.0"
-    implementation      group: 'com.android.support',            name: 'support-v4',        version: "28.0.0"
+    implementation      group: 'com.android.support',            name: 'appcompat-v7',      version: "$rootProject.ext.androidSupportVersion"
+    implementation      group: 'com.android.support',            name: 'support-v4',        version: "$rootProject.ext.androidSupportVersion"
+    implementation      group: 'com.android.support',            name: 'recyclerview-v7',   version: "$rootProject.ext.androidSupportVersion"
+    implementation      group: 'com.android.support',            name: 'design',            version: "$rootProject.ext.androidSupportVersion"
     implementation      group: 'com.android.support.constraint', name: 'constraint-layout', version: "1.1.3"
-    implementation      group: 'com.android.support',            name: 'recyclerview-v7',   version: '28.0.0'
-
-
-//    implementation      group: 'com.android.tools.lint',         name: 'lint-gradle',       version: '26.3.0'
 
     // Lifecycle components
     implementation      group: "android.arch.lifecycle", name: "extensions", version: "$rootProject.ext.archLifecycleVersion"
@@ -60,12 +58,12 @@ dependencies {
     testImplementation  group: 'android.arch.persistence.room',  name: 'testing',  version: "$rootProject.ext.roomVersion"
     testImplementation  group: 'junit',                          name:'junit',     version: '4.12'
 
+    androidTestImplementation group: 'com.android.support.test', name:'rules', version: '1.0.2'
     androidTestImplementation group: 'com.android.support.test', name:'runner', version: '1.0.2'
     androidTestImplementation group: 'com.android.support.test.espresso', name: 'espresso-core', version: '3.0.2'
     androidTestImplementation group: "android.arch.core", name: "core-testing", version: "$rootProject.ext.archLifecycleVersion"
     androidTestImplementation ('com.android.support.test.espresso:espresso-core:3.0.1', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    implementation 'com.android.support:design:28.0.0'
 }
 
