@@ -1,29 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.lydiaralph.decisiontracker.ViewDecisionsActivity">
+    android:padding="16dp"
+    android:orientation="vertical"
+    tools:context="com.lydiaralph.decisiontracker.ConfigureNewDecisionActivity">
 
     <TextView
         android:id="@+id/page_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="@style/PageTitle"
         android:text="@string/configure_decision" />
+
+    <TextView
+        android:id="@+id/prompt_decision_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ask_this_question" />
+
+    <EditText
+            android:id="@+id/input_decision_text"
+            android:layout_width="wrap_content"
+            android:hint="@string/ask_this_question_hint"
+            android:layout_height="wrap_content" />
+
+    <Button
+            android:id="@+id/button_submit_new_decision"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/save" />
 
     <Button
         android:id="@+id/button_return_to_main_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:text="@string/return_to_main_menu"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/greeting"
-        app:layout_constraintVertical_bias="0.107" />
+        android:text="@string/return_to_main_menu" />
 
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>
