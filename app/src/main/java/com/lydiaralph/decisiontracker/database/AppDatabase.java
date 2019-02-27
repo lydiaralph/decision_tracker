@@ -26,10 +26,43 @@ public abstract class AppDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             AppDatabase.class, "app_database")
+                            .addCallback(sRoomDatabaseCallback)
                             .build();
                 }
             }
         }
         return INSTANCE;
     }
+
+
+    private static RoomDatabase.Callback sRoomDatabaseCallback =
+            new RoomDatabase.Callback() {
+
+                @Override
+                public void onOpen(@NonNull SupportSQLiteDatabase db) {
+                    super.onOpen(db);
+                    new PopulateDbAsync(INSTANCE).execute();
+                }
+            };
+
+    // To populate the database with static data
+    private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
+
+        private final DecisionDao mDao;
+
+        PopulateDbAsync(AppDatabase db) {
+            mDao = db.decisionDao();
+        }
+
+        @Override
+        protected Void doInBackground(final Void... params) {
+            mDao.deleteAll();
+            Decision decision = new Decision("New decision");
+            mDao.insert(decision);
+            decision = new Decision("Second decision");
+            mDao.insert(decision);
+            return null;
+        }
+    }
+
 }
