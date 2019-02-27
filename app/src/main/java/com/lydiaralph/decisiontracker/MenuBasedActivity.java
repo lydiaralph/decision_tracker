@@ -3,11 +3,12 @@ package com.lydiaralph.decisiontracker;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-public abstract class MenuBasedActivity extends Activity {
+public abstract class MenuBasedActivity extends AppCompatActivity {
 
     protected View returnToMainMenuButton;
     protected View viewResultsButton;
@@ -40,12 +41,12 @@ public abstract class MenuBasedActivity extends Activity {
 
     protected void setConfigureNewDecisionButton() {
         configureNewDecisionButton = findViewById(R.id.button_configure);
-        configureNewDecisionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                configureNewDecision(v);
-            }
-        });
+//        configureNewDecisionButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                configureNewDecision(v);
+//            }
+//        });
     }
 
     @Override
