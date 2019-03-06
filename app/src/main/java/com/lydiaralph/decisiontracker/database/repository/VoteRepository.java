@@ -19,7 +19,7 @@ public class VoteRepository {
 
         public VoteRepository(Application application) {
             AppDatabase db = AppDatabase.getDatabase(application);
-            voteDao = db.votesDao();
+//            voteDao = db.votesDao();
             allVotes = voteDao.getAll();
         }
 

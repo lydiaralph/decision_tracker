@@ -16,8 +16,11 @@ public interface DecisionDao {
     LiveData<List<Decision>> getAll();
 
     @Insert
-    void insert(Decision decisions);
+    void insert(Decision decision);
 
     @Delete
-    void delete(Decision decisions);
+    void delete(Decision decision);
+
+    @Query("DELETE FROM decisions")
+    void deleteAll();
 }

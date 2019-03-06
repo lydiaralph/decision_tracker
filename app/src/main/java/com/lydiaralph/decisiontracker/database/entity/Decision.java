@@ -15,6 +15,7 @@ public class Decision {
     @ColumnInfo(name = "id")
     public int id;
 
+    @NonNull
     @ColumnInfo(name = "decision_text")
     public String decisionText;
 

@@ -1,38 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-    android:layout_marginTop="@dimen/activity_vertical_margin"
+    style="@style/PageStyle"
     tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/page_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="@style/PageTitle"
         android:text="@string/main_menu" />
 
     <TextView
+        style="@style/TextStyle"
         android:id="@+id/greeting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="34dp"
-        android:layout_marginLeft="34dp"
         android:text="@string/hello" />
 
-
     <Button
+        style="@style/GenericButton"
         android:id="@+id/button_view_results"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/view_results" />
 
     <Button
+        style="@style/GenericButton"
         android:id="@+id/button_configure"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/configure_decision" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/darker_gray"
+        tools:listitem="@layout/recyclerview_item" />
 </LinearLayout>
 

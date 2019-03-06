@@ -78,7 +78,7 @@ limitations under the License. -->
     <string name="action_share">Share</string>
     <string name="action_reply">Reply</string>
     <string name="button_save">Save</string>
-    <string name="empty_not_saved">Word not saved because it is empty.</string>
+    <string name="empty_not_saved">Decision not saved because it is empty.</string>
     <string name="bye">Bye!</string>
     <string name="hello">Hello!</string>
     <string name="return_to_main_menu">Return to main menu</string>
