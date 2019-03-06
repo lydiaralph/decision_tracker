@@ -24,3 +24,6 @@ Third:
 * New feature: can add more options
 
 * New feature: can change how often to be asked
+
+Refer to this:
+https://www.captechconsulting.com/blogs/android-material-themes-made-easy-with-appcompat

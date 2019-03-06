@@ -46,7 +46,7 @@ public class DecisionAdapter extends RecyclerView.Adapter<DecisionAdapter.Decisi
         }
     }
 
-    void setDecisions(List<Decision> decisions){
+    public void setDecisions(List<Decision> decisions){
         this.decisions = decisions;
         notifyDataSetChanged();
     }

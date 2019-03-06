@@ -1,9 +1,12 @@
 package com.lydiaralph.decisiontracker.database;
 
+import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
+import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 
 import com.lydiaralph.decisiontracker.database.dao.DecisionDao;
 import com.lydiaralph.decisiontracker.database.dao.OptionDao;
@@ -12,11 +15,9 @@ import com.lydiaralph.decisiontracker.database.entity.Decision;
 import com.lydiaralph.decisiontracker.database.entity.Option;
 import com.lydiaralph.decisiontracker.database.entity.Vote;
 
-@Database(entities = {Vote.class, Option.class, Decision.class}, version = 1)
+@Database(entities = {Decision.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
-    public abstract DecisionDao decisionsDao();
-    public abstract OptionDao optionsDao();
-    public abstract VoteDao votesDao();
+    public abstract DecisionDao decisionDao();
 
     private static volatile AppDatabase INSTANCE;
 

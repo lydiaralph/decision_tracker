@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 
 public class ConfigureNewDecisionActivity extends MenuBasedActivity {
-    private static final String LOG_NAME = ConfigureNewDecisionActivity.class.getSimpleName();
+    private static final String LOG = ConfigureNewDecisionActivity.class.getSimpleName();
 
     public static final String INPUT_DECISION_TEXT = "InputDecisionText";
 
@@ -32,7 +32,7 @@ public class ConfigureNewDecisionActivity extends MenuBasedActivity {
                     setResult(Activity.RESULT_CANCELED, resultIntent);
                 } else {
                     String decisionText = decisionTextView.getText().toString();
-                    Log.i(LOG_NAME, "Input decision text: " + decisionText);
+                    Log.i(LOG, "Input decision text: " + decisionText);
                     resultIntent.putExtra(INPUT_DECISION_TEXT, decisionText);
                     setResult(Activity.RESULT_OK, resultIntent);
                 }

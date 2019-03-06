@@ -17,7 +17,7 @@ public class DecisionRepository {
 
         public DecisionRepository(Application application) {
             AppDatabase db = AppDatabase.getDatabase(application);
-            decisionDao = db.decisionsDao();
+            decisionDao = db.decisionDao();
             allDecisions = decisionDao.getAll();
         }
         public LiveData<List<Decision>> getAllDecisions() {

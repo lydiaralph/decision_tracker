@@ -1,17 +1,20 @@
 package com.lydiaralph.decisiontracker;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lydiaralph.decisiontracker.database.adapter.DecisionAdapter;
 import com.lydiaralph.decisiontracker.database.entity.Decision;
 import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModel;
+
+import java.util.List;
 
 public class MainActivity extends MenuBasedActivity {
 
@@ -24,12 +27,22 @@ public class MainActivity extends MenuBasedActivity {
         setContentView(R.layout.activity_main);
         setViewResultsButton();
         setConfigureNewDecisionButton();
-        decisionViewModel = ViewModelProviders.of(this).get(DecisionViewModel.class);
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerview);
         final DecisionAdapter adapter = new DecisionAdapter(this);
+        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        decisionViewModel = ViewModelProviders.of(this).get(DecisionViewModel.class);
+
+        final Observer<List<Decision>> decisionObserver = new Observer<List<Decision>>() {
+            @Override
+            public void onChanged(@Nullable final List<Decision> newDecisions) {
+               adapter.setDecisions(newDecisions);
+            }
+        };
+
+        decisionViewModel.getAllDecisions().observe(this, decisionObserver);
     }
 
     protected void setConfigureNewDecisionButton() {

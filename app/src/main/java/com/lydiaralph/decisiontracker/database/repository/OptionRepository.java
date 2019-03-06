@@ -17,7 +17,7 @@ public class OptionRepository {
 
     public OptionRepository(Application application) {
         AppDatabase db = AppDatabase.getDatabase(application);
-        optionDao = db.optionsDao();
+//        optionDao = db.optionsDao();
         allOptions = optionDao.getAll();
     }
 
