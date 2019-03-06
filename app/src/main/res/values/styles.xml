@@ -1,13 +1,18 @@
-<resources>
-    <style name="AppBaseTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!--<style name="AppBaseTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">-->
+    <style name="AppBaseTheme" parent="Theme.Design.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorControlHighlight"></item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorAccent" tools:targetApi="lollipop">@color/colorAccent</item>
+        <item name="android:textColor">#ffffff</item>
     </style>
 
     <style name="AppTheme.NoActionBar" parent="AppBaseTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="colorAccent">#ffffff</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

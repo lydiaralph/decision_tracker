@@ -20,13 +20,19 @@
         android:layout_marginBottom="30dp"
         android:text="@string/ask_this_question" />
 
-    <EditText
-        android:id="@+id/input_decision_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/ask_this_question_hint"
-        android:inputType="text"
-        />
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/activity_horizontal_margin">
+
+        <android.support.design.widget.TextInputEditText
+            style="@style/TextStyle"
+            android:id="@+id/input_decision_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textNoSuggestions"
+            android:hint="@string/ask_this_question_hint" />
+    </android.support.design.widget.TextInputLayout>
 
     <Button
         style="@style/GenericButton"
