@@ -1,14 +1,12 @@
 package com.lydiaralph.decisiontracker.database.repository;
 
 import android.app.Application;
-import android.arch.lifecycle.LiveData;
+import androidx.lifecycle.LiveData;
 import android.os.AsyncTask;
 
 import com.lydiaralph.decisiontracker.database.dao.VoteDao;
 import com.lydiaralph.decisiontracker.database.entity.Vote;
 import com.lydiaralph.decisiontracker.database.AppDatabase;
-import com.lydiaralph.decisiontracker.database.dao.VoteDao;
-import com.lydiaralph.decisiontracker.database.entity.Vote;
 
 import java.util.List;
 

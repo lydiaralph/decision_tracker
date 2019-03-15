@@ -1,8 +1,8 @@
 package com.lydiaralph.decisiontracker.database.viewmodel;
 
 import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
-import android.arch.lifecycle.LiveData;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 
 import com.lydiaralph.decisiontracker.database.entity.Vote;
 import com.lydiaralph.decisiontracker.database.repository.VoteRepository;
