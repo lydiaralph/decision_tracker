@@ -1,19 +1,23 @@
 package com.lydiaralph.decisiontracker;
 
-import android.support.test.InstrumentationRegistry;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import com.lydiaralph.decisiontracker.R;
+import com.lydiaralph.decisiontracker.ConfigureNewDecisionActivity;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.espresso.matcher.ViewMatchers;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.runner.AndroidJUnit4;
+
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
 public class MenuBasedActivityTest {
@@ -31,15 +35,15 @@ public class MenuBasedActivityTest {
 
     @Test
     public void testSideMenu() {
-        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
+        openActionBarOverflowOrOptionsMenu(ApplicationProvider.getApplicationContext());
         onView(withText(R.string.return_to_main_menu)).perform(click());
         onView(withId(R.id.page_title)).check(matches(withText(R.string.main_menu)));
 
-        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
+        openActionBarOverflowOrOptionsMenu(ApplicationProvider.getApplicationContext());
         onView(withText(R.string.view_results)).perform(click());
         onView(withId(R.id.page_title)).check(matches(withText(R.string.view_results)));
 
-        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
+        openActionBarOverflowOrOptionsMenu(ApplicationProvider.getApplicationContext());
         onView(withText(R.string.configure_decision)).perform(click());
         onView(withId(R.id.page_title)).check(matches(withText(R.string.configure_decision)));
     }

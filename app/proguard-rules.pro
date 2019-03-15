@@ -5,6 +5,8 @@
 
 # TODO: work out if it should be a **
 
+
+
 -dontnote android.net.http.*
 -dontnote com.google.apphosting.api.*
 -dontnote com.google.auto.common.*
@@ -15,6 +17,7 @@
 -dontnote org.apache.commons.codec.**
 -dontnote org.apache.http.**
 -dontnote sun.misc.*
+-dontwarn androidx.room.*
 -dontwarn android.arch.persistence.room.*
 -dontwarn android.arch.persistence.room.ext.*
 -dontwarn android.arch.persistence.room.log.*
@@ -63,6 +66,15 @@
 -keep class android.support.v4.app.* { *; }
 -keep interface android.support.v4.app.* { *; }
 -keep class android.support.design.widget.AppBarLayout { *; }
+-keep class androidx.appcompat.* { *; }
+-keep class androidx.legacy.* {*;}
+-keep class androidx.recyclerview.* {*;}
+-keep class androidx.room.* {*;}
+-keep class androidx.lifecycle.* {*;}
+-keep interface androidx.lifecycle.* {*;}
+-keep interface androidx.** { *; }
+-keep class androidx.** { *; }
+
 
 # Javax
 -keep class javax.lang.model.* { *; }

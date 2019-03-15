@@ -9,7 +9,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -37,32 +37,56 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    annotationProcessor group: 'android.arch.persistence.room',  name: 'compiler', version: "$rootProject.ext.roomVersion"
-    implementation      group: 'android.arch.persistence.room',  name: 'compiler', version: "$rootProject.ext.roomVersion"
-    implementation      group: 'android.arch.persistence.room',  name: 'runtime',  version: "$rootProject.ext.roomVersion"
-    implementation      group: 'com.android.support',            name: 'appcompat-v7',      version: "$rootProject.ext.androidSupportVersion"
-    implementation      group: 'com.android.support',            name: 'support-v4',        version: "$rootProject.ext.androidSupportVersion"
-    implementation      group: 'com.android.support',            name: 'recyclerview-v7',   version: "$rootProject.ext.androidSupportVersion"
-    implementation      group: 'com.android.support',            name: 'design',            version: "$rootProject.ext.androidSupportVersion"
-    implementation      group: 'com.android.support.constraint', name: 'constraint-layout', version: "1.1.3"
-
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    annotationProcessor group: 'androidx.room', name: 'room-compiler', version: '2.0.0-beta01'
+    implementation group: 'androidx.room', name: 'room-compiler', version: '2.0.0-beta01'
+    implementation group: 'androidx.room', name: 'room-runtime', version: '2.0.0-beta01'
+    implementation group: 'androidx.appcompat', name: 'appcompat', version: '1.0.0-beta01'
+    implementation group: 'androidx.legacy', name: 'legacy-support-v4', version: '1.0.0-beta01'
+    implementation group: 'androidx.recyclerview', name: 'recyclerview', version: '1.0.0-beta01'
+    implementation group: 'com.google.android.material', name: 'material', version: '1.0.0-beta01'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     // Lifecycle components
-    implementation      group: "android.arch.lifecycle", name: "extensions", version: "$rootProject.ext.archLifecycleVersion"
-    annotationProcessor group: "android.arch.lifecycle", name: "compiler",   version: "$rootProject.ext.archLifecycleVersion"
 
-    testImplementation  group: 'android.arch.persistence.room',  name: 'testing',  version: "$rootProject.ext.roomVersion"
-    testImplementation  group: 'junit',                          name:'junit',     version: '4.12'
+    implementation "androidx.lifecycle:lifecycle-common:${property('androidx.lifecycle.version')}"
+    implementation "androidx.lifecycle:lifecycle-extensions:${property('androidx.lifecycle.version')}"
+    implementation "androidx.lifecycle:lifecycle-viewmodel:${property('androidx.lifecycle.version')}"
+    implementation "androidx.lifecycle:lifecycle-livedata:${property('androidx.lifecycle.version')}"
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:${property('androidx.lifecycle.version')}"
 
-    androidTestImplementation group: 'com.android.support.test', name:'rules', version: '1.0.2'
-    androidTestImplementation group: 'com.android.support.test', name:'runner', version: '1.0.2'
-    androidTestImplementation group: 'com.android.support.test.espresso', name: 'espresso-core', version: '3.0.2'
-    androidTestImplementation group: "android.arch.core", name: "core-testing", version: "$rootProject.ext.archLifecycleVersion"
-    androidTestImplementation ('com.android.support.test.espresso:espresso-core:3.0.1', {
+    testImplementation group: 'androidx.room', name: 'room-testing', version: '2.0.0-beta01'
+    testImplementation 'junit:junit:4.12'
+    // https://mvnrepository.com/artifact/org.hamcrest/hamcrest
+//    androidTestImplementation group: 'org.hamcrest', name: 'hamcrest', version: '2.1'
+
+
+    // https://mvnrepository.com/artifact/junit/junit
+    testImplementation        group: 'junit', name: 'junit', version: '4.12'
+    androidTestImplementation group: 'junit', name: 'junit', version: '4.12'
+
+    // Test helpers for LiveData
+    testImplementation 'androidx.arch.core:core-testing:2.0.0-beta01'
+    // Test helpers for Room
+    testImplementation 'androidx.room:room-testing:2.0.0-beta01'
+
+    androidTestImplementation 'androidx.test:rules:1.1.0-alpha4'
+    androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
+
+    implementation group: 'androidx.annotation', name: 'annotation', version: '1.0.0'
+
+    // https://mvnrepository.com/artifact/androidx.test/core
+    androidTestImplementation group: 'androidx.test', name: 'core', version: '1.1.0'
+
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
+    androidTestImplementation group: 'androidx.arch.core', name: 'core-testing', version: '2.0.0-beta01'
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0-alpha4', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 }
