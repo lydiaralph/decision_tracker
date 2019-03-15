@@ -2,7 +2,6 @@ package com.lydiaralph.decisiontracker.database;
 
 import android.content.Context;
 
-import com.lydiaralph.decisiontracker.database.AppDatabase;
 import com.lydiaralph.decisiontracker.database.dao.DecisionDao;
 import com.lydiaralph.decisiontracker.database.entity.Decision;
 
@@ -14,6 +13,7 @@ import org.junit.runner.RunWith;
 import java.io.IOException;
 import java.util.List;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -30,7 +30,7 @@ public class AppDatabaseTest {
     public void createDb() {
         Context context = ApplicationProvider.getApplicationContext();
         db = Room.inMemoryDatabaseBuilder(context, AppDatabase.class).build();
-        decisionDao = db.getDecisionDao();
+        decisionDao = db.decisionDao();
     }
 
     @After
@@ -42,7 +42,7 @@ public class AppDatabaseTest {
     public void writeUserAndReadInList() throws Exception {
         Decision decision = new Decision("george");
         decisionDao.insert(decision);
-        Decision byName = decisionDao.getDecisionById(1).getValue();
-        assertThat(byName.getDecisionText(), equalTo(decision.getDecisionText()));
+        LiveData<List<Decision>> byName = decisionDao.getAll();
+        assertThat(byName.getValue().get(0).getDecisionText(), equalTo(decision.getDecisionText()));
     }
 }
