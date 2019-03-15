@@ -54,13 +54,12 @@ dependencies {
     implementation group: 'com.google.android.material', name: 'material', version: '1.0.0-beta01'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     // Lifecycle components
-    implementation group: 'androidx.lifecycle', name: 'lifecycle-common', version: '2.0.0'
-    implementation group: 'androidx.lifecycle', name: 'lifecycle-extensions', version: '2.0.0-beta01'
-    implementation group: 'androidx.lifecycle', name: 'lifecycle-viewmodel', version: '2.0.0-beta01'
-    implementation group: 'androidx.lifecycle', name: 'lifecycle-livedata', version: '2.0.0-beta01'
 
-    annotationProcessor group: 'androidx.lifecycle', name: 'lifecycle-compiler', version: '2.0.0-beta01'
-
+    implementation "androidx.lifecycle:lifecycle-common:${property('androidx.lifecycle.version')}"
+    implementation "androidx.lifecycle:lifecycle-extensions:${property('androidx.lifecycle.version')}"
+    implementation "androidx.lifecycle:lifecycle-viewmodel:${property('androidx.lifecycle.version')}"
+    implementation "androidx.lifecycle:lifecycle-livedata:${property('androidx.lifecycle.version')}"
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:${property('androidx.lifecycle.version')}"
 
     testImplementation group: 'androidx.room', name: 'room-testing', version: '2.0.0-beta01'
     testImplementation 'junit:junit:4.12'

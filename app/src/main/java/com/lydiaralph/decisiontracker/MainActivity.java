@@ -46,6 +46,7 @@ public class MainActivity extends MenuBasedActivity {
         decisionViewModel.getAllDecisions().observe(this, decisionObserver);
     }
 
+    @Override
     protected void setConfigureNewDecisionButton() {
         configureNewDecisionButton = findViewById(R.id.button_configure);
         configureNewDecisionButton.setOnClickListener(new View.OnClickListener() {
