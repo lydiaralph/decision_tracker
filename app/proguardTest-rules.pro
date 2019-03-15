@@ -15,11 +15,11 @@
 -dontnote org.apache.commons.codec.**
 -dontnote org.apache.http.**
 -dontnote sun.misc.*
--dontwarn android.arch.persistence.room.*
--dontwarn android.arch.persistence.room.ext.*
--dontwarn android.arch.persistence.room.log.*
--dontwarn android.arch.persistence.room.paging.LimitOffsetDataSource
--dontwarn android.arch.persistence.room.processor.*
+-dontwarn androidx.room.*
+-dontwarn androidx.room.ext.*
+-dontwarn androidx.room.log.*
+-dontwarn androidx.room.paging.LimitOffsetDataSource
+-dontwarn androidx.room.processor.*
 -dontwarn android.arch.util.paging.CountedDataSource
 -dontwarn com.google.appengine.api.*
 -dontwarn com.google.auto.common.*
@@ -75,33 +75,35 @@
 
 # Arch
 
--keep, includedescriptorclasses class android.arch.lifecycle.* { public *; }
+-keep, includedescriptorclasses class androidx.lifecycle.* { public *; }
 
 -keep class android.arch.persistence.db.* { public *; }
 
--keep, includedescriptorclasses class android.arch.persistence.room.* { public *; }
+-keep, includedescriptorclasses class androidx.room.* { public *; }
 
--keep, includedescriptorclasses class android.arch.persistence.room.ext.* { *; }
+-keep, includedescriptorclasses class androidx.room.ext.* { *; }
 
--keep class android.arch.persistence.room.RoomSQLiteQuery { public *; }
+-keep class androidx.room.RoomSQLiteQuery { public *; }
 
--keep , includedescriptorclasses class android.arch.persistence.room.log.* {
+-keep, includedescriptorclasses class androidx.room.* { public *; }
+
+-keep , includedescriptorclasses class androidx.room.log.* {
 public *;
 }
 
--keep, includedescriptorclasses class android.arch.persistence.room.vo.Field {
+-keep, includedescriptorclasses class androidx.room.vo.Field {
  public *;
 }
 
--keep, includedescriptorclasses  class android.arch.persistence.room.verifier.DatabaseVerifier {
+-keep, includedescriptorclasses  class androidx.room.verifier.DatabaseVerifier {
    public *;
 }
 
--keep, includedescriptorclasses  class android.arch.persistence.room.DatabaseConfiguration {
+-keep, includedescriptorclasses  class androidx.room.DatabaseConfiguration {
   public *;
 }
 
--keep, includedescriptorclasses  public class android.arch.persistence.room.processor.* {
+-keep, includedescriptorclasses  public class androidx.room.processor.* {
     public *;
 }
 
@@ -137,7 +139,7 @@ public *;
 
 -dontnote org.sqlite.core.**
 
--keep class net.bytebuddy.* { public *; }
+-keep class net.bytebuddy.** { public *; }
 -keep interface net.bytebuddy.* { public *; }
 
 -keep class edu.umd.cs.findbugs.* {public *; }

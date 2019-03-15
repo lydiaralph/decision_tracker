@@ -45,49 +45,37 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    annotationProcessor group: 'androidx.room', name: 'room-compiler', version: '2.0.0-beta01'
-    implementation group: 'androidx.room', name: 'room-compiler', version: '2.0.0-beta01'
-    implementation group: 'androidx.room', name: 'room-runtime', version: '2.0.0-beta01'
-    implementation group: 'androidx.appcompat', name: 'appcompat', version: '1.0.0-beta01'
-    implementation group: 'androidx.legacy', name: 'legacy-support-v4', version: '1.0.0-beta01'
-    implementation group: 'androidx.recyclerview', name: 'recyclerview', version: '1.0.0-beta01'
-    implementation group: 'com.google.android.material', name: 'material', version: '1.0.0-beta01'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    // Lifecycle components
 
+    // Androidx
+    implementation "androidx.appcompat:appcompat:${property('androidx.appcompat.version')}"
+    implementation "androidx.legacy:legacy-support-v4:${property('androidx.legacy.version')}"
+    implementation "androidx.recyclerview:recyclerview:${property('androidx.recyclerview.version')}"
+    implementation "androidx.annotation:annotation:${property('androidx.appcompat.version')}"
+    implementation "com.google.android.material:material:${property('com.google.android.material.version')}"
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+
+    // Room
+    annotationProcessor "androidx.room:room-compiler:${property('androidx.lifecycle.version')}"
+    implementation "androidx.room:room-compiler:${property('androidx.lifecycle.version')}"
+    implementation "androidx.room:room-runtime:${property('androidx.lifecycle.version')}"
+
+    // Lifecycle components
     implementation "androidx.lifecycle:lifecycle-common:${property('androidx.lifecycle.version')}"
     implementation "androidx.lifecycle:lifecycle-extensions:${property('androidx.lifecycle.version')}"
     implementation "androidx.lifecycle:lifecycle-viewmodel:${property('androidx.lifecycle.version')}"
     implementation "androidx.lifecycle:lifecycle-livedata:${property('androidx.lifecycle.version')}"
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:${property('androidx.lifecycle.version')}"
 
-    testImplementation group: 'androidx.room', name: 'room-testing', version: '2.0.0-beta01'
+    // Testing
     testImplementation 'junit:junit:4.12'
-    // https://mvnrepository.com/artifact/org.hamcrest/hamcrest
-//    androidTestImplementation group: 'org.hamcrest', name: 'hamcrest', version: '2.1'
+    testImplementation "androidx.room:room-testing:${property('androidx.lifecycle.version')}"
+    testImplementation "androidx.arch.core:core-testing:${property('androidx.lifecycle.version')}"
 
-
-    // https://mvnrepository.com/artifact/junit/junit
-    testImplementation        group: 'junit', name: 'junit', version: '4.12'
-    androidTestImplementation group: 'junit', name: 'junit', version: '4.12'
-
-    // Test helpers for LiveData
-    testImplementation 'androidx.arch.core:core-testing:2.0.0-beta01'
-    // Test helpers for Room
-    testImplementation 'androidx.room:room-testing:2.0.0-beta01'
-
-    androidTestImplementation 'androidx.test:rules:1.1.0-alpha4'
-    androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
-
-    implementation group: 'androidx.annotation', name: 'annotation', version: '1.0.0'
-
-    // https://mvnrepository.com/artifact/androidx.test/core
-    androidTestImplementation group: 'androidx.test', name: 'core', version: '1.1.0'
-
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
-    androidTestImplementation group: 'androidx.arch.core', name: 'core-testing', version: '2.0.0-beta01'
-    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0-alpha4', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
+    androidTestImplementation "androidx.test.ext:junit:${property('androidx.test.version')}"
+    androidTestImplementation "androidx.test:rules:${property('androidx.test.version')}"
+    androidTestImplementation "androidx.test:runner:${property('androidx.test.version')}"
+    androidTestImplementation "androidx.test:core:${property('androidx.test.version')}"
+    androidTestImplementation "androidx.test.espresso:espresso-core:${property('espresso.version')}"
+    androidTestImplementation "androidx.arch.core:core-testing:${property('androidx.lifecycle.version')}"
 }
 
