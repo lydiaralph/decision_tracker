@@ -1,9 +1,15 @@
 package com.lydiaralph.decisiontracker.database.entity;
 
+import java.util.Calendar;
+
+import androidx.annotation.Keep;
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-import androidx.annotation.NonNull;
+import androidx.room.TypeConverter;
+import androidx.room.TypeConverters;
 
 @Entity(tableName = "decisions")
 public class Decision {
@@ -17,11 +23,13 @@ public class Decision {
     @ColumnInfo(name = "decision_text")
     public String decisionText;
 
-//    @ColumnInfo(name = "start_date")
-//    public Date startDate;
-//
-//    @ColumnInfo(name = "end_date")
-//    public Date endDate;
+    @TypeConverters({Converters.class})
+    @ColumnInfo(name = "start_date")
+    public Calendar startDate;
+
+    @TypeConverters({Converters.class})
+    @ColumnInfo(name = "end_date")
+    public Calendar endDate;
 
     public int getId(){
         return this.id;
@@ -31,21 +39,51 @@ public class Decision {
         return this.decisionText;
     }
 
-//    public Date getStartDate(){
-//        return this.getStartDate();
-//    }
-//
-//    public Date getEndDate(){
-//        return this.getEndDate();
-//    }
+    @Keep
+    public Calendar getStartDate(){
+        return this.startDate;
+    }
 
+    @Keep
+    public Calendar getEndDate(){
+        return this.endDate;
+    }
+
+    /**
+     * Start date defaults to today's date. End date defaults to start date + 3 months.
+     * @param decisionText
+     */
+    @Ignore
     public Decision(String decisionText){
         this.decisionText = decisionText;
-//        this.startDate = startDate;
-//        this.endDate = endDate;
+        this.startDate = Calendar.getInstance();
+        this.endDate = Calendar.getInstance();
+        endDate.add(Calendar.MONTH, 3);
     }
 
-    public void setDecisionText(String newDecisionText) {
-        this.decisionText = newDecisionText;
+    public Decision(String decisionText, Calendar startDate, Calendar endDate){
+        this.decisionText = decisionText;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
+
+    public static class Converters {
+        @TypeConverter
+        public Calendar fromTimestamp(Long value) {
+            Calendar returnDate = Calendar.getInstance();
+            returnDate.setTimeInMillis(value);
+            return value == null ? null : returnDate;
+        }
+
+        @TypeConverter
+        public Long dateToTimestamp(Calendar date) {
+            if (date == null) {
+                return null;
+            } else {
+                return date.getTimeInMillis();
+            }
+        }
+    }
+
+
 }

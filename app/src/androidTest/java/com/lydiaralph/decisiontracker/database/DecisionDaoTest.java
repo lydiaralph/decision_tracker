@@ -13,6 +13,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Calendar;
 import java.util.List;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
@@ -54,7 +55,31 @@ public class DecisionDaoTest {
         Decision decision = new Decision("decision");
         mDecisionDao.insert(decision);
         List<Decision> allDecisions = LiveDataTestUtil.getValue(mDecisionDao.getAll());
-        assertEquals(allDecisions.get(0).getDecisionText(), decision.getDecisionText());
+        assertEquals(decision.getDecisionText(), allDecisions.get(0).getDecisionText());
+    }
+
+    @Test
+    public void insertDecisionWithCustomDates() throws Exception {
+        Calendar startDate = Calendar.getInstance();
+        startDate.set(2019, 2, 1);
+        Calendar endDate = Calendar.getInstance();
+        endDate.set(2019, 3, 2);
+        Decision decision = new Decision("decision", startDate, endDate);
+        mDecisionDao.insert(decision);
+        List<Decision> allDecisions = LiveDataTestUtil.getValue(mDecisionDao.getAll());
+        assertEquals(decision.getDecisionText(), allDecisions.get(0).getDecisionText());
+        assertEquals(0, allDecisions.get(0).getStartDate().compareTo(startDate));
+        assertEquals(0, allDecisions.get(0).getEndDate().compareTo(endDate));
+    }
+
+    @Test
+    public void decisionInsertedWithNoDatesHasDefaultDates() throws Exception {
+        Decision decision = new Decision("decision");
+        mDecisionDao.insert(decision);
+        List<Decision> allDecisions = LiveDataTestUtil.getValue(mDecisionDao.getAll());
+        assertEquals(decision.getDecisionText(), allDecisions.get(0).getDecisionText());
+        assertEquals(Calendar.getInstance().get(Calendar.MONTH), allDecisions.get(0).getStartDate().get(Calendar.MONTH));
+        assertEquals(Calendar.getInstance().get(Calendar.MONTH) + 3, allDecisions.get(0).getEndDate().get(Calendar.MONTH));
     }
 
     @Test
@@ -64,8 +89,8 @@ public class DecisionDaoTest {
         Decision decision2 = new Decision("bbb");
         mDecisionDao.insert(decision2);
         List<Decision> allDecisions = LiveDataTestUtil.getValue(mDecisionDao.getAll());
-        assertEquals(allDecisions.get(0).getDecisionText(), decision.getDecisionText());
-        assertEquals(allDecisions.get(1).getDecisionText(), decision2.getDecisionText());
+        assertEquals(decision.getDecisionText(), allDecisions.get(0).getDecisionText());
+        assertEquals(decision2.getDecisionText(), allDecisions.get(1).getDecisionText());
     }
 
     @Test

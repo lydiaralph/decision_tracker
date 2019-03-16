@@ -11,6 +11,9 @@ import androidx.annotation.NonNull;
 import com.lydiaralph.decisiontracker.database.dao.DecisionDao;
 import com.lydiaralph.decisiontracker.database.entity.Decision;
 
+import java.util.Calendar;
+import java.util.Date;
+
 @Database(entities = {Decision.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract DecisionDao decisionDao();
@@ -56,6 +59,10 @@ public abstract class AppDatabase extends RoomDatabase {
             mDao.deleteAll();
             Decision decision = new Decision("New decision");
             mDao.insert(decision);
+            Calendar startDate = Calendar.getInstance();
+            startDate.set(2019, 2, 1);
+            Calendar endDate = Calendar.getInstance();
+            endDate.set(2019, 3, 2);
             decision = new Decision("Second decision");
             mDao.insert(decision);
             return null;

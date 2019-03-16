@@ -76,6 +76,8 @@
 -keep interface androidx.** { *; }
 #-keep class androidx.** { *; }
 
+-keep class java.util.Calendar { *; }
+
 
 # Javax
 -keep class javax.lang.model.* { *; }
