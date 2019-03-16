@@ -174,3 +174,7 @@ public *;
 -keep class sun.misc.** { *; }
 -dontwarn sun.misc.**
 
+-keep class androidx.** { public *; }
+-keep class org.junit.** {public *;}
+-keep class android.app.** {public *; }
+
