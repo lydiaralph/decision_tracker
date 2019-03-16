@@ -63,6 +63,7 @@
 # Core
 -keep interface com.lydiaralph.decisiontracker.* { *; }
 -keep, includedescriptorclasses class com.lydiaralph.decisiontracker.* { *; }
+-keep class android.app.** {public *; }
 -keep class android.support.v4.app.* { *; }
 -keep interface android.support.v4.app.* { *; }
 -keep class android.support.design.widget.AppBarLayout { *; }
@@ -73,7 +74,7 @@
 -keep class androidx.lifecycle.* {*;}
 -keep interface androidx.lifecycle.* {*;}
 -keep interface androidx.** { *; }
--keep class androidx.** { *; }
+#-keep class androidx.** { *; }
 
 
 # Javax
@@ -123,5 +124,8 @@ public *;
 -keep, includedescriptorclasses class org.sqlite.core.* { public *; }
 
 -keep class org.sqlite.Function { public *; }
+
+
+
 
 

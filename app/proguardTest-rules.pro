@@ -58,7 +58,7 @@
 
 
 # Core
--keep interface com.lydiaralph.decisiontracker.* { *; }
+-keep interface com.lydiaralph.decisiontracker.** { *; }
 -keep, includedescriptorclasses class com.lydiaralph.decisiontracker.* { *; }
 -keep class android.support.v4.app.* { *; }
 -keep interface android.support.v4.app.* { *; }
@@ -173,4 +173,8 @@ public *;
 
 -keep class sun.misc.** { *; }
 -dontwarn sun.misc.**
+
+-keep class androidx.** { public *; }
+-keep class org.junit.** {public *;}
+-keep class android.app.** {public *; }
 
