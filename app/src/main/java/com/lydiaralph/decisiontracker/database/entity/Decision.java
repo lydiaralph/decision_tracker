@@ -23,12 +23,10 @@ import java.util.Calendar;
 
 import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
-
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 
 @Entity(tableName = "decisions")
@@ -43,12 +41,14 @@ public class Decision {
     @ColumnInfo(name = "decision_text")
     public String decisionText;
 
-    @TypeConverters({Converters.class})
+    @TypeConverters({ConverterUtils.class})
     @ColumnInfo(name = "start_date")
+    @NonNull
     public Calendar startDate;
 
-    @TypeConverters({Converters.class})
+    @TypeConverters({ConverterUtils.class})
     @ColumnInfo(name = "end_date")
+    @NonNull
     public Calendar endDate;
 
     public int getId(){
@@ -86,24 +86,5 @@ public class Decision {
         this.startDate = startDate;
         this.endDate = endDate;
     }
-
-    public static class Converters {
-        @TypeConverter
-        public Calendar fromTimestamp(Long value) {
-            Calendar returnDate = Calendar.getInstance();
-            returnDate.setTimeInMillis(value);
-            return value == null ? null : returnDate;
-        }
-
-        @TypeConverter
-        public Long dateToTimestamp(Calendar date) {
-            if (date == null) {
-                return null;
-            } else {
-                return date.getTimeInMillis();
-            }
-        }
-    }
-
 
 }

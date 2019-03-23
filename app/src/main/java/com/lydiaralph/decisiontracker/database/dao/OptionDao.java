@@ -43,6 +43,9 @@ public interface OptionDao {
     @Insert
     void insertAll(Option... options);
 
+    @Insert
+    void insert(Option option);
+
     @Delete
     void delete(Option option);
 }

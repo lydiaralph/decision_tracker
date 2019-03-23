@@ -49,4 +49,7 @@ public interface VoteDao {
 
     @Delete
     void delete(Vote vote);
+
+    @Query("DELETE FROM votes")
+    void deleteAll();
 }

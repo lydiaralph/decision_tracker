@@ -20,8 +20,10 @@ package com.lydiaralph.decisiontracker.database.entity;
  * Modified: 'Option' rather than 'Word'.
  */
 
+import androidx.annotation.Keep;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.annotation.NonNull;
 
@@ -32,12 +34,15 @@ public class Option {
     @ColumnInfo(name = "id")
     public int id;
 
+    @NonNull
     @ColumnInfo(name = "decision_id")
     public int decisionId;
 
+    @NonNull
     @ColumnInfo(name = "option_text")
     public String optionText;
 
+    @Keep
     public int getDecisionId() {
         return decisionId;
     }
@@ -46,8 +51,15 @@ public class Option {
         return id;
     }
 
+    @Keep
     public String getOptionText() {
         return optionText;
+    }
+
+    @Ignore
+    public Option(int decisionId, String optionText){
+        this.decisionId = decisionId;
+        this.optionText = optionText;
     }
 
     public Option(int id, int decisionId, String optionText){

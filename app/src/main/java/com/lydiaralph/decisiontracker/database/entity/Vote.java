@@ -20,10 +20,15 @@ package com.lydiaralph.decisiontracker.database.entity;
  * Modified: 'Vote' rather than 'Word'.
  */
 
+import java.util.Calendar;
+
+import androidx.annotation.Keep;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.annotation.NonNull;
+import androidx.room.TypeConverters;
 
 @Entity(tableName = "votes")
 public class Vote {
@@ -32,31 +37,51 @@ public class Vote {
     @ColumnInfo(name = "id")
     public int id;
 
+    @NonNull
     @ColumnInfo(name = "decision_id")
     public int decisionId;
 
+    @NonNull
     @ColumnInfo(name = "option_id")
     public int optionId;
 
-//    @ColumnInfo(name = "vote_date")
-//    public Date voteDate;
+    @NonNull
+    @TypeConverters({ConverterUtils.class})
+    @ColumnInfo(name = "vote_date")
+    public Calendar voteDate;
 
+    @Keep
     public int getId() {
-        return id;
+        return this.id;
     }
 
+    @Keep
     public int getDecisionId() {
-        return decisionId;
+        return this.decisionId;
     }
 
-//    public Date getVoteDate() {
-//        return voteDate;
-//    }
+    @Keep
+    public int getOptionId() {
+        return this.optionId;
+    }
 
-    public Vote(int id, int decisionId, int optionId){
+    @Keep
+    public Calendar getVoteDate() {
+        return voteDate;
+    }
+
+    @Ignore
+    public Vote(int decisionId, int optionId, Calendar voteDate){
+        this.decisionId = decisionId;
+        this.optionId = optionId;
+        this.voteDate = voteDate;
+    }
+
+    public Vote(int id, int decisionId, int optionId, Calendar voteDate){
         this.id = id;
         this.decisionId = decisionId;
         this.optionId = optionId;
-//        this.voteDate = voteDate;
+        this.voteDate = voteDate;
     }
+
 }
