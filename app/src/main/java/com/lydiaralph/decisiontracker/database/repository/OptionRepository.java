@@ -38,7 +38,7 @@ public class OptionRepository {
 
     public OptionRepository(Application application) {
         AppDatabase db = AppDatabase.getDatabase(application);
-//        optionDao = db.optionsDao();
+        optionDao = db.optionDao();
         allOptions = optionDao.getAll();
     }
 
@@ -60,7 +60,7 @@ public class OptionRepository {
 
         @Override
         protected Void doInBackground(final Option... params) {
-            mAsyncTaskDao.insertAll(params);
+            mAsyncTaskDao.insertAll(params[0]);
             return null;
         }
     }

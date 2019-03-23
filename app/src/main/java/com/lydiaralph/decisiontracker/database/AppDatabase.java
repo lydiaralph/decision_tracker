@@ -29,14 +29,19 @@ import android.os.AsyncTask;
 import androidx.annotation.NonNull;
 
 import com.lydiaralph.decisiontracker.database.dao.DecisionDao;
+import com.lydiaralph.decisiontracker.database.dao.OptionDao;
+import com.lydiaralph.decisiontracker.database.dao.VoteDao;
 import com.lydiaralph.decisiontracker.database.entity.Decision;
+import com.lydiaralph.decisiontracker.database.entity.Option;
 
 import java.util.Calendar;
 import java.util.Date;
 
-@Database(entities = {Decision.class}, version = 1)
+@Database(entities = {Decision.class, Option.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract DecisionDao decisionDao();
+//    public abstract VoteDao voteDao();
+    public abstract OptionDao optionDao();
 
     private static volatile AppDatabase INSTANCE;
 
@@ -68,23 +73,28 @@ public abstract class AppDatabase extends RoomDatabase {
     // To populate the database with static data
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
 
-        private final DecisionDao mDao;
+        private final DecisionDao decisionDao;
+        private final OptionDao optionDao;
 
         PopulateDbAsync(AppDatabase db) {
-            mDao = db.decisionDao();
+            decisionDao = db.decisionDao();
+            optionDao = db.optionDao();
         }
 
         @Override
         protected Void doInBackground(final Void... params) {
-            mDao.deleteAll();
+            decisionDao.deleteAll();
             Decision decision = new Decision("New decision");
-            mDao.insert(decision);
+            decisionDao.insert(decision);
             Calendar startDate = Calendar.getInstance();
             startDate.set(2019, 2, 1);
             Calendar endDate = Calendar.getInstance();
             endDate.set(2019, 3, 2);
             decision = new Decision("Second decision");
-            mDao.insert(decision);
+            decisionDao.insert(decision);
+
+            Option option = new Option(1, "First option");
+            optionDao.insert(option);
             return null;
         }
     }
