@@ -20,27 +20,28 @@ package com.lydiaralph.decisiontracker.database;
  * Modified: 'AppDatabase' rather than 'WordRoomDatabase'. Migrated to AndroidX.
  */
 
-import androidx.sqlite.db.SupportSQLiteDatabase;
-import androidx.room.Database;
-import androidx.room.Room;
-import androidx.room.RoomDatabase;
 import android.content.Context;
 import android.os.AsyncTask;
-import androidx.annotation.NonNull;
 
 import com.lydiaralph.decisiontracker.database.dao.DecisionDao;
 import com.lydiaralph.decisiontracker.database.dao.OptionDao;
 import com.lydiaralph.decisiontracker.database.dao.VoteDao;
 import com.lydiaralph.decisiontracker.database.entity.Decision;
 import com.lydiaralph.decisiontracker.database.entity.Option;
+import com.lydiaralph.decisiontracker.database.entity.Vote;
 
 import java.util.Calendar;
-import java.util.Date;
 
-@Database(entities = {Decision.class, Option.class}, version = 1)
+import androidx.annotation.NonNull;
+import androidx.room.Database;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
+
+@Database(entities = {Decision.class, Option.class, Vote.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract DecisionDao decisionDao();
-//    public abstract VoteDao voteDao();
+    public abstract VoteDao voteDao();
     public abstract OptionDao optionDao();
 
     private static volatile AppDatabase INSTANCE;
@@ -75,10 +76,12 @@ public abstract class AppDatabase extends RoomDatabase {
 
         private final DecisionDao decisionDao;
         private final OptionDao optionDao;
+        private final VoteDao voteDao;
 
         PopulateDbAsync(AppDatabase db) {
             decisionDao = db.decisionDao();
             optionDao = db.optionDao();
+            voteDao = db.voteDao();
         }
 
         @Override
@@ -95,6 +98,9 @@ public abstract class AppDatabase extends RoomDatabase {
 
             Option option = new Option(1, "First option");
             optionDao.insert(option);
+
+            Vote vote = new Vote(1, 1, 2, Calendar.getInstance());
+            voteDao.insert(vote);
             return null;
         }
     }

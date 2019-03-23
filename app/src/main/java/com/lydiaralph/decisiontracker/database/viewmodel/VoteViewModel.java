@@ -40,11 +40,11 @@ public class VoteViewModel extends AndroidViewModel {
         mAllVotes = mRepository.getAllVotes();
     }
 
-    LiveData<List<Vote>> getAllVotes() {
+    public LiveData<List<Vote>> getAllVotes() {
         return mAllVotes;
     }
 
-    void insert(Vote vote) {
+    public void insert(Vote vote) {
         mRepository.insert(vote);
     }
 }
