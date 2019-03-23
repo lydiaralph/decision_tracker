@@ -76,6 +76,14 @@ public class DecisionDaoTest {
     }
 
     @Test
+    public void decisionById() throws Exception {
+        Decision decision = new Decision("decision");
+        mDecisionDao.insert(decision);
+        Decision fetchedDecision = LiveDataTestUtil.getValue(mDecisionDao.getDecisionById(1));
+        assertEquals(decision.getDecisionText(), fetchedDecision.getDecisionText());
+    }
+
+    @Test
     public void insertDecisionWithCustomDates() throws Exception {
         Calendar startDate = Calendar.getInstance();
         startDate.set(2019, 2, 1);
