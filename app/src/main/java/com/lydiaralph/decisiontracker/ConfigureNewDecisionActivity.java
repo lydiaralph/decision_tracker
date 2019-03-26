@@ -18,7 +18,7 @@ public class ConfigureNewDecisionActivity extends MenuBasedActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_configure_new_decision);
+        setContentView(R.layout.activity_2_configure_new_decision);
         setReturnToMainMenuButton();
 
         final EditText decisionTextView = findViewById(R.id.input_decision_text);

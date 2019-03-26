@@ -10,7 +10,7 @@ public class ConfirmConfigurationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_confirm_new_question);
+        setContentView(R.layout.activity_4_confirm_new_question);
 
         Intent intent = getIntent();
         String newQuestion = intent.getStringExtra(ConfigurationActivity.NEW_QUESTION);

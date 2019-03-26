@@ -8,6 +8,23 @@ Essential:
 
 * Write unit tests
 
+Screen 1: Main menu: a menu of 'Set up decision', 'Vote on decision', 'View results'.
+
+Screen 2: Set up decision: user enters the title of their decision to track, e.g. 'What shall I do next year?' and how long to track for, e.g. weeks or months
+Screen 3: Set up decision: user enters options for this decision
+Screen 4: Set up decision: decision confirmed as saved in the database, along with options. User can return to Main Menu.
+
+Screen 5: Vote on decision: User sees list of decisions and chooses one to vote on
+Screen 6: Vote on decision: User selects option to vote for
+Screen 7: Vote on decision: Vote is confirmed. User can return to Main Menu.
+
+Screen 8: View results: User sees a list of decisions and chooses one to view the results for
+Screen 9: View results: if decision tracking time is over, user sees results
+Screen 10: View results: if decision tracking time is not over, user is asked if they want to terminate the decision tracking early. If yes, view Screen 9: View results. If no, return to Screen 1: Main Menu.
+
+Screen 11: Delete all data.
+
+
 
 Next:
 
