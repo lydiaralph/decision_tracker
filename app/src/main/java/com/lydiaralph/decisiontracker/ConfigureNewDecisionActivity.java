@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.widget.EditText;
 
 public class ConfigureNewDecisionActivity extends MenuBasedActivity {
+    public static final String PERSIST = "persist";
     private static final String LOG = ConfigureNewDecisionActivity.class.getSimpleName();
 
     public static final String INPUT_DECISION_TEXT = "InputDecisionText";
@@ -26,7 +28,8 @@ public class ConfigureNewDecisionActivity extends MenuBasedActivity {
         persistNewDecisionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent resultIntent = new Intent();
+                Intent resultIntent = new Intent(ConfigureNewDecisionActivity.this, ViewDecisionsActivity.class);
+                resultIntent.setAction(PERSIST);
 
                 if (TextUtils.isEmpty(decisionTextView.getText())) {
                     setResult(Activity.RESULT_CANCELED, resultIntent);
@@ -36,6 +39,7 @@ public class ConfigureNewDecisionActivity extends MenuBasedActivity {
                     resultIntent.putExtra(INPUT_DECISION_TEXT, decisionText);
                     setResult(Activity.RESULT_OK, resultIntent);
                 }
+                startActivity(resultIntent);
                 finish();
             }
         });

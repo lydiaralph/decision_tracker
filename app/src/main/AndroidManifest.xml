@@ -27,10 +27,10 @@
         </activity>
         <activity
             android:name=".ConfigureNewDecisionActivity"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".ViewDecisionsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.lydiaralph.decisiontracker.MainActivity" />
+                android:value="com.lydiaralph.decisiontracker.ViewDecisionsActivity" />
         </activity>
     </application>
 

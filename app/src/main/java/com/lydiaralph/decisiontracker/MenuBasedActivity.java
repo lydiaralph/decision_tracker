@@ -41,12 +41,12 @@ public abstract class MenuBasedActivity extends AppCompatActivity {
 
     protected void setConfigureNewDecisionButton() {
         configureNewDecisionButton = findViewById(R.id.button_configure);
-//        configureNewDecisionButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                configureNewDecision(v);
-//            }
-//        });
+        configureNewDecisionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                configureNewDecision(v);
+            }
+        });
     }
 
     @Override
