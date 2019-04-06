@@ -16,7 +16,7 @@ package com.lydiaralph.decisiontracker.database.entity;
  *
  * Derived from https://github.com/googlecodelabs/android-room-with-a-view
  *
- * Modified: 'Decision' rather than 'Word'.
+ * Modified: 'Decision' rather than 'Word'. Added several fields. Added Calendar conversion methods.
  */
 
 import java.util.Calendar;
@@ -31,6 +31,9 @@ import androidx.room.TypeConverters;
 
 @Entity(tableName = "decisions")
 public class Decision {
+
+    public static final Integer DEFAULT_TRACKER_PERIOD_UNITS = 90;
+    public static final int DEFAULT_TRACKER_PERIOD_TYPE = Calendar.DATE;
 
     @PrimaryKey(autoGenerate = true)
     @NonNull
@@ -81,10 +84,47 @@ public class Decision {
         endDate.add(Calendar.MONTH, 3);
     }
 
+    @Ignore
+    public Decision(String decisionText, String trackerPeriodType, Integer trackerPeriodUnits){
+        int trackerPeriodCalendarType = TrackerPeriodType.convertToCalendar(trackerPeriodType);
+
+        if(trackerPeriodUnits.equals(0)){
+            trackerPeriodUnits = DEFAULT_TRACKER_PERIOD_UNITS;
+            trackerPeriodCalendarType = DEFAULT_TRACKER_PERIOD_TYPE;
+        }
+
+        this.decisionText = decisionText;
+        this.startDate = Calendar.getInstance();
+        this.endDate = Calendar.getInstance();
+        endDate.add(trackerPeriodCalendarType, trackerPeriodUnits);
+    }
+
     public Decision(String decisionText, Calendar startDate, Calendar endDate){
         this.decisionText = decisionText;
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+    public enum TrackerPeriodType{
+        DAYS,
+        WEEKS,
+        MONTHS;
+
+        public static int convertToCalendar(String trackerPeriodType){
+            if(trackerPeriodType == null){
+                return Calendar.DATE;
+            }
+            TrackerPeriodType type = valueOf(trackerPeriodType.toUpperCase());
+            switch(type) {
+                case DAYS:
+                    return Calendar.DATE;
+                case WEEKS:
+                    return Calendar.WEEK_OF_YEAR;
+                case MONTHS:
+                    return Calendar.MONTH;
+            }
+            return Calendar.DATE;
+        }
     }
 
 }

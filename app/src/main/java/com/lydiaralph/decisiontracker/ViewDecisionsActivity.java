@@ -49,8 +49,11 @@ public class ViewDecisionsActivity extends MenuBasedActivity {
             if (callingIntent.getAction().equals(ConfigureNewDecisionActivity.PERSIST)) {
                 if(callingIntent.getExtras() != null) {
                     String inputText = (String) callingIntent.getExtras().get(ConfigureNewDecisionActivity.INPUT_DECISION_TEXT);
+                    String trackerPeriodType = (String) callingIntent.getExtras().get(ConfigureNewDecisionActivity.INPUT_TRACKER_PERIOD_TYPE);
+                    Integer trackerPeriodUnit = (Integer) callingIntent.getExtras().get(ConfigureNewDecisionActivity.INPUT_TRACKER_PERIOD);
+
                     if (inputText != null) {
-                        Decision decision = new Decision(inputText);
+                        Decision decision = new Decision(inputText, trackerPeriodType, trackerPeriodUnit);
                         decisionViewModel.insert(decision);
                     }
                 } else {
