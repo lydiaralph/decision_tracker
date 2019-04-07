@@ -6,6 +6,10 @@ public class DateUtilsImpl implements DateUtils {
 
     private static DateUtilsImpl instance = null;
 
+    private DateUtilsImpl(){
+        // private: use getInstance()
+    }
+
     public static DateUtilsImpl getInstance(){
         if(instance == null){
             instance = new DateUtilsImpl();
