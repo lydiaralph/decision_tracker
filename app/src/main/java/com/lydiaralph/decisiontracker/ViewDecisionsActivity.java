@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.lydiaralph.decisiontracker.database.adapter.DecisionAdapter;
+import com.lydiaralph.decisiontracker.database.entity.DateUtils;
+import com.lydiaralph.decisiontracker.database.entity.DateUtilsImpl;
 import com.lydiaralph.decisiontracker.database.entity.Decision;
 import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModel;
 
@@ -20,7 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ViewDecisionsActivity extends MenuBasedActivity {
 
     private DecisionViewModel decisionViewModel;
-    public static final int NEW_DECISION_REQUEST_CODE = 1;
+    private DateUtils dateUtils;
 
     protected View saveButton;
 
@@ -29,6 +31,8 @@ public class ViewDecisionsActivity extends MenuBasedActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_8_view_decisions);
         setReturnToMainMenuButton();
+
+        dateUtils = DateUtilsImpl.getInstance();
 
         final DecisionAdapter adapter = new DecisionAdapter(this);
         final RecyclerView recyclerView = findViewById(R.id.recyclerview);
@@ -53,7 +57,8 @@ public class ViewDecisionsActivity extends MenuBasedActivity {
                     Integer trackerPeriodUnit = (Integer) callingIntent.getExtras().get(ConfigureNewDecisionActivity.INPUT_TRACKER_PERIOD);
 
                     if (inputText != null) {
-                        Decision decision = new Decision(inputText, trackerPeriodType, trackerPeriodUnit);
+                        Decision decision = new Decision(dateUtils, inputText);
+                        decision.setDates(dateUtils, trackerPeriodType, trackerPeriodUnit);
                         decisionViewModel.insert(decision);
                     }
                 } else {

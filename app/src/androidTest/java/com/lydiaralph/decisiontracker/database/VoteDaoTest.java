@@ -32,7 +32,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.List;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
@@ -70,7 +70,7 @@ public class VoteDaoTest {
 
     @Test
     public void insertAndGetVote() throws Exception {
-        Calendar date = Calendar.getInstance();
+        LocalDate date = LocalDate.now();
         Vote vote = new Vote(1, 2, 3, date);
         mVoteDao.insert(vote);
         List<Vote> allVotes = LiveDataTestUtil.getValue(mVoteDao.getAll());
@@ -82,8 +82,7 @@ public class VoteDaoTest {
 
     @Test
     public void deleteAll() throws Exception {
-        Calendar date = Calendar.getInstance();
-        date.set(2019, 2, 1);
+        LocalDate date = LocalDate.of(2019, 2, 1);
         Vote vote1 = new Vote(1, 2, 4, date);
         Vote vote2 = new Vote(2, 4, 5, date);
 

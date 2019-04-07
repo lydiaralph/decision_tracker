@@ -32,7 +32,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.List;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
@@ -85,10 +85,8 @@ public class DecisionDaoTest {
 
     @Test
     public void insertDecisionWithCustomDates() throws Exception {
-        Calendar startDate = Calendar.getInstance();
-        startDate.set(2019, 2, 1);
-        Calendar endDate = Calendar.getInstance();
-        endDate.set(2019, 3, 2);
+        LocalDate startDate = LocalDate.of(2019, 2, 1);
+        LocalDate endDate = LocalDate.of(2019, 3, 2);
         Decision decision = new Decision("decision", startDate, endDate);
         mDecisionDao.insert(decision);
         List<Decision> allDecisions = LiveDataTestUtil.getValue(mDecisionDao.getAll());
@@ -103,8 +101,9 @@ public class DecisionDaoTest {
         mDecisionDao.insert(decision);
         List<Decision> allDecisions = LiveDataTestUtil.getValue(mDecisionDao.getAll());
         assertEquals(decision.getDecisionText(), allDecisions.get(0).getDecisionText());
-        assertEquals(Calendar.getInstance().get(Calendar.MONTH), allDecisions.get(0).getStartDate().get(Calendar.MONTH));
-        assertEquals(Calendar.getInstance().get(Calendar.MONTH) + 3, allDecisions.get(0).getEndDate().get(Calendar.MONTH));
+        assertEquals(LocalDate.now().getMonth(), allDecisions.get(0).getStartDate().getMonth());
+        assertEquals(LocalDate.now().getMonthValue() + 3,
+                allDecisions.get(0).getEndDate().getMonthValue());
     }
 
     @Test

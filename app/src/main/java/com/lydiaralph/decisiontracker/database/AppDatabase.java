@@ -26,11 +26,13 @@ import android.os.AsyncTask;
 import com.lydiaralph.decisiontracker.database.dao.DecisionDao;
 import com.lydiaralph.decisiontracker.database.dao.OptionDao;
 import com.lydiaralph.decisiontracker.database.dao.VoteDao;
+import com.lydiaralph.decisiontracker.database.entity.DateUtils;
+import com.lydiaralph.decisiontracker.database.entity.DateUtilsImpl;
 import com.lydiaralph.decisiontracker.database.entity.Decision;
 import com.lydiaralph.decisiontracker.database.entity.Option;
 import com.lydiaralph.decisiontracker.database.entity.Vote;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
@@ -78,28 +80,29 @@ public abstract class AppDatabase extends RoomDatabase {
         private final OptionDao optionDao;
         private final VoteDao voteDao;
 
+        private final DateUtils dateUtils;
+
         PopulateDbAsync(AppDatabase db) {
             decisionDao = db.decisionDao();
             optionDao = db.optionDao();
             voteDao = db.voteDao();
+            dateUtils = DateUtilsImpl.getInstance();
         }
 
         @Override
         protected Void doInBackground(final Void... params) {
             decisionDao.deleteAll();
-            Decision decision = new Decision("New decision");
+            Decision decision = new Decision(dateUtils, "New decision");
             decisionDao.insert(decision);
-            Calendar startDate = Calendar.getInstance();
-            startDate.set(2019, 2, 1);
-            Calendar endDate = Calendar.getInstance();
-            endDate.set(2019, 3, 2);
-            decision = new Decision("Second decision");
+            LocalDate startDate = LocalDate.of(2019, 2, 1);
+            LocalDate endDate = LocalDate.of(2019, 2, 5);
+            decision = new Decision("Second decision", startDate, endDate);
             decisionDao.insert(decision);
 
             Option option = new Option(1, "First option");
             optionDao.insert(option);
 
-            Vote vote = new Vote(1, 1, 2, Calendar.getInstance());
+            Vote vote = new Vote(1, 1, 2, LocalDate.now());
             voteDao.insert(vote);
             return null;
         }

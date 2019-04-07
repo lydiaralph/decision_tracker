@@ -15,8 +15,6 @@ import com.lydiaralph.decisiontracker.database.entity.Decision;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Calendar;
-
 public class ConfigureNewDecisionActivity extends MenuBasedActivity {
     public static final String PERSIST = "persist";
     private static final String LOG = ConfigureNewDecisionActivity.class.getSimpleName();

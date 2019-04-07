@@ -5,7 +5,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.lydiaralph.decisiontracker"
-        minSdkVersion 21
+        minSdkVersion 28
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -17,11 +17,9 @@ android {
             }
         }
     }
-
     lintOptions {
         warning 'InvalidPackage'
     }
-
     buildTypes {
         release {
             debuggable false
@@ -41,11 +39,13 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildToolsVersion '28.0.3'
+    productFlavors {
+    }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-
     // Androidx
     implementation "androidx.appcompat:appcompat:${property('androidx.appcompat.version')}"
     implementation "androidx.legacy:legacy-support-v4:${property('androidx.legacy.version')}"

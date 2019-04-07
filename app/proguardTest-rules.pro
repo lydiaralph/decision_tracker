@@ -177,5 +177,3 @@ public *;
 -keep class androidx.** { public *; }
 -keep class org.junit.** {public *;}
 -keep class android.app.** {public *; }
-
--keep class java.util.Calendar { *; }
