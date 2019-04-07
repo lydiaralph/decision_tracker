@@ -14,6 +14,7 @@ import androidx.test.runner.AndroidJUnit4;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.withHint;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
@@ -30,10 +31,28 @@ public class ConfigureNewDecisionActivityTest {
     }
 
     @Test
-    public void testConfigureDecisionButton() {
+    public void testMainMenuButton() {
         onView(withId(R.id.button_return_to_main_menu)).check(matches(withText(R.string.return_to_main_menu)));
         onView(withId(R.id.button_return_to_main_menu)).perform(click());
         onView(withId(R.id.page_title)).check(matches(withText(R.string.main_menu)));
     }
+
+    @Test
+    public void testConfigureNewDecisionButton() {
+        onView(withId(R.id.page_title)).check(matches(withText(R.string.configure_decision)));
+        onView(withId(R.id.button_submit_new_decision)).check(matches(withText(R.string.save)));
+        onView(withId(R.id.button_submit_new_decision)).perform(click());
+        onView(withId(R.id.page_title)).check(matches(withText(R.string.view_results)));
+    }
+
+    @Test
+    public void testDecisionInputFields() {
+        onView(withId(R.id.prompt_decision_text)).check(matches(withText(R.string.ask_this_question)));
+
+        onView(withId(R.id.radio_day)).check(matches(withText(R.string.days)));
+        onView(withId(R.id.radio_week)).check(matches(withText(R.string.weeks)));
+        onView(withId(R.id.radio_month)).check(matches(withText(R.string.months)));
+    }
+
 
 }

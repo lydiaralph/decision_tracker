@@ -32,8 +32,6 @@ public class ViewDecisionsActivity extends MenuBasedActivity {
         setContentView(R.layout.activity_8_view_decisions);
         setReturnToMainMenuButton();
 
-        dateUtils = DateUtilsImpl.getInstance();
-
         final DecisionAdapter adapter = new DecisionAdapter(this);
         final RecyclerView recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setAdapter(adapter);
@@ -51,25 +49,30 @@ public class ViewDecisionsActivity extends MenuBasedActivity {
         Intent callingIntent = getIntent();
         if (callingIntent != null && callingIntent.getAction() != null) {
             if (callingIntent.getAction().equals(ConfigureNewDecisionActivity.PERSIST)) {
-                if(callingIntent.getExtras() != null) {
-                    String inputText = (String) callingIntent.getExtras().get(ConfigureNewDecisionActivity.INPUT_DECISION_TEXT);
-                    String trackerPeriodType = (String) callingIntent.getExtras().get(ConfigureNewDecisionActivity.INPUT_TRACKER_PERIOD_TYPE);
-                    Integer trackerPeriodUnit = (Integer) callingIntent.getExtras().get(ConfigureNewDecisionActivity.INPUT_TRACKER_PERIOD);
-
-                    if (inputText != null) {
-                        Decision decision = new Decision(dateUtils, inputText);
-                        decision.setDates(dateUtils, trackerPeriodType, trackerPeriodUnit);
-                        decisionViewModel.insert(decision);
-                    }
-                } else {
-                    Toast.makeText(
-                            getApplicationContext(),
-                            R.string.empty_not_saved,
-                            Toast.LENGTH_LONG).show();
-                }
+                handlePersist(callingIntent);
             }
         }
 
         decisionViewModel.getAllDecisions().observe(this, decisionObserver);
+    }
+
+    private void handlePersist(Intent callingIntent) {
+        if(callingIntent.getExtras() != null) {
+            String inputText = (String) callingIntent.getExtras().get(ConfigureNewDecisionActivity.INPUT_DECISION_TEXT);
+            String trackerPeriodType = (String) callingIntent.getExtras().get(ConfigureNewDecisionActivity.INPUT_TRACKER_PERIOD_TYPE);
+            Integer trackerPeriodUnit = (Integer) callingIntent.getExtras().get(ConfigureNewDecisionActivity.INPUT_TRACKER_PERIOD);
+
+            if (inputText != null) {
+                dateUtils = DateUtilsImpl.getInstance();
+                Decision decision = new Decision(dateUtils, inputText);
+                decision.setDates(dateUtils, trackerPeriodType, trackerPeriodUnit);
+                decisionViewModel.insert(decision);
+            }
+        } else {
+            Toast.makeText(
+                    getApplicationContext(),
+                    R.string.empty_not_saved,
+                    Toast.LENGTH_LONG).show();
+        }
     }
 }
