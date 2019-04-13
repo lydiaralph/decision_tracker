@@ -23,8 +23,11 @@ package com.lydiaralph.decisiontracker.database;
 import android.content.Context;
 
 import com.lydiaralph.decisiontracker.database.dao.DecisionDao;
+import com.lydiaralph.decisiontracker.database.entity.DateUtils;
+import com.lydiaralph.decisiontracker.database.entity.DateUtilsImpl;
 import com.lydiaralph.decisiontracker.database.entity.Decision;
 import com.lydiaralph.decisiontracker.database.utils.LiveDataTestUtil;
+import com.lydiaralph.decisiontracker.database.utils.TestDateUtilsImpl;
 
 import org.junit.After;
 import org.junit.Before;
@@ -32,7 +35,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.List;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
@@ -51,6 +54,7 @@ public class DecisionDaoTest {
 
     private DecisionDao mDecisionDao;
     private AppDatabase mDb;
+    private DateUtils dateUtils = TestDateUtilsImpl.getInstance();
 
     @Before
     public void createDb() {
@@ -69,7 +73,7 @@ public class DecisionDaoTest {
 
     @Test
     public void insertAndGetDecisionText() throws Exception {
-        Decision decision = new Decision("decision");
+        Decision decision = new Decision(dateUtils, "decision");
         mDecisionDao.insert(decision);
         List<Decision> allDecisions = LiveDataTestUtil.getValue(mDecisionDao.getAll());
         assertEquals(decision.getDecisionText(), allDecisions.get(0).getDecisionText());
@@ -77,7 +81,7 @@ public class DecisionDaoTest {
 
     @Test
     public void decisionById() throws Exception {
-        Decision decision = new Decision("decision");
+        Decision decision = new Decision(dateUtils, "decision");
         mDecisionDao.insert(decision);
         Decision fetchedDecision = LiveDataTestUtil.getValue(mDecisionDao.getDecisionById(1));
         assertEquals(decision.getDecisionText(), fetchedDecision.getDecisionText());
@@ -85,10 +89,8 @@ public class DecisionDaoTest {
 
     @Test
     public void insertDecisionWithCustomDates() throws Exception {
-        Calendar startDate = Calendar.getInstance();
-        startDate.set(2019, 2, 1);
-        Calendar endDate = Calendar.getInstance();
-        endDate.set(2019, 3, 2);
+        LocalDate startDate = LocalDate.of(2019, 2, 1);
+        LocalDate endDate = LocalDate.of(2019, 3, 2);
         Decision decision = new Decision("decision", startDate, endDate);
         mDecisionDao.insert(decision);
         List<Decision> allDecisions = LiveDataTestUtil.getValue(mDecisionDao.getAll());
@@ -99,19 +101,20 @@ public class DecisionDaoTest {
 
     @Test
     public void decisionInsertedWithNoDatesHasDefaultDates() throws Exception {
-        Decision decision = new Decision("decision");
+        Decision decision = new Decision(dateUtils, "decision");
         mDecisionDao.insert(decision);
         List<Decision> allDecisions = LiveDataTestUtil.getValue(mDecisionDao.getAll());
         assertEquals(decision.getDecisionText(), allDecisions.get(0).getDecisionText());
-        assertEquals(Calendar.getInstance().get(Calendar.MONTH), allDecisions.get(0).getStartDate().get(Calendar.MONTH));
-        assertEquals(Calendar.getInstance().get(Calendar.MONTH) + 3, allDecisions.get(0).getEndDate().get(Calendar.MONTH));
+        assertEquals(TestDateUtilsImpl.MONTH, allDecisions.get(0).getStartDate().getMonthValue());
+        assertEquals(dateUtils.getCurrentDate().getMonthValue() + 3,
+                allDecisions.get(0).getEndDate().getMonthValue());
     }
 
     @Test
     public void getAllDecisions() throws Exception {
-        Decision decision = new Decision("aaa");
+        Decision decision = new Decision(dateUtils, "aaa");
         mDecisionDao.insert(decision);
-        Decision decision2 = new Decision("bbb");
+        Decision decision2 = new Decision(dateUtils, "bbb");
         mDecisionDao.insert(decision2);
         List<Decision> allDecisions = LiveDataTestUtil.getValue(mDecisionDao.getAll());
         assertEquals(decision.getDecisionText(), allDecisions.get(0).getDecisionText());
@@ -120,9 +123,9 @@ public class DecisionDaoTest {
 
     @Test
     public void deleteAll() throws Exception {
-        Decision decision = new Decision("decision");
+        Decision decision = new Decision(dateUtils, "decision");
         mDecisionDao.insert(decision);
-        Decision decision2 = new Decision("decision2");
+        Decision decision2 = new Decision(dateUtils, "decision2");
         mDecisionDao.insert(decision2);
         mDecisionDao.deleteAll();
         List<Decision> allDecisions = LiveDataTestUtil.getValue(mDecisionDao.getAll());

@@ -16,10 +16,11 @@ package com.lydiaralph.decisiontracker.database.entity;
  *
  * Derived from https://github.com/googlecodelabs/android-room-with-a-view
  *
- * Modified: 'Decision' rather than 'Word'.
+ * Modified: 'Decision' rather than 'Word'. Added several fields. Added Calendar conversion methods.
  */
 
-import java.util.Calendar;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
@@ -31,6 +32,8 @@ import androidx.room.TypeConverters;
 
 @Entity(tableName = "decisions")
 public class Decision {
+
+    public static final Integer DEFAULT_TRACKER_PERIOD_UNITS = 90;
 
     @PrimaryKey(autoGenerate = true)
     @NonNull
@@ -44,12 +47,12 @@ public class Decision {
     @TypeConverters({ConverterUtils.class})
     @ColumnInfo(name = "start_date")
     @NonNull
-    public Calendar startDate;
+    public LocalDate startDate;
 
     @TypeConverters({ConverterUtils.class})
     @ColumnInfo(name = "end_date")
     @NonNull
-    public Calendar endDate;
+    public LocalDate endDate;
 
     public int getId(){
         return this.id;
@@ -60,31 +63,43 @@ public class Decision {
     }
 
     @Keep
-    public Calendar getStartDate(){
+    public LocalDate getStartDate(){
         return this.startDate;
     }
 
     @Keep
-    public Calendar getEndDate(){
+    public LocalDate getEndDate(){
         return this.endDate;
     }
 
     /**
-     * Start date defaults to today's date. End date defaults to start date + 3 months.
+     * Start date defaults to today's date. End date defaults to start date + whatever default is set to.
      * @param decisionText
      */
     @Ignore
-    public Decision(String decisionText){
+    public Decision (DateUtils dateUtils, String decisionText){
         this.decisionText = decisionText;
-        this.startDate = Calendar.getInstance();
-        this.endDate = Calendar.getInstance();
-        endDate.add(Calendar.MONTH, 3);
+        this.startDate = dateUtils.getCurrentDate();
+        this.endDate = startDate.plus(DEFAULT_TRACKER_PERIOD_UNITS, ChronoUnit.DAYS);
     }
 
-    public Decision(String decisionText, Calendar startDate, Calendar endDate){
+    // For Room constructor
+    public Decision(String decisionText, LocalDate startDate, LocalDate endDate){
         this.decisionText = decisionText;
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+    public Decision setDates(DateUtils dateUtils, String trackerPeriodType, Integer trackerPeriodUnits){
+        if(trackerPeriodUnits.equals(0)){
+            trackerPeriodUnits = DEFAULT_TRACKER_PERIOD_UNITS;
+            trackerPeriodType = ChronoUnit.DAYS.name();
+        }
+        LocalDate startDate = dateUtils.getCurrentDate();
+
+        this.startDate = startDate;
+        this.endDate = startDate.plus(trackerPeriodUnits, ChronoUnit.valueOf(trackerPeriodType.toUpperCase()));
+        return this;
     }
 
 }

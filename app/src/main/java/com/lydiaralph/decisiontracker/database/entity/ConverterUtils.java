@@ -1,23 +1,26 @@
 package com.lydiaralph.decisiontracker.database.entity;
 
-import java.util.Calendar;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 import androidx.room.TypeConverter;
 
 public class ConverterUtils {
     @TypeConverter
-    public Calendar fromTimestamp(Long value) {
-        Calendar returnDate = Calendar.getInstance();
-        returnDate.setTimeInMillis(value);
-        return value == null ? null : returnDate;
+    public LocalDate fromTimestamp(Long value) {
+        return value == null ?
+                LocalDate.now() :
+                Instant.ofEpochSecond(value).atZone(ZoneId.systemDefault()).toLocalDate();
     }
 
     @TypeConverter
-    public Long dateToTimestamp(Calendar date) {
+    public Long dateToTimestamp(LocalDate date) {
         if (date == null) {
             return null;
         } else {
-            return date.getTimeInMillis();
+            return date.atStartOfDay(ZoneId.systemDefault()).toEpochSecond();
         }
     }
 }

@@ -27,6 +27,39 @@
         android:inputType="textNoSuggestions"
         android:hint="@string/ask_this_question_hint" />
 
+    <TextView
+        style="@style/TextStyle"
+        android:id="@+id/prompt_tracker_period"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:text="@string/prompt_tracker_period" />
+
+    <EditText
+        android:id="@+id/input_tracker_period"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textNoSuggestions"
+        android:hint="3" />
+
+    <RadioGroup android:id="@+id/radio_tracker_period_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <RadioButton android:id="@+id/radio_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/days" />
+        <RadioButton android:id="@+id/radio_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/weeks" />
+        <RadioButton android:id="@+id/radio_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/months" />
+    </RadioGroup>
+
     <Button
         style="@style/GenericButton"
         android:id="@+id/button_submit_new_decision"

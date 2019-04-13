@@ -20,7 +20,7 @@ package com.lydiaralph.decisiontracker.database.entity;
  * Modified: 'Vote' rather than 'Word'.
  */
 
-import java.util.Calendar;
+import java.time.LocalDate;
 
 import androidx.annotation.Keep;
 import androidx.room.ColumnInfo;
@@ -48,7 +48,7 @@ public class Vote {
     @NonNull
     @TypeConverters({ConverterUtils.class})
     @ColumnInfo(name = "vote_date")
-    public Calendar voteDate;
+    public LocalDate voteDate;
 
     @Keep
     public int getId() {
@@ -66,18 +66,18 @@ public class Vote {
     }
 
     @Keep
-    public Calendar getVoteDate() {
+    public LocalDate getVoteDate() {
         return voteDate;
     }
 
     @Ignore
-    public Vote(int decisionId, int optionId, Calendar voteDate){
+    public Vote(int decisionId, int optionId, LocalDate voteDate){
         this.decisionId = decisionId;
         this.optionId = optionId;
         this.voteDate = voteDate;
     }
 
-    public Vote(int id, int decisionId, int optionId, Calendar voteDate){
+    public Vote(int id, int decisionId, int optionId, LocalDate voteDate){
         this.id = id;
         this.decisionId = decisionId;
         this.optionId = optionId;

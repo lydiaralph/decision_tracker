@@ -85,4 +85,8 @@ limitations under the License. -->
     <string name="page_title">Placeholder page title</string>
     <string name="main_menu">Main menu</string>
     <string name="configure_new_decision">Configure new decision</string>
+    <string name="prompt_tracker_period">Track this decision for...</string>
+    <string name="days">days</string>
+    <string name="weeks">weeks</string>
+    <string name="months">months</string>
 </resources>
