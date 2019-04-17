@@ -26,6 +26,8 @@ import com.lydiaralph.decisiontracker.database.dao.DecisionDao;
 import com.lydiaralph.decisiontracker.database.entity.DateUtils;
 import com.lydiaralph.decisiontracker.database.entity.DateUtilsImpl;
 import com.lydiaralph.decisiontracker.database.entity.Decision;
+import com.lydiaralph.decisiontracker.database.entity.DecisionOptions;
+import com.lydiaralph.decisiontracker.database.entity.Option;
 import com.lydiaralph.decisiontracker.database.utils.LiveDataTestUtil;
 import com.lydiaralph.decisiontracker.database.utils.TestDateUtilsImpl;
 
@@ -82,9 +84,12 @@ public class DecisionDaoTest {
     @Test
     public void decisionById() throws Exception {
         Decision decision = new Decision(dateUtils, "decision");
-        mDecisionDao.insert(decision);
-        Decision fetchedDecision = LiveDataTestUtil.getValue(mDecisionDao.getDecisionById(1));
-        assertEquals(decision.getDecisionText(), fetchedDecision.getDecisionText());
+        long decisionId = mDecisionDao.insert(decision);
+        Option option = new Option(decisionId, "test option");
+        DecisionOptions fetchedDecision = LiveDataTestUtil.getValue(mDecisionDao.getDecisionById(1));
+        assertEquals(decision.getDecisionText(), fetchedDecision.getDecision().getDecisionText());
+        assertEquals(1, fetchedDecision.getOptionsList().size());
+        assertEquals(option.getOptionText(), fetchedDecision.getOptionsList().get(0).getOptionText());
     }
 
     @Test

@@ -30,6 +30,7 @@ import androidx.room.PrimaryKey;
 import androidx.annotation.NonNull;
 
 import static androidx.room.ForeignKey.CASCADE;
+import static java.lang.Math.toIntExact;
 
 @Entity(tableName = "options",
         indices = {@Index("decision_id")},
@@ -63,6 +64,12 @@ public class Option {
     @Keep
     public String getOptionText() {
         return optionText;
+    }
+
+    @Ignore
+    public Option(long decisionId, String optionText){
+        this.decisionId = toIntExact(decisionId);
+        this.optionText = optionText;
     }
 
     @Ignore
