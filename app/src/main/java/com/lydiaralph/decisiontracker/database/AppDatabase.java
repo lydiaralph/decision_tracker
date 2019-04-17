@@ -106,6 +106,12 @@ public abstract class AppDatabase extends RoomDatabase {
             Option option = new Option(toIntExact(decisionId), "First option");
             optionDao.insert(option);
 
+            Option option2 = new Option(toIntExact(decisionId), "Second option");
+            optionDao.insert(option2);
+
+            Option option3 = new Option(toIntExact(decisionId), "Third option");
+            optionDao.insert(option3);
+
             Vote vote = new Vote(1, 1, 2, LocalDate.now());
             voteDao.insert(vote);
             return null;

@@ -40,6 +40,14 @@
         android:textAppearance="@style/TextStyle"
         android:text="@string/no_options_placeholder" />
 
+    <LinearLayout
+        android:id="@+id/display_options"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextStyle"
+        android:text="@string/no_options_placeholder"
+        android:orientation="horizontal" />
+
     <Button
         style="@style/GenericButton"
         android:id="@+id/button_return_to_main_menu"
