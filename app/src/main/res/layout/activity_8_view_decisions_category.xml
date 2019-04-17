@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/PageStyle"
-    tools:context=".ViewDecisionsActivity">
+    tools:context=".ViewDecisionsCategoryActivity">
 
     <TextView
         android:id="@+id/page_title"

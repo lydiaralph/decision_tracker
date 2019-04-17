@@ -6,14 +6,9 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-
-import com.lydiaralph.decisiontracker.database.entity.Decision;
-
-import org.jetbrains.annotations.NotNull;
 
 public class ConfigureNewDecisionActivity extends MenuBasedActivity {
     public static final String PERSIST = "persist";
@@ -39,7 +34,7 @@ public class ConfigureNewDecisionActivity extends MenuBasedActivity {
         persistNewDecisionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent resultIntent = new Intent(ConfigureNewDecisionActivity.this, ViewDecisionsActivity.class);
+                Intent resultIntent = new Intent(ConfigureNewDecisionActivity.this, ViewDecisionsCategoryActivity.class);
                 resultIntent.setAction(PERSIST);
 
                 if (TextUtils.isEmpty(decisionTextView.getText())) {
