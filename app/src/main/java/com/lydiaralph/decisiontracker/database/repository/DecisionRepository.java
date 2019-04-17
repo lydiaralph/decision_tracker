@@ -44,6 +44,10 @@ public class DecisionRepository {
             return allDecisions;
         }
 
+        public LiveData<Decision> getDecisionById(Integer decisionId) {
+            return decisionDao.getDecisionById(decisionId);
+        }
+
         public void insert(Decision decision) {
             new insertAsyncTask(decisionDao).execute(decision);
         }

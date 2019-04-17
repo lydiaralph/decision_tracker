@@ -69,7 +69,7 @@ public class DecisionAdapter extends RecyclerView.Adapter<DecisionAdapter.Decisi
                 public void onClick(View v) {
                     Intent intentViewDecisionDetail = new Intent(holder.decisionItemView.getContext(),
                             ViewDecisionDetailActivity.class);
-                    intentViewDecisionDetail.putExtra(ViewDecisionsCategoryActivity.VIEW_DECISION_ID, (int) position);
+                    intentViewDecisionDetail.putExtra(ViewDecisionsCategoryActivity.VIEW_DECISION_ID, current.getId());
                     holder.decisionItemView.getContext().startActivity(intentViewDecisionDetail);
                 }
             });

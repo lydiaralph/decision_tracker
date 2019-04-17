@@ -45,6 +45,10 @@ public class DecisionViewModel extends AndroidViewModel {
         return mAllDecisions;
     }
 
+    public LiveData<Decision> getDecisionById(Integer decisionId) {
+        return mRepository.getDecisionById(decisionId);
+    }
+
     public void insert(Decision decision) {
         mRepository.insert(decision);
     }
