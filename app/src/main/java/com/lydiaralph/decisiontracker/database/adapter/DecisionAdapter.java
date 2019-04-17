@@ -21,17 +21,20 @@ package com.lydiaralph.decisiontracker.database.adapter;
  */
 
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.lydiaralph.decisiontracker.R;
-
+import com.lydiaralph.decisiontracker.ViewDecisionDetailActivity;
+import com.lydiaralph.decisiontracker.ViewDecisionsCategoryActivity;
 import com.lydiaralph.decisiontracker.database.entity.Decision;
 
 import java.util.List;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 public class DecisionAdapter extends RecyclerView.Adapter<DecisionAdapter.DecisionViewHolder> {
 
@@ -60,6 +63,17 @@ public class DecisionAdapter extends RecyclerView.Adapter<DecisionAdapter.Decisi
         if (decisions != null) {
             Decision current = decisions.get(position);
             holder.decisionItemView.setText(current.getDecisionText());
+
+            holder.decisionItemView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    Intent intentViewDecisionDetail = new Intent(holder.decisionItemView.getContext(),
+                            ViewDecisionDetailActivity.class);
+                    intentViewDecisionDetail.putExtra(ViewDecisionsCategoryActivity.VIEW_DECISION_ID, (int) position);
+                    holder.decisionItemView.getContext().startActivity(intentViewDecisionDetail);
+                }
+            });
+
         } else {
             // Covers the case of data not being ready yet.
             holder.decisionItemView.setText("No decision");

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/PageStyle"
+    tools:context=".ViewDecisionDetailActivity">
+
+    <TextView
+        android:id="@+id/page_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/PageTitle"
+        android:text="@string/your_decision" />
+
+    <TextView
+        android:id="@+id/display_decision_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextStyle"
+        android:text="What shall I do next year?" />
+
+    <TextView
+        android:id="@+id/display_dates"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextStyle"
+        android:text="12 March 2019 - 3 April 2019" />
+
+    <TextView
+        android:id="@+id/editorial_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextStyle"
+        android:text="@string/you_decided" />
+
+    <Button
+        style="@style/GenericButton"
+        android:id="@+id/button_return_to_main_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/return_to_main_menu" />
+
+</LinearLayout>
+
