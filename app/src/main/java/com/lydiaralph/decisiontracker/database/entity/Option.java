@@ -23,31 +23,40 @@ package com.lydiaralph.decisiontracker.database.entity;
 import androidx.annotation.Keep;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.Ignore;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import androidx.annotation.NonNull;
 
-@Entity(tableName = "options")
+import static androidx.room.ForeignKey.CASCADE;
+
+@Entity(tableName = "options",
+        indices = {@Index("decision_id")},
+        foreignKeys = @ForeignKey(entity = Decision.class,
+                parentColumns = "id",
+                childColumns = "decision_id",
+                onDelete = CASCADE))
 public class Option {
     @PrimaryKey(autoGenerate = true)
     @NonNull
     @ColumnInfo(name = "id")
-    public int id;
+    public Integer id;
 
     @NonNull
     @ColumnInfo(name = "decision_id")
-    public int decisionId;
+    public Integer decisionId;
 
     @NonNull
     @ColumnInfo(name = "option_text")
     public String optionText;
 
     @Keep
-    public int getDecisionId() {
+    public Integer getDecisionId() {
         return decisionId;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

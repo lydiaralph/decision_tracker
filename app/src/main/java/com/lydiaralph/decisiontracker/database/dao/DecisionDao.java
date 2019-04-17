@@ -28,9 +28,11 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 import com.lydiaralph.decisiontracker.database.entity.Decision;
+import com.lydiaralph.decisiontracker.database.entity.DecisionOptions;
 
 import java.util.List;
 
@@ -40,11 +42,12 @@ public interface DecisionDao {
     @Query("SELECT * FROM decisions")
     LiveData<List<Decision>> getAll();
 
+    @Transaction
     @Query("SELECT * FROM decisions WHERE id=:decisionId")
-    LiveData<Decision> getDecisionById(Integer decisionId);
+    LiveData<DecisionOptions> getDecisionById(Integer decisionId);
 
     @Insert
-    void insert(Decision decision);
+    long insert(Decision decision);
 
     @Update
     void update(Decision decision);

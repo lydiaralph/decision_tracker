@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "2ae51c532b35ab0ade584b8391914598",
+    "identityHash": "26e0d22192d0f778b255198702782625",
     "entities": [
       {
         "tableName": "decisions",
@@ -44,7 +44,7 @@
       },
       {
         "tableName": "options",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `decision_id` INTEGER NOT NULL, `option_text` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `decision_id` INTEGER NOT NULL, `option_text` TEXT NOT NULL, FOREIGN KEY(`decision_id`) REFERENCES `decisions`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -71,8 +71,29 @@
           ],
           "autoGenerate": true
         },
-        "indices": [],
-        "foreignKeys": []
+        "indices": [
+          {
+            "name": "index_options_decision_id",
+            "unique": false,
+            "columnNames": [
+              "decision_id"
+            ],
+            "createSql": "CREATE  INDEX `index_options_decision_id` ON `${TABLE_NAME}` (`decision_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "decisions",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "decision_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       },
       {
         "tableName": "votes",
@@ -115,7 +136,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"2ae51c532b35ab0ade584b8391914598\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"26e0d22192d0f778b255198702782625\")"
     ]
   }
 }

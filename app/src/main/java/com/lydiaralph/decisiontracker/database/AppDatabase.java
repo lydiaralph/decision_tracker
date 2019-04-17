@@ -29,16 +29,20 @@ import com.lydiaralph.decisiontracker.database.dao.VoteDao;
 import com.lydiaralph.decisiontracker.database.entity.DateUtils;
 import com.lydiaralph.decisiontracker.database.entity.DateUtilsImpl;
 import com.lydiaralph.decisiontracker.database.entity.Decision;
+import com.lydiaralph.decisiontracker.database.entity.DecisionOptions;
 import com.lydiaralph.decisiontracker.database.entity.Option;
 import com.lydiaralph.decisiontracker.database.entity.Vote;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
+
+import static java.lang.Math.toIntExact;
 
 @Database(entities = {Decision.class, Option.class, Vote.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
@@ -97,9 +101,9 @@ public abstract class AppDatabase extends RoomDatabase {
             LocalDate startDate = LocalDate.of(2019, 2, 1);
             LocalDate endDate = LocalDate.of(2019, 2, 5);
             decision = new Decision("Second decision", startDate, endDate);
-            decisionDao.insert(decision);
+            long decisionId = decisionDao.insert(decision);
 
-            Option option = new Option(1, "First option");
+            Option option = new Option(toIntExact(decisionId), "First option");
             optionDao.insert(option);
 
             Vote vote = new Vote(1, 1, 2, LocalDate.now());

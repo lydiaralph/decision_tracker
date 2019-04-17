@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextStyle"
-        android:text="12 March 2019 - 3 April 2019" />
+        android:text="@string/no_dates_placeholder" />
 
     <TextView
         android:id="@+id/editorial_text"
@@ -32,6 +32,13 @@
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextStyle"
         android:text="@string/you_decided" />
+
+    <TextView
+        android:id="@+id/display_option_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextStyle"
+        android:text="@string/no_options_placeholder" />
 
     <Button
         style="@style/GenericButton"

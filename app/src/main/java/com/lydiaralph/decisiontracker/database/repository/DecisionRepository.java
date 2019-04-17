@@ -27,6 +27,7 @@ import android.os.AsyncTask;
 import com.lydiaralph.decisiontracker.database.AppDatabase;
 import com.lydiaralph.decisiontracker.database.dao.DecisionDao;
 import com.lydiaralph.decisiontracker.database.entity.Decision;
+import com.lydiaralph.decisiontracker.database.entity.DecisionOptions;
 
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class DecisionRepository {
             return allDecisions;
         }
 
-        public LiveData<Decision> getDecisionById(Integer decisionId) {
+        public LiveData<DecisionOptions> getDecisionById(Integer decisionId) {
             return decisionDao.getDecisionById(decisionId);
         }
 
