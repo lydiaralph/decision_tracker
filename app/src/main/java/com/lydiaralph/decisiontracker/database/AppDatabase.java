@@ -93,27 +93,44 @@ public abstract class AppDatabase extends RoomDatabase {
             dateUtils = DateUtilsImpl.getInstance();
         }
 
+        private void insertDecisionWithOptionsNoVotes(){
+            LocalDate startDate = LocalDate.of(2019, 2, 1);
+            LocalDate endDate = LocalDate.of(2019, 2, 5);
+            Decision decisionWithOptionsNoVotes = new Decision("Decision with options no votes", startDate, endDate);
+            long decisionId = decisionDao.insert(decisionWithOptionsNoVotes);
+            Option option = new Option(decisionId, "First option");
+            optionDao.insert(option);
+            Option option2 = new Option(decisionId, "Second option");
+            optionDao.insert(option2);
+            Option option3 = new Option(decisionId, "Third option");
+            optionDao.insert(option3);
+        }
+
+        private void insertDecisionWithOptionsAndVotes(){
+            LocalDate startDate = LocalDate.of(2019, 2, 1);
+            LocalDate endDate = LocalDate.of(2019, 2, 5);
+            Decision decisionWithOptionsNoVotes = new Decision("Decision with options and votes", startDate, endDate);
+            long decisionId = decisionDao.insert(decisionWithOptionsNoVotes);
+            long optionId1 = optionDao.insert(new Option(decisionId, "Option with three votes"));
+            voteDao.insert(new Vote(optionId1, LocalDate.now()));
+            voteDao.insert(new Vote(optionId1, LocalDate.now()));
+            voteDao.insert(new Vote(optionId1, LocalDate.now()));
+
+            optionDao.insert(new Option(decisionId, "Option with no votes"));
+
+            long optionId3 = optionDao.insert(new Option(decisionId, "Option with one vote"));
+            voteDao.insert(new Vote(optionId3, LocalDate.now()));
+        }
+
         @Override
         protected Void doInBackground(final Void... params) {
             decisionDao.deleteAll();
-            Decision decision = new Decision(dateUtils, "New decision");
-            decisionDao.insert(decision);
-            LocalDate startDate = LocalDate.of(2019, 2, 1);
-            LocalDate endDate = LocalDate.of(2019, 2, 5);
-            decision = new Decision("Second decision", startDate, endDate);
-            long decisionId = decisionDao.insert(decision);
+            Decision decisionWithNoOptions = new Decision(dateUtils, "Decision with no options");
+            decisionDao.insert(decisionWithNoOptions);
 
-            Option option = new Option(decisionId, "First option");
-            optionDao.insert(option);
+            insertDecisionWithOptionsNoVotes();
+            insertDecisionWithOptionsAndVotes();
 
-            Option option2 = new Option(decisionId, "Second option");
-            optionDao.insert(option2);
-
-            Option option3 = new Option(decisionId, "Third option");
-            optionDao.insert(option3);
-
-            Vote vote = new Vote(1, 1, 2, LocalDate.now());
-            voteDao.insert(vote);
             return null;
         }
     }

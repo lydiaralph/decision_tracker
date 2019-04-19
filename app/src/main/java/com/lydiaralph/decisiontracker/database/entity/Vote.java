@@ -25,21 +25,27 @@ import java.time.LocalDate;
 import androidx.annotation.Keep;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.Ignore;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import androidx.annotation.NonNull;
 import androidx.room.TypeConverters;
 
-@Entity(tableName = "votes")
+import static androidx.room.ForeignKey.CASCADE;
+import static java.lang.Math.toIntExact;
+
+@Entity(tableName = "votes",
+ indices = {@Index("option_id")},
+        foreignKeys = @ForeignKey(entity = Option.class,
+        parentColumns = "id",
+        childColumns = "option_id",
+        onDelete = CASCADE))
 public class Vote {
     @PrimaryKey(autoGenerate = true)
     @NonNull
     @ColumnInfo(name = "id")
     public int id;
-
-    @NonNull
-    @ColumnInfo(name = "decision_id")
-    public int decisionId;
 
     @NonNull
     @ColumnInfo(name = "option_id")
@@ -56,11 +62,6 @@ public class Vote {
     }
 
     @Keep
-    public int getDecisionId() {
-        return this.decisionId;
-    }
-
-    @Keep
     public int getOptionId() {
         return this.optionId;
     }
@@ -71,15 +72,19 @@ public class Vote {
     }
 
     @Ignore
-    public Vote(int decisionId, int optionId, LocalDate voteDate){
-        this.decisionId = decisionId;
+    public Vote(int optionId, LocalDate voteDate){
         this.optionId = optionId;
         this.voteDate = voteDate;
     }
 
-    public Vote(int id, int decisionId, int optionId, LocalDate voteDate){
+    @Ignore
+    public Vote(long optionId, LocalDate voteDate){
+        this.optionId = toIntExact(optionId);
+        this.voteDate = voteDate;
+    }
+
+    public Vote(int id, int optionId, LocalDate voteDate){
         this.id = id;
-        this.decisionId = decisionId;
         this.optionId = optionId;
         this.voteDate = voteDate;
     }
