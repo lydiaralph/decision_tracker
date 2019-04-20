@@ -5,7 +5,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lydiaralph.decisiontracker.database.entity.DecisionOptions;
-import com.lydiaralph.decisiontracker.database.entity.Option;
+import com.lydiaralph.decisiontracker.database.entity.OptionsVotes;
+import com.lydiaralph.decisiontracker.database.entity.Vote;
 import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModel;
 
 import java.time.format.DateTimeFormatter;
@@ -31,6 +32,8 @@ public class ViewDecisionDetailActivity extends MenuBasedActivity {
         LinearLayout a = new LinearLayout(this);
         a.setOrientation(LinearLayout.VERTICAL);
 
+        TextView optionView = new TextView(this);
+
         final Observer<DecisionOptions> decisionObserver = new Observer<DecisionOptions>() {
             @Override
             public void onChanged(@Nullable final DecisionOptions decision) {
@@ -43,8 +46,6 @@ public class ViewDecisionDetailActivity extends MenuBasedActivity {
                         decision.getDecision().getStartDate().format(formatter),
                         decision.getDecision().getEndDate().format(formatter)));
 
-                TextView optionView = findViewById(R.id.display_option_text);
-
                 if(!decision.getOptionsList().isEmpty()){
                     setDecisionOptionsView(a, decision, optionView);
                 }
@@ -56,10 +57,22 @@ public class ViewDecisionDetailActivity extends MenuBasedActivity {
     }
 
     private void setDecisionOptionsView(LinearLayout a, final DecisionOptions decision, final TextView optionView) {
-        for(Option option : decision.getOptionsList()){
+        for(OptionsVotes option : decision.getOptionsList()){
             TextView optionTextView = new TextView(this);
-            optionTextView.setText(option.getOptionText());
+            optionTextView.setText(option.getOption().getOptionText());
             a.addView(optionTextView);
+
+            if(!option.getVotesList().isEmpty()){
+                setVotesView(a, option);
+            }
+        }
+    }
+
+    private void setVotesView(LinearLayout a, OptionsVotes option) {
+        for(Vote vote : option.getVotesList()){
+            TextView voteView = new TextView(this);
+            voteView.setText("Voted for this option on " + vote.getVoteDate());
+            a.addView(voteView);
         }
     }
 }

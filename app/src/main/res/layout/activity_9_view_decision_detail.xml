@@ -33,13 +33,6 @@
         android:textAppearance="@style/TextStyle"
         android:text="@string/you_decided" />
 
-    <TextView
-        android:id="@+id/display_option_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextStyle"
-        android:text="@string/no_options_placeholder" />
-
     <LinearLayout
         android:id="@+id/display_options"
         android:layout_width="wrap_content"
