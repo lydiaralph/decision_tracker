@@ -19,6 +19,10 @@ public class OptionsVotes {
         return option;
     }
 
+    public Integer countVotes() {
+        return votesList.size();
+    }
+
     public List<Vote> getVotesList() {
         return votesList;
     }

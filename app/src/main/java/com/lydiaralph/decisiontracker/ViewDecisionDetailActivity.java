@@ -47,7 +47,8 @@ public class ViewDecisionDetailActivity extends MenuBasedActivity {
                         decision.getDecision().getEndDate().format(formatter)));
 
                 if(!decision.getOptionsList().isEmpty()){
-                    setDecisionOptionsView(optionsHolderView, decision, editorialTextView);
+                    setDecisionOptionsView(optionsHolderView, decision);
+                    editorialTextView.setText(R.string.you_decided);
                 }
                 else {
                     editorialTextView.setText(R.string.no_options_placeholder);
@@ -60,19 +61,23 @@ public class ViewDecisionDetailActivity extends MenuBasedActivity {
         decisionViewModel.getDecisionById(selectedDecisionId).observe(this, decisionObserver);
     }
 
+    // TODO: Can swap this out with pie chart or other graphic
     private void setDecisionOptionsView(LinearLayout optionsHolderView,
-                                        final DecisionOptions decision,
-                                        TextView editorialTextView) {
-        editorialTextView.setText(R.string.you_decided);
-
+                                        final DecisionOptions decision) {
         for(OptionsVotes option : decision.getOptionsList()){
             TextView optionTextView = new TextView(this);
             optionTextView.setText(option.getOption().getOptionText());
             optionsHolderView.addView(optionTextView);
 
-            if(!option.getVotesList().isEmpty()){
-                setVotesView(optionsHolderView, option);
-            }
+            TextView voteCountView = new TextView(this);
+            Integer voteCount = option.countVotes();
+            voteCountView.setText(voteCount.toString());
+            optionsHolderView.addView(voteCountView);
+
+// Shows dates on which options were voted for. Perhaps move to separate OptionDetailedActivity?
+//            if(!option.getVotesList().isEmpty()){
+//                setVotesView(optionsHolderView, option);
+//            }
         }
     }
 
