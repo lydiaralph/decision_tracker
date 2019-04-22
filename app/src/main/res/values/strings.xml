@@ -24,6 +24,10 @@ limitations under the License. -->
     <string name="home_answer_question">Answer questions</string>
     <string name="view_results">View results</string>
 
+    <!--View single decision-->
+    <string name="your_decision">Your decision</string>
+    <string name="you_decided">You decided</string>
+
     <!-- Ask new question -->
     <string name="configure_decision">Set up your decision</string>
     <string name="ask_this_question">What decision are you making?</string>
@@ -89,4 +93,6 @@ limitations under the License. -->
     <string name="days">days</string>
     <string name="weeks">weeks</string>
     <string name="months">months</string>
+    <string name="no_options_placeholder">No options configured for this decision</string>
+    <string name="no_dates_placeholder">No dates configured for this decision</string>
 </resources>

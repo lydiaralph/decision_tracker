@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ViewDecisionsActivity"
+            android:name=".ViewDecisionsCategoryActivity"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -27,10 +27,23 @@
         </activity>
         <activity
             android:name=".ConfigureNewDecisionActivity"
-            android:parentActivityName=".ViewDecisionsActivity">
+            android:parentActivityName=".ViewDecisionsCategoryActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.lydiaralph.decisiontracker.ViewDecisionsActivity" />
+                android:value="com.lydiaralph.decisiontracker.ViewDecisionsCategoryActivity" />
+        </activity>
+
+        <activity
+            android:name=".ViewDecisionDetailActivity"
+            android:parentActivityName=".ViewDecisionDetailActivity">
+            <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.lydiaralph.decisiontracker.ViewDecisionsCategoryActivity" />
         </activity>
     </application>
 

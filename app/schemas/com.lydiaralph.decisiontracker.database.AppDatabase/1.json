@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "2ae51c532b35ab0ade584b8391914598",
+    "identityHash": "e73e485148a975f30f4e6396ce1e454f",
     "entities": [
       {
         "tableName": "decisions",
@@ -44,7 +44,7 @@
       },
       {
         "tableName": "options",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `decision_id` INTEGER NOT NULL, `option_text` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `decision_id` INTEGER NOT NULL, `option_text` TEXT NOT NULL, FOREIGN KEY(`decision_id`) REFERENCES `decisions`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -71,22 +71,37 @@
           ],
           "autoGenerate": true
         },
-        "indices": [],
-        "foreignKeys": []
+        "indices": [
+          {
+            "name": "index_options_decision_id",
+            "unique": false,
+            "columnNames": [
+              "decision_id"
+            ],
+            "createSql": "CREATE  INDEX `index_options_decision_id` ON `${TABLE_NAME}` (`decision_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "decisions",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "decision_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       },
       {
         "tableName": "votes",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `decision_id` INTEGER NOT NULL, `option_id` INTEGER NOT NULL, `vote_date` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `option_id` INTEGER NOT NULL, `vote_date` INTEGER NOT NULL, FOREIGN KEY(`option_id`) REFERENCES `options`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "decisionId",
-            "columnName": "decision_id",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -109,13 +124,34 @@
           ],
           "autoGenerate": true
         },
-        "indices": [],
-        "foreignKeys": []
+        "indices": [
+          {
+            "name": "index_votes_option_id",
+            "unique": false,
+            "columnNames": [
+              "option_id"
+            ],
+            "createSql": "CREATE  INDEX `index_votes_option_id` ON `${TABLE_NAME}` (`option_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "options",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "option_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"2ae51c532b35ab0ade584b8391914598\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"e73e485148a975f30f4e6396ce1e454f\")"
     ]
   }
 }

@@ -74,7 +74,7 @@ public abstract class MenuBasedActivity extends AppCompatActivity {
     }
 
     public void displayResults(View view) {
-        Intent intent = new Intent(this, ViewDecisionsActivity.class);
+        Intent intent = new Intent(this, ViewDecisionsCategoryActivity.class);
         startActivity(intent);
     }
 

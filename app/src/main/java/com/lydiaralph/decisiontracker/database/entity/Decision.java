@@ -21,6 +21,7 @@ package com.lydiaralph.decisiontracker.database.entity;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
@@ -38,7 +39,7 @@ public class Decision {
     @PrimaryKey(autoGenerate = true)
     @NonNull
     @ColumnInfo(name = "id")
-    public int id;
+    public Integer id;
 
     @NonNull
     @ColumnInfo(name = "decision_text")
@@ -54,7 +55,7 @@ public class Decision {
     @NonNull
     public LocalDate endDate;
 
-    public int getId(){
+    public Integer getId(){
         return this.id;
     }
 
@@ -101,5 +102,4 @@ public class Decision {
         this.endDate = startDate.plus(trackerPeriodUnits, ChronoUnit.valueOf(trackerPeriodType.toUpperCase()));
         return this;
     }
-
 }

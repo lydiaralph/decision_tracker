@@ -26,6 +26,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.lydiaralph.decisiontracker.database.entity.Decision;
+import com.lydiaralph.decisiontracker.database.entity.DecisionOptions;
 import com.lydiaralph.decisiontracker.database.repository.DecisionRepository;
 
 import java.util.List;
@@ -43,6 +44,10 @@ public class DecisionViewModel extends AndroidViewModel {
 
     public LiveData<List<Decision>> getAllDecisions() {
         return mAllDecisions;
+    }
+
+    public LiveData<DecisionOptions> getDecisionById(Integer decisionId) {
+        return mRepository.getDecisionById(decisionId);
     }
 
     public void insert(Decision decision) {

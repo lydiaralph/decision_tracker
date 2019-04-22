@@ -38,11 +38,11 @@ public interface VoteDao {
     @Query("SELECT * FROM votes")
     LiveData<List<Vote>> getAll();
 
-    @Query("SELECT * FROM votes WHERE decision_id = :decisionId")
-    LiveData<List<Vote>> getAllByDecisionId(Integer decisionId);
+    @Query("SELECT * FROM votes WHERE option_id = :optionId")
+    LiveData<List<Vote>> getAllByDecisionId(Integer optionId);
 
-    @Query("SELECT COUNT(id) FROM votes WHERE decision_id = :decisionId AND option_id = :optionId")
-    LiveData<Integer> countVoteByDecisionAndOption(Integer decisionId, Integer optionId);
+    @Query("SELECT COUNT(id) FROM votes WHERE option_id = :optionId")
+    LiveData<Integer> countVoteByDecisionAndOption(Integer optionId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Vote votes);

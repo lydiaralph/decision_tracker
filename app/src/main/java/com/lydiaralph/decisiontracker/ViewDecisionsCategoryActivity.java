@@ -3,6 +3,7 @@ package com.lydiaralph.decisiontracker;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.lydiaralph.decisiontracker.database.adapter.DecisionAdapter;
@@ -19,8 +20,9 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ViewDecisionsActivity extends MenuBasedActivity {
+public class ViewDecisionsCategoryActivity extends MenuBasedActivity {
 
+    public static final String VIEW_DECISION_ID = "ViewDecisionId";
     private DecisionViewModel decisionViewModel;
     private DateUtils dateUtils;
 
@@ -29,7 +31,7 @@ public class ViewDecisionsActivity extends MenuBasedActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_8_view_decisions);
+        setContentView(R.layout.activity_8_view_decisions_category);
         setReturnToMainMenuButton();
 
         final DecisionAdapter adapter = new DecisionAdapter(this);
