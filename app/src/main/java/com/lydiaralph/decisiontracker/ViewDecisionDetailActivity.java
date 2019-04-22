@@ -29,10 +29,10 @@ public class ViewDecisionDetailActivity extends MenuBasedActivity {
         decisionViewModel = ViewModelProviders.of(this).get(DecisionViewModel.class);
 
         LinearLayout myRoot = findViewById(R.id.display_options);
-        LinearLayout a = new LinearLayout(this);
-        a.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout optionsHolderView = new LinearLayout(this);
+        optionsHolderView.setOrientation(LinearLayout.VERTICAL);
 
-        TextView optionView = new TextView(this);
+        TextView editorialTextView = new TextView(this);
 
         final Observer<DecisionOptions> decisionObserver = new Observer<DecisionOptions>() {
             @Override
@@ -47,23 +47,31 @@ public class ViewDecisionDetailActivity extends MenuBasedActivity {
                         decision.getDecision().getEndDate().format(formatter)));
 
                 if(!decision.getOptionsList().isEmpty()){
-                    setDecisionOptionsView(a, decision, optionView);
+                    setDecisionOptionsView(optionsHolderView, decision, editorialTextView);
                 }
-                myRoot.addView(a);
+                else {
+                    editorialTextView.setText(R.string.no_options_placeholder);
+                }
+                myRoot.addView(optionsHolderView);
             }
         };
+        myRoot.addView(editorialTextView);
 
         decisionViewModel.getDecisionById(selectedDecisionId).observe(this, decisionObserver);
     }
 
-    private void setDecisionOptionsView(LinearLayout a, final DecisionOptions decision, final TextView optionView) {
+    private void setDecisionOptionsView(LinearLayout optionsHolderView,
+                                        final DecisionOptions decision,
+                                        TextView editorialTextView) {
+        editorialTextView.setText(R.string.you_decided);
+
         for(OptionsVotes option : decision.getOptionsList()){
             TextView optionTextView = new TextView(this);
             optionTextView.setText(option.getOption().getOptionText());
-            a.addView(optionTextView);
+            optionsHolderView.addView(optionTextView);
 
             if(!option.getVotesList().isEmpty()){
-                setVotesView(a, option);
+                setVotesView(optionsHolderView, option);
             }
         }
     }
