@@ -1,4 +1,4 @@
-package com.lydiaralph.decisiontracker;
+package com.lydiaralph.decisiontracker.notification;
 
 import android.annotation.TargetApi;
 import android.app.Notification;
@@ -11,6 +11,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
+
+import com.lydiaralph.decisiontracker.R;
+
 import androidx.core.app.NotificationCompat;
 
 /**

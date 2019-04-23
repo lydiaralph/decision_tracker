@@ -1,9 +1,11 @@
-package com.lydiaralph.decisiontracker;
+package com.lydiaralph.decisiontracker.activities;
 
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
+
+import com.lydiaralph.decisiontracker.R;
 
 public class ConfirmConfigurationActivity extends AppCompatActivity {
 

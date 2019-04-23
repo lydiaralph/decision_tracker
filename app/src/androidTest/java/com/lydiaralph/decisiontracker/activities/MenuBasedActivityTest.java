@@ -1,7 +1,7 @@
-package com.lydiaralph.decisiontracker;
+package com.lydiaralph.decisiontracker.activities;
 
 import com.lydiaralph.decisiontracker.R;
-import com.lydiaralph.decisiontracker.ConfigureNewDecisionActivity;
+import com.lydiaralph.decisiontracker.activities.ConfigureNewDecisionActivity;
 
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -29,7 +29,7 @@ public class MenuBasedActivityTest {
 
     @Test
     public void testMainMenuButton() {
-        onView(withId(R.id.button_return_to_main_menu)).check(matches(withText(R.string.return_to_main_menu)));
+        onView(ViewMatchers.withId(R.id.button_return_to_main_menu)).check(matches(withText(R.string.return_to_main_menu)));
         onView(withId(R.id.button_return_to_main_menu)).perform(click());
         onView(withId(R.id.page_title)).check(matches(withText(R.string.main_menu)));
     }

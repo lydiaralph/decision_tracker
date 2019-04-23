@@ -1,11 +1,11 @@
-package com.lydiaralph.decisiontracker;
+package com.lydiaralph.decisiontracker.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.lydiaralph.decisiontracker.R;
 import com.lydiaralph.decisiontracker.database.adapter.DecisionAdapter;
 import com.lydiaralph.decisiontracker.database.entity.DateUtils;
 import com.lydiaralph.decisiontracker.database.entity.DateUtilsImpl;

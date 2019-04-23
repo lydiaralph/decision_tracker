@@ -1,9 +1,10 @@
-package com.lydiaralph.decisiontracker;
+package com.lydiaralph.decisiontracker.activities;
 
 import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.lydiaralph.decisiontracker.R;
 import com.lydiaralph.decisiontracker.database.entity.DecisionOptions;
 import com.lydiaralph.decisiontracker.database.entity.OptionsVotes;
 import com.lydiaralph.decisiontracker.database.entity.Vote;

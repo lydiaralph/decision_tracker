@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_question_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,23 +19,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ViewDecisionsCategoryActivity"
-            android:parentActivityName=".MainActivity">
+            android:name=".activities.ViewDecisionsCategoryActivity"
+            android:parentActivityName=".activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.lydiaralph.decisiontracker.MainActivity" />
+                android:value="com.lydiaralph.decisiontracker.activities.MainActivity" />
         </activity>
         <activity
-            android:name=".ConfigureNewDecisionActivity"
-            android:parentActivityName=".ViewDecisionsCategoryActivity">
+            android:name=".activities.ConfigureNewDecisionActivity"
+            android:parentActivityName=".activities.ViewDecisionsCategoryActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.lydiaralph.decisiontracker.ViewDecisionsCategoryActivity" />
+                android:value="com.lydiaralph.decisiontracker.activities.ViewDecisionsCategoryActivity" />
         </activity>
 
         <activity
-            android:name=".ViewDecisionDetailActivity"
-            android:parentActivityName=".ViewDecisionDetailActivity">
+            android:name=".activities.ViewDecisionDetailActivity"
+            android:parentActivityName=".activities.ViewDecisionDetailActivity">
             <intent-filter>
             <action android:name="android.intent.action.MAIN" />
 
@@ -43,7 +43,7 @@
             </intent-filter>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.lydiaralph.decisiontracker.ViewDecisionsCategoryActivity" />
+                android:value="com.lydiaralph.decisiontracker.activities.ViewDecisionsCategoryActivity" />
         </activity>
     </application>
 

@@ -28,8 +28,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.lydiaralph.decisiontracker.R;
-import com.lydiaralph.decisiontracker.ViewDecisionDetailActivity;
-import com.lydiaralph.decisiontracker.ViewDecisionsCategoryActivity;
+import com.lydiaralph.decisiontracker.activities.ViewDecisionDetailActivity;
+import com.lydiaralph.decisiontracker.activities.ViewDecisionsCategoryActivity;
 import com.lydiaralph.decisiontracker.database.entity.Decision;
 
 import java.util.List;

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/PageStyle"
-    tools:context=".ViewDecisionDetailActivity">
+    tools:context=".activities.ViewDecisionDetailActivity">
 
     <TextView
         android:id="@+id/page_title"

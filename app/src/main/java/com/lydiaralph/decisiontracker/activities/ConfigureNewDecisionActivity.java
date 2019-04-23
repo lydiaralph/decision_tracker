@@ -1,4 +1,4 @@
-package com.lydiaralph.decisiontracker;
+package com.lydiaralph.decisiontracker.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+
+import com.lydiaralph.decisiontracker.R;
 
 public class ConfigureNewDecisionActivity extends MenuBasedActivity {
     public static final String PERSIST = "persist";

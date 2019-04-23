@@ -1,10 +1,12 @@
-package com.lydiaralph.decisiontracker;
+package com.lydiaralph.decisiontracker.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+
+import com.lydiaralph.decisiontracker.R;
 
 public class ConfigurationActivity extends AppCompatActivity {
 

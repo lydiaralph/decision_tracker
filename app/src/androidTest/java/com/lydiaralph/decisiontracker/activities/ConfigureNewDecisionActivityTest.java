@@ -1,7 +1,7 @@
-package com.lydiaralph.decisiontracker;
+package com.lydiaralph.decisiontracker.activities;
 
 import com.lydiaralph.decisiontracker.R;
-import com.lydiaralph.decisiontracker.ConfigureNewDecisionActivity;
+import com.lydiaralph.decisiontracker.activities.ConfigureNewDecisionActivity;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -27,7 +27,7 @@ public class ConfigureNewDecisionActivityTest {
 
     @Test
     public void pageTitle() {
-        onView(withId(R.id.page_title)).check(matches(withText(R.string.configure_decision)));
+        onView(ViewMatchers.withId(R.id.page_title)).check(matches(withText(R.string.configure_decision)));
     }
 
     @Test
