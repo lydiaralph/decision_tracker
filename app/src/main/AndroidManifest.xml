@@ -45,6 +45,19 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.lydiaralph.decisiontracker.activities.ViewDecisionsCategoryActivity" />
         </activity>
+
+        <activity
+            android:name=".activities.VoteActivity"
+            android:parentActivityName=".activities.ViewDecisionsCategoryActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.lydiaralph.decisiontracker.activities.ViewDecisionsCategoryActivity" />
+        </activity>
     </application>
 
 </manifest>

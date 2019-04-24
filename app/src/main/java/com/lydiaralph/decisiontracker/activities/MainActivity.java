@@ -15,5 +15,6 @@ public class MainActivity extends MenuBasedActivity {
         setContentView(R.layout.activity_1_main);
         setViewResultsButton();
         setConfigureNewDecisionButton();
+        setVoteOnDecisionButton();
     }
 }

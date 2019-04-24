@@ -2,13 +2,10 @@ package com.lydiaralph.decisiontracker.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
 
 import com.lydiaralph.decisiontracker.R;
 import com.lydiaralph.decisiontracker.database.adapter.DecisionAdapter;
-import com.lydiaralph.decisiontracker.database.entity.DateUtils;
-import com.lydiaralph.decisiontracker.database.entity.DateUtilsImpl;
+import com.lydiaralph.decisiontracker.database.adapter.VoteDecisionAdapter;
 import com.lydiaralph.decisiontracker.database.entity.Decision;
 import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModel;
 
@@ -21,12 +18,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class ViewDecisionsCategoryActivity extends MenuBasedActivity {
+    public static final String VOTE = "VOTE";
+    public static final String VIEW = "VIEW";
 
     public static final String VIEW_DECISION_ID = "ViewDecisionId";
     private DecisionViewModel decisionViewModel;
-    private DateUtils dateUtils;
-
-    protected View saveButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,47 +30,45 @@ public class ViewDecisionsCategoryActivity extends MenuBasedActivity {
         setContentView(R.layout.activity_8_view_decisions_category);
         setReturnToMainMenuButton();
 
-        final DecisionAdapter adapter = new DecisionAdapter(this);
         final RecyclerView recyclerView = findViewById(R.id.recyclerview);
-        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         decisionViewModel = ViewModelProviders.of(this).get(DecisionViewModel.class);
 
+        Intent callingIntent = getIntent();
+        if (callingIntent != null && callingIntent.getAction() != null) {
+            if (callingIntent.getAction().equals(ViewDecisionsCategoryActivity.VIEW)) {
+                setOnClickToViewDetailedResult(recyclerView);
+            } else if (callingIntent.getAction().equals(VOTE)) {
+                setOnClickToVote(recyclerView);
+            }
+        }
+    }
+
+    private void setOnClickToVote(RecyclerView recyclerView) {
+        final VoteDecisionAdapter voteDecisionAdapter = new VoteDecisionAdapter(this);
+        recyclerView.setAdapter(voteDecisionAdapter);
+
         final Observer<List<Decision>> decisionObserver = new Observer<List<Decision>>() {
             @Override
             public void onChanged(@Nullable final List<Decision> newDecisions) {
-                adapter.setDecisions(newDecisions);
+                voteDecisionAdapter.setDecisions(newDecisions);
             }
         };
-
-        Intent callingIntent = getIntent();
-        if (callingIntent != null && callingIntent.getAction() != null) {
-            if (callingIntent.getAction().equals(ConfigureNewDecisionActivity.PERSIST)) {
-                handlePersist(callingIntent);
-            }
-        }
-
         decisionViewModel.getAllDecisions().observe(this, decisionObserver);
     }
 
-    private void handlePersist(Intent callingIntent) {
-        if(callingIntent.getExtras() != null) {
-            String inputText = (String) callingIntent.getExtras().get(ConfigureNewDecisionActivity.INPUT_DECISION_TEXT);
-            String trackerPeriodType = (String) callingIntent.getExtras().get(ConfigureNewDecisionActivity.INPUT_TRACKER_PERIOD_TYPE);
-            Integer trackerPeriodUnit = (Integer) callingIntent.getExtras().get(ConfigureNewDecisionActivity.INPUT_TRACKER_PERIOD);
+    private void setOnClickToViewDetailedResult(RecyclerView recyclerView) {
+        final DecisionAdapter decisionAdapter = new DecisionAdapter(this);
+        recyclerView.setAdapter(decisionAdapter);
 
-            if (inputText != null) {
-                dateUtils = DateUtilsImpl.getInstance();
-                Decision decision = new Decision(dateUtils, inputText);
-                decision.setDates(dateUtils, trackerPeriodType, trackerPeriodUnit);
-                decisionViewModel.insert(decision);
+        final Observer<List<Decision>> decisionObserver = new Observer<List<Decision>>() {
+            @Override
+            public void onChanged(@Nullable final List<Decision> newDecisions) {
+                decisionAdapter.setDecisions(newDecisions);
             }
-        } else {
-            Toast.makeText(
-                    getApplicationContext(),
-                    R.string.empty_not_saved,
-                    Toast.LENGTH_LONG).show();
-        }
+        };
+        decisionViewModel.getAllDecisions().observe(this, decisionObserver);
     }
 }
+

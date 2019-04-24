@@ -83,6 +83,8 @@ limitations under the License. -->
     <string name="action_reply">Reply</string>
     <string name="button_save">Save</string>
     <string name="empty_not_saved">Decision not saved because it is empty.</string>
+
+    <string name="empty_option_not_saved">No option was voted for. Returning to view decisions... </string>
     <string name="bye">Bye!</string>
     <string name="hello">Hello!</string>
     <string name="return_to_main_menu">Return to main menu</string>
@@ -95,4 +97,9 @@ limitations under the License. -->
     <string name="months">months</string>
     <string name="no_options_placeholder">No options configured for this decision</string>
     <string name="no_dates_placeholder">No dates configured for this decision</string>
+    <string name="vote_on_decision">Vote on decision</string>
+    <string name="decision_question_hint">What shall I do next year?</string>
+    <string name="what_is_your_decision_today">What is your decision today?</string>
+    <string name="no_vote_today">No vote today</string>
+    <string name="configure_at_least_two_options">Must configure at least two options</string>
 </resources>

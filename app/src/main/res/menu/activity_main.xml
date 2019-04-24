@@ -6,4 +6,7 @@
 
     <item android:id="@+id/configure_new_decision"
         android:title="@string/configure_decision" />
+
+    <item android:id="@+id/vote"
+        android:title="@string/vote_on_decision" />
 </menu>
