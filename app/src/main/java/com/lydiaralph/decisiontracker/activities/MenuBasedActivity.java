@@ -35,7 +35,9 @@ public abstract class MenuBasedActivity extends AppCompatActivity {
         viewResultsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayResults(v);
+                Intent intent = new Intent(getApplicationContext(), ViewDecisionsCategoryActivity.class);
+                intent.setAction(ViewDecisionsCategoryActivity.VIEW);
+                startActivity(intent);
             }
         });
     }
@@ -50,6 +52,18 @@ public abstract class MenuBasedActivity extends AppCompatActivity {
         });
     }
 
+    protected void setVoteOnDecisionButton() {
+        viewResultsButton = findViewById(R.id.button_vote);
+        viewResultsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ViewDecisionsCategoryActivity.class);
+                intent.setAction(ViewDecisionsCategoryActivity.VOTE);
+                startActivity(intent);
+            }
+        });
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_menu_base, menu);
@@ -59,7 +73,8 @@ public abstract class MenuBasedActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.view_results) {
-            displayResults(viewResultsButton);
+            Intent intent = new Intent(getApplicationContext(), ViewDecisionsCategoryActivity.class);
+            startActivity(intent);
             return true;
         } else if (item.getItemId() == R.id.configure_new_decision) {
             configureNewDecision(configureNewDecisionButton);

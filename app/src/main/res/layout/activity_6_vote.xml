@@ -1,30 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    style="@style/PageStyle"
-    tools:context=".activities.ViewDecisionDetailActivity">
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/page_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="@style/PageTitle"
-        android:text="@string/your_decision" />
+        android:text="@string/vote_on_decision" />
 
     <TextView
         android:id="@+id/display_decision_text"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextStyle"
         android:text="@string/decision_question_hint" />
 
     <TextView
         android:id="@+id/display_dates"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextStyle"
+        android:text="Time remaining: 6 weeks" />
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextStyle"
-        android:text="@string/no_dates_placeholder" />
+        android:text="@string/what_is_your_decision_today" />
 
     <LinearLayout
         android:id="@+id/display_options"
@@ -34,12 +38,12 @@
         android:text="@string/no_options_placeholder"
         android:orientation="horizontal" />
 
+    <!-- Add radio button for each option programmatically -->
     <Button
         style="@style/GenericButton"
-        android:id="@+id/button_return_to_main_menu"
+        android:id="@+id/button_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/return_to_main_menu" />
+        android:text="@string/save" />
 
 </LinearLayout>
-

@@ -21,24 +21,30 @@ package com.lydiaralph.decisiontracker.database.repository;
  */
 
 import android.app.Application;
-import androidx.lifecycle.LiveData;
 import android.os.AsyncTask;
 
 import com.lydiaralph.decisiontracker.database.AppDatabase;
 import com.lydiaralph.decisiontracker.database.dao.DecisionDao;
+import com.lydiaralph.decisiontracker.database.dao.OptionDao;
 import com.lydiaralph.decisiontracker.database.entity.Decision;
+import com.lydiaralph.decisiontracker.database.entity.DecisionInsert;
 import com.lydiaralph.decisiontracker.database.entity.DecisionOptions;
+import com.lydiaralph.decisiontracker.database.entity.Option;
 
 import java.util.List;
+
+import androidx.lifecycle.LiveData;
 
 public class DecisionRepository {
 
         private DecisionDao decisionDao;
+        private OptionDao optionDao;
         private LiveData<List<Decision>> allDecisions;
 
         public DecisionRepository(Application application) {
             AppDatabase db = AppDatabase.getDatabase(application);
             decisionDao = db.decisionDao();
+            optionDao = db.optionDao();
             allDecisions = decisionDao.getAll();
         }
         public LiveData<List<Decision>> getAllDecisions() {
@@ -49,21 +55,29 @@ public class DecisionRepository {
             return decisionDao.getDecisionById(decisionId);
         }
 
-        public void insert(Decision decision) {
-            new insertAsyncTask(decisionDao).execute(decision);
+        public void insert(DecisionInsert decision) {
+            new insertAsyncTask(decisionDao, optionDao).execute(decision);
         }
 
-        private static class insertAsyncTask extends AsyncTask<Decision, Void, Void> {
+        private static class insertAsyncTask extends AsyncTask<DecisionInsert, Void, Void> {
 
             private DecisionDao mAsyncTaskDao;
+            private OptionDao mAsyncTaskOptionDao;
 
-            insertAsyncTask(DecisionDao dao) {
+            insertAsyncTask(DecisionDao dao, OptionDao optionDao) {
                 mAsyncTaskDao = dao;
+                mAsyncTaskOptionDao = optionDao;
             }
 
             @Override
-            protected Void doInBackground(final Decision... params) {
-                mAsyncTaskDao.insert(params[0]);
+            protected Void doInBackground(final DecisionInsert... params) {
+                long decisionId = mAsyncTaskDao.insert(params[0].getDecision());
+                if(!params[0].getOptionTextList().isEmpty()){
+                    for(String optionText: params[0].getOptionTextList()){
+                        Option optionWithDecisionId = new Option(decisionId, optionText);
+                        mAsyncTaskOptionDao.insert(optionWithDecisionId);
+                    }
+                }
                 return null;
             }
         }

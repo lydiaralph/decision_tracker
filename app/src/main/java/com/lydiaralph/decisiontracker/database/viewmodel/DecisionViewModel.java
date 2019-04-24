@@ -22,14 +22,16 @@ package com.lydiaralph.decisiontracker.database.viewmodel;
 
 
 import android.app.Application;
-import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 
 import com.lydiaralph.decisiontracker.database.entity.Decision;
+import com.lydiaralph.decisiontracker.database.entity.DecisionInsert;
 import com.lydiaralph.decisiontracker.database.entity.DecisionOptions;
 import com.lydiaralph.decisiontracker.database.repository.DecisionRepository;
 
 import java.util.List;
+
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 
 public class DecisionViewModel extends AndroidViewModel {
 
@@ -50,7 +52,7 @@ public class DecisionViewModel extends AndroidViewModel {
         return mRepository.getDecisionById(decisionId);
     }
 
-    public void insert(Decision decision) {
+    public void insert(DecisionInsert decision) {
         mRepository.insert(decision);
     }
 }
