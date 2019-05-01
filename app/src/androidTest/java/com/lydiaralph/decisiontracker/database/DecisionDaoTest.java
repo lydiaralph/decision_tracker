@@ -45,6 +45,7 @@ import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static java.lang.Math.toIntExact;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 
@@ -86,10 +87,12 @@ public class DecisionDaoTest {
         Decision decision = new Decision(dateUtils, "decision");
         long decisionId = mDecisionDao.insert(decision);
         Option option = new Option(decisionId, "test option");
-        DecisionOptions fetchedDecision = LiveDataTestUtil.getValue(mDecisionDao.getDecisionById(1));
+        mDb.optionDao().insert(option);
+
+        DecisionOptions fetchedDecision = LiveDataTestUtil.getValue(mDecisionDao.getDecisionById(toIntExact(decisionId)));
         assertEquals(decision.getDecisionText(), fetchedDecision.getDecision().getDecisionText());
         assertEquals(1, fetchedDecision.getOptionsList().size());
-        assertEquals(option.getOptionText(), fetchedDecision.getOptionsList().get(0).getOptionText());
+        assertEquals(option.getOptionText(), fetchedDecision.getOptionsList().get(0).getOption().getOptionText());
     }
 
     @Test

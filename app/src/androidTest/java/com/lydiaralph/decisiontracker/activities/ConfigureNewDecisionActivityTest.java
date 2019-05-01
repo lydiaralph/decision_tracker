@@ -34,7 +34,7 @@ public class ConfigureNewDecisionActivityTest {
     public void testMainMenuButton() {
         onView(withId(R.id.button_return_to_main_menu)).check(matches(withText(R.string.return_to_main_menu)));
         onView(withId(R.id.button_return_to_main_menu)).perform(click());
-        onView(withId(R.id.page_title)).check(matches(withText(R.string.main_menu)));
+        onView(withId(R.id.page_title)).check(matches(withText(R.string.main_menu_title)));
     }
 
     @Test

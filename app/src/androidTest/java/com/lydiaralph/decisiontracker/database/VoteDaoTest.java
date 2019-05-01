@@ -23,8 +23,11 @@ package com.lydiaralph.decisiontracker.database;
 import android.content.Context;
 
 import com.lydiaralph.decisiontracker.database.dao.VoteDao;
+import com.lydiaralph.decisiontracker.database.entity.Decision;
+import com.lydiaralph.decisiontracker.database.entity.Option;
 import com.lydiaralph.decisiontracker.database.entity.Vote;
 import com.lydiaralph.decisiontracker.database.utils.LiveDataTestUtil;
+import com.lydiaralph.decisiontracker.database.utils.TestDateUtilsImpl;
 
 import org.junit.After;
 import org.junit.Before;
@@ -40,6 +43,7 @@ import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static java.lang.Math.toIntExact;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -52,6 +56,7 @@ public class VoteDaoTest {
 
     private VoteDao mVoteDao;
     private AppDatabase mDb;
+    Integer optionId;
 
     @Before
     public void createDb() {
@@ -61,6 +66,12 @@ public class VoteDaoTest {
                 .allowMainThreadQueries()
                 .build();
         mVoteDao = mDb.voteDao();
+
+        Decision decision = new Decision(TestDateUtilsImpl.getInstance(), "test");
+        Integer decisionId = toIntExact(mDb.decisionDao().insert(decision));
+
+        Option option = new Option(1, decisionId, "new option");
+        optionId = toIntExact(mDb.optionDao().insert(option));
     }
 
     @After
@@ -71,20 +82,18 @@ public class VoteDaoTest {
     @Test
     public void insertAndGetVote() throws Exception {
         LocalDate date = LocalDate.now();
-        Vote vote = new Vote(1, 2, 3, date);
+        Vote vote = new Vote(optionId, date);
         mVoteDao.insert(vote);
         List<Vote> allVotes = LiveDataTestUtil.getValue(mVoteDao.getAll());
-        assertEquals(2, allVotes.get(0).getDecisionId());
-        assertEquals(3, allVotes.get(0).getOptionId());
+        assertEquals(optionId.intValue(), allVotes.get(0).getOptionId());
         assertEquals(date, allVotes.get(0).getVoteDate());
-        assertNotNull(allVotes.get(0).getId());
     }
 
     @Test
     public void deleteAll() throws Exception {
         LocalDate date = LocalDate.of(2019, 2, 1);
-        Vote vote1 = new Vote(1, 2, 4, date);
-        Vote vote2 = new Vote(2, 4, 5, date);
+        Vote vote1 = new Vote(optionId, date);
+        Vote vote2 = new Vote(optionId, date);
 
         mVoteDao.insert(vote1);
         mVoteDao.insert(vote2);
