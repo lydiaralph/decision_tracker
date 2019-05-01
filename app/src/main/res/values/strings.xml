@@ -103,4 +103,5 @@ limitations under the License. -->
     <string name="no_vote_today">No vote today</string>
     <string name="configure_at_least_two_options">Must configure at least two options</string>
     <string name="dash">-</string>
+    <string name="no_votes_for_this_decision">No votes recorded for any options</string>
 </resources>

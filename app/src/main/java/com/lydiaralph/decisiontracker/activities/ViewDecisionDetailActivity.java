@@ -24,11 +24,13 @@ import com.lydiaralph.decisiontracker.database.entity.DecisionOptions;
 import com.lydiaralph.decisiontracker.database.entity.OptionsVotes;
 import com.lydiaralph.decisiontracker.database.entity.Vote;
 import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModel;
+import com.lydiaralph.decisiontracker.database.viewmodel.OptionViewModel;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
@@ -69,10 +71,21 @@ public class ViewDecisionDetailActivity extends MenuBasedActivity implements OnC
                         decision.getDecision().getStartDate().format(formatter),
                         decision.getDecision().getEndDate().format(formatter)));
 
-                if(!decision.getOptionsList().isEmpty()){
-                    displayVotesInPieChart(decision);
+                if(!decision.getOptionsList().isEmpty()) {
+                    // More efficient with lambda? But bootstrap error
+                    boolean hasVotes = false;
+                    for(OptionsVotes optionsVotes : decision.getOptionsList()){
+                        if(optionsVotes.countVotes() > 0){
+                            hasVotes = true;
+                        }
+                    }
+                    if (!hasVotes) {
+                        editorialTextView.setText(getString(R.string.no_votes_for_this_decision));
+                    } else {
+                        displayVotesInPieChart(decision);
 //                    setDecisionOptionsView(optionsHolderView, decision);
-                    editorialTextView.setText(R.string.you_decided);
+                        editorialTextView.setText(R.string.you_decided);
+                    }
                 }
                 else {
                     editorialTextView.setText(R.string.no_options_placeholder);
