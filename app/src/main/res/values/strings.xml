@@ -102,4 +102,5 @@ limitations under the License. -->
     <string name="what_is_your_decision_today">What is your decision today?</string>
     <string name="no_vote_today">No vote today</string>
     <string name="configure_at_least_two_options">Must configure at least two options</string>
+    <string name="dash">-</string>
 </resources>
