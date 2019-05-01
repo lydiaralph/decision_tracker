@@ -1,7 +1,6 @@
 package com.lydiaralph.decisiontracker.activities;
 
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.LinearLayout;
@@ -24,17 +23,19 @@ import com.lydiaralph.decisiontracker.database.entity.DecisionOptions;
 import com.lydiaralph.decisiontracker.database.entity.OptionsVotes;
 import com.lydiaralph.decisiontracker.database.entity.Vote;
 import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModel;
-import com.lydiaralph.decisiontracker.database.viewmodel.OptionViewModel;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Predicate;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+
+/**
+ * Inspired by https://github.com/PhilJay/MPAndroidChart/blob/master/MPChartExample/src/main/java/com/xxmassdeveloper/mpchartexample/PieChartActivity.java
+ */
 
 public class ViewDecisionDetailActivity extends MenuBasedActivity implements OnChartValueSelectedListener {
     private static final String LOG = ViewDecisionDetailActivity.class.getSimpleName();
@@ -42,7 +43,6 @@ public class ViewDecisionDetailActivity extends MenuBasedActivity implements OnC
     private DecisionViewModel decisionViewModel;
 
     private PieChart chart;
-    private TextView tvX, tvY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,9 +127,6 @@ public class ViewDecisionDetailActivity extends MenuBasedActivity implements OnC
     }
 
     private void displayVotesInPieChart(DecisionOptions decisionOptions){
-        tvX = findViewById(R.id.tvXMax);
-        tvY = findViewById(R.id.tvYMax);
-
         configureChart(decisionOptions);
         setData(decisionOptions);
     }
