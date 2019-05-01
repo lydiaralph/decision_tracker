@@ -47,6 +47,7 @@ public class ViewDecisionDetailActivity extends MenuBasedActivity implements OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i(LOG, "Starting activity");
         setContentView(R.layout.activity_9_view_decision_detail);
         setReturnToMainMenuButton();
 

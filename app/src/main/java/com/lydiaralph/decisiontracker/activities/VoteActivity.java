@@ -35,6 +35,7 @@ public class VoteActivity extends MenuBasedActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i(LOG, "Starting activity");
         setContentView(R.layout.activity_6_vote);
         decisionViewModel = ViewModelProviders.of(this).get(DecisionViewModel.class);
         voteViewModel = ViewModelProviders.of(this).get(VoteViewModel.class);

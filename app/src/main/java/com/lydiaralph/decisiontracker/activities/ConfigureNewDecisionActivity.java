@@ -36,6 +36,7 @@ public class ConfigureNewDecisionActivity extends MenuBasedActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i(LOG, "Starting activity");
         setContentView(R.layout.activity_2_configure_new_decision);
         setReturnToMainMenuButton();
         decisionViewModel = ViewModelProviders.of(this).get(DecisionViewModel.class);
