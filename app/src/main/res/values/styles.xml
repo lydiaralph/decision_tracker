@@ -1,18 +1,19 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!--<style name="AppBaseTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">-->
-    <style name="AppBaseTheme" parent="Theme.Design.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
+    <style name="AppBaseTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/orange</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorControlHighlight"></item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:colorAccent" tools:targetApi="lollipop">@color/colorAccent</item>
-        <item name="android:textColor">#ffffff</item>
+        <item name="colorControlHighlight">@color/black</item>
+        <item name="colorAccent">@color/orange_light</item>
+        <item name="android:colorAccent" tools:targetApi="lollipop">@color/orange_light</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">false</item>
     </style>
 
     <style name="AppTheme.NoActionBar" parent="AppBaseTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="colorAccent">#ffffff</item>
+        <item name="colorAccent">@color/white</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -38,12 +39,9 @@
         <item name="android:layout_height">26dp</item>
         <item name="android:textSize">24sp</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:layout_marginBottom">6dp</item>
         <item name="android:paddingLeft">8dp</item>
-    </style>
-
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:textColorPrimary">#00FF00</item>
     </style>
 
     <style name="TextStyle" parent="TextAppearance.AppCompat">

@@ -79,6 +79,7 @@ public abstract class MenuBasedActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.view_results) {
             Intent intent = new Intent(getApplicationContext(), ViewDecisionsCategoryActivity.class);
+            intent.setAction(ViewDecisionsCategoryActivity.VIEW);
             startActivity(intent);
             return true;
         } else if (item.getItemId() == R.id.configure_new_decision) {
