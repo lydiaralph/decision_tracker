@@ -26,7 +26,7 @@ limitations under the License. -->
 
     <!--View single decision-->
     <string name="your_decision">Your decision</string>
-    <string name="you_decided">You decided</string>
+    <string name="you_decided">Results are in!</string>
 
     <!-- Ask new question -->
     <string name="configure_decision">Set up your decision</string>

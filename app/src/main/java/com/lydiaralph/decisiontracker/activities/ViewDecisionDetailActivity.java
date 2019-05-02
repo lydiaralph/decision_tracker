@@ -64,7 +64,7 @@ public class ViewDecisionDetailActivity extends MenuBasedActivity implements OnC
             @Override
             public void onChanged(@Nullable final DecisionOptions decision) {
                 TextView decisionTextView = findViewById(R.id.display_decision_text);
-                decisionTextView.setText(decision.getDecision().getDecisionText());
+//                decisionTextView.setText(decision.getDecision().getDecisionText());
 
                 TextView datesView = findViewById(R.id.display_dates);
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
@@ -85,7 +85,7 @@ public class ViewDecisionDetailActivity extends MenuBasedActivity implements OnC
                     } else {
                         displayVotesInPieChart(decision);
 //                    setDecisionOptionsView(optionsHolderView, decision);
-                        editorialTextView.setText(R.string.you_decided);
+//                        editorialTextView.setText(R.string.you_decided);
                     }
                 }
                 else {
@@ -210,15 +210,25 @@ public class ViewDecisionDetailActivity extends MenuBasedActivity implements OnC
 
     private String generateCenterText(DecisionOptions decisionOptions) {
         String decisionText = decisionOptions.getDecision().getDecisionText();
-        Integer spaceIndexAfterThirdWay = decisionText.indexOf(" ", Math.round(decisionText.length() / 3));
-        Integer spaceIndexAfterSecondThirdWay = decisionText.indexOf(" ", Math.round(decisionText.length() / 3) * 2);
 
-        String first = decisionText.substring(0, spaceIndexAfterThirdWay);
-        String second = decisionText.substring(spaceIndexAfterThirdWay, spaceIndexAfterSecondThirdWay);
-        String third = decisionText.substring(spaceIndexAfterSecondThirdWay);
-        String textWithBreak = first + "\n" + second + "\n" + third;
+        if(decisionText.length() > 40){
+            Integer spaceIndexAfterThirdWay = decisionText.indexOf(" ", Math.round(decisionText.length() / 3));
+            Integer spaceIndexAfterSecondThirdWay = decisionText.indexOf(" ", Math.round(decisionText.length() / 3) * 2);
 
-        return textWithBreak;
+            String first = decisionText.substring(0, spaceIndexAfterThirdWay);
+            String second = decisionText.substring(spaceIndexAfterThirdWay, spaceIndexAfterSecondThirdWay);
+            String third = decisionText.substring(spaceIndexAfterSecondThirdWay);
+
+            return first + "\n" + second + "\n" + third;
+        }
+        else if(decisionText.length() > 20){
+            Integer spaceIndexHalf = decisionText.indexOf(" ", Math.round(decisionText.length() / 2));
+
+            String first = decisionText.substring(0, spaceIndexHalf);
+            String second = decisionText.substring(spaceIndexHalf);
+            return first + "\n" + second;
+        }
+        return decisionText;
     }
 
     @Override

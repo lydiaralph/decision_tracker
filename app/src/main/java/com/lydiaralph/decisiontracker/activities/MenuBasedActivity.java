@@ -2,6 +2,7 @@ package com.lydiaralph.decisiontracker.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
@@ -75,11 +76,17 @@ public abstract class MenuBasedActivity extends AppCompatActivity {
         return true;
     }
 
+    // Side menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.view_results) {
             Intent intent = new Intent(getApplicationContext(), ViewDecisionsCategoryActivity.class);
             intent.setAction(ViewDecisionsCategoryActivity.VIEW);
+            startActivity(intent);
+            return true;
+        } else if (item.getItemId() == R.id.vote) {
+            Intent intent = new Intent(getApplicationContext(), ViewDecisionsCategoryActivity.class);
+            intent.setAction(ViewDecisionsCategoryActivity.VOTE);
             startActivity(intent);
             return true;
         } else if (item.getItemId() == R.id.configure_new_decision) {
@@ -92,11 +99,6 @@ public abstract class MenuBasedActivity extends AppCompatActivity {
 
     private void returnToMainMenu(View view) {
         Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
-
-    public void displayResults(View view) {
-        Intent intent = new Intent(this, ViewDecisionsCategoryActivity.class);
         startActivity(intent);
     }
 
