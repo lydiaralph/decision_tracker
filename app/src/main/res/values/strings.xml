@@ -14,7 +14,7 @@ limitations under the License. -->
 
 <resources>
     <!-- Everywhere -->
-    <string name="app_name">Decision Tracker</string>
+    <string name="app_name">You Decide</string>
     <string name="success_announcement">Success!</string>
     <string name="placeholder">placeholder</string>
 
@@ -26,7 +26,7 @@ limitations under the License. -->
 
     <!--View single decision-->
     <string name="your_decision">Your decision</string>
-    <string name="you_decided">You decided</string>
+    <string name="you_decided">Results are in!</string>
 
     <!-- Ask new question -->
     <string name="configure_decision">Set up your decision</string>
@@ -86,10 +86,10 @@ limitations under the License. -->
 
     <string name="empty_option_not_saved">No option was voted for. Returning to view decisions... </string>
     <string name="bye">Bye!</string>
-    <string name="hello">Hello!</string>
+    <string name="main_menu_subtext">Be decisive, track your votes</string>
     <string name="return_to_main_menu">Return to main menu</string>
     <string name="page_title">Placeholder page title</string>
-    <string name="main_menu">Main menu</string>
+    <string name="main_menu_title">You decide</string>
     <string name="configure_new_decision">Configure new decision</string>
     <string name="prompt_tracker_period">Track this decision for...</string>
     <string name="days">days</string>

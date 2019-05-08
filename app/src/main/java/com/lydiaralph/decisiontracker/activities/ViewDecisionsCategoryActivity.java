@@ -2,6 +2,7 @@ package com.lydiaralph.decisiontracker.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.lydiaralph.decisiontracker.R;
 import com.lydiaralph.decisiontracker.database.adapter.DecisionAdapter;
@@ -18,6 +19,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class ViewDecisionsCategoryActivity extends MenuBasedActivity {
+
+    private static final String LOG = ViewDecisionsCategoryActivity.class.getSimpleName();
+
     public static final String VOTE = "VOTE";
     public static final String VIEW = "VIEW";
 
@@ -27,6 +31,8 @@ public class ViewDecisionsCategoryActivity extends MenuBasedActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i(LOG, "Starting activity");
+
         setContentView(R.layout.activity_8_view_decisions_category);
         setReturnToMainMenuButton();
 
@@ -41,6 +47,8 @@ public class ViewDecisionsCategoryActivity extends MenuBasedActivity {
                 setOnClickToViewDetailedResult(recyclerView);
             } else if (callingIntent.getAction().equals(VOTE)) {
                 setOnClickToVote(recyclerView);
+            } else {
+                Log.e(LOG, "Unrecognised calling intent: " + callingIntent.getAction());
             }
         }
     }

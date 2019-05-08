@@ -9,14 +9,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/PageTitle"
-        android:text="@string/main_menu" />
+        android:text="@string/main_menu_title" />
 
     <TextView
         style="@style/TextStyle"
         android:id="@+id/greeting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello" />
+        android:text="@string/main_menu_subtext" />
 
     <Button
         style="@style/GenericButton"

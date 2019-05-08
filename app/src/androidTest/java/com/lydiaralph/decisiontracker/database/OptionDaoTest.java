@@ -23,8 +23,11 @@ package com.lydiaralph.decisiontracker.database;
 import android.content.Context;
 
 import com.lydiaralph.decisiontracker.database.dao.OptionDao;
+import com.lydiaralph.decisiontracker.database.entity.DateUtilsImpl;
+import com.lydiaralph.decisiontracker.database.entity.Decision;
 import com.lydiaralph.decisiontracker.database.entity.Option;
 import com.lydiaralph.decisiontracker.database.utils.LiveDataTestUtil;
+import com.lydiaralph.decisiontracker.database.utils.TestDateUtilsImpl;
 
 import org.junit.After;
 import org.junit.Before;
@@ -39,6 +42,7 @@ import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static java.lang.Math.toIntExact;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
@@ -49,6 +53,7 @@ public class OptionDaoTest {
 
     private OptionDao mOptionDao;
     private AppDatabase mDb;
+    Integer decisionId;
 
     @Before
     public void createDb() {
@@ -58,6 +63,9 @@ public class OptionDaoTest {
                 .allowMainThreadQueries()
                 .build();
         mOptionDao = mDb.optionDao();
+
+        Decision decision = new Decision(TestDateUtilsImpl.getInstance(), "test");
+        decisionId = toIntExact(mDb.decisionDao().insert(decision));
     }
 
     @After
@@ -67,17 +75,17 @@ public class OptionDaoTest {
 
     @Test
     public void insertAndGetOption() throws Exception {
-        Option option = new Option(1, 2, "new option");
+        Option option = new Option(1, decisionId, "new option");
         mOptionDao.insert(option);
-        List<Option> allOptions = LiveDataTestUtil.getValue(mOptionDao.getAllByDecisionId(2));
+        List<Option> allOptions = LiveDataTestUtil.getValue(mOptionDao.getAllByDecisionId(decisionId));
         assertEquals(option.getOptionText(), allOptions.get(0).getOptionText());
         assertEquals(option.getDecisionId(), allOptions.get(0).getDecisionId());
     }
 
     @Test
     public void insertAndGetAllOptions() throws Exception {
-        Option option1 = new Option(1, 2, "new option");
-        Option option2 = new Option(2, 2, "second option");
+        Option option1 = new Option(1, decisionId, "new option");
+        Option option2 = new Option(2, decisionId, "second option");
         mOptionDao.insertAll(option1, option2);
         List<Option> allOptions = LiveDataTestUtil.getValue(mOptionDao.getAll());
         assertEquals(option1.getOptionText(), allOptions.get(0).getOptionText());
@@ -88,7 +96,7 @@ public class OptionDaoTest {
 
     @Test
     public void deleteOption() throws Exception {
-        Option option1 = new Option(1, 2, "new option");
+        Option option1 = new Option(1, decisionId, "new option");
         mOptionDao.insert(option1);
         List<Option> fetched = LiveDataTestUtil.getValue(mOptionDao.getAll());
         assert(fetched.size() > 0);

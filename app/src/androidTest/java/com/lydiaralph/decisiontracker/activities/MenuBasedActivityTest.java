@@ -31,16 +31,15 @@ public class MenuBasedActivityTest {
     public void testMainMenuButton() {
         onView(ViewMatchers.withId(R.id.button_return_to_main_menu)).check(matches(withText(R.string.return_to_main_menu)));
         onView(withId(R.id.button_return_to_main_menu)).perform(click());
-        onView(withId(R.id.page_title)).check(matches(withText(R.string.main_menu)));
+        onView(withId(R.id.page_title)).check(matches(withText(R.string.main_menu_title)));
     }
 
 
-    @Ignore("TODO: Fix side menu functionality")
     @Test
     public void testSideMenu() {
         openActionBarOverflowOrOptionsMenu(ApplicationProvider.getApplicationContext());
         onView(withText(R.string.return_to_main_menu)).perform(click());
-        onView(withId(R.id.page_title)).check(matches(withText(R.string.main_menu)));
+        onView(withId(R.id.page_title)).check(matches(withText(R.string.main_menu_title)));
 
         openActionBarOverflowOrOptionsMenu(ApplicationProvider.getApplicationContext());
         onView(withText(R.string.view_results)).perform(click());

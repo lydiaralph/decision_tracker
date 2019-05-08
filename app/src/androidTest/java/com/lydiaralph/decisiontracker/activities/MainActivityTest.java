@@ -25,7 +25,7 @@ public class MainActivityTest {
 
     @Test
     public void pageTitle() {
-        onView(ViewMatchers.withId(R.id.page_title)).check(matches(withText(R.string.main_menu)));
+        onView(ViewMatchers.withId(R.id.page_title)).check(matches(withText(R.string.main_menu_title)));
     }
 
     @Test
