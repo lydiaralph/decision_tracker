@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.lydiaralph.decisiontracker.R;
+import com.lydiaralph.decisiontracker.dagger.DecisionViewModelFactory;
 import com.lydiaralph.decisiontracker.database.adapter.DecisionAdapter;
 import com.lydiaralph.decisiontracker.database.adapter.VoteDecisionAdapter;
 import com.lydiaralph.decisiontracker.database.entity.Decision;
@@ -12,24 +13,31 @@ import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModel;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import dagger.android.AndroidInjection;
 
 public class ViewDecisionsCategoryActivity extends MenuBasedActivity {
-
     private static final String LOG = ViewDecisionsCategoryActivity.class.getSimpleName();
 
     public static final String VOTE = "VOTE";
     public static final String VIEW = "VIEW";
 
     public static final String VIEW_DECISION_ID = "ViewDecisionId";
+
+    @Inject
+    DecisionViewModelFactory viewModelFactory;
+
     private DecisionViewModel decisionViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         Log.i(LOG, "Starting activity");
 
@@ -39,7 +47,7 @@ public class ViewDecisionsCategoryActivity extends MenuBasedActivity {
         final RecyclerView recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        decisionViewModel = ViewModelProviders.of(this).get(DecisionViewModel.class);
+        decisionViewModel = ViewModelProviders.of(this, viewModelFactory).get(DecisionViewModel.class);
 
         Intent callingIntent = getIntent();
         if (callingIntent != null && callingIntent.getAction() != null) {

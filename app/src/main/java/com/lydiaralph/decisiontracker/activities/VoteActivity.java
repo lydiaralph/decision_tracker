@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lydiaralph.decisiontracker.R;
+import com.lydiaralph.decisiontracker.dagger.DecisionViewModelFactory;
 import com.lydiaralph.decisiontracker.database.entity.DecisionOptions;
 import com.lydiaralph.decisiontracker.database.entity.OptionsVotes;
 import com.lydiaralph.decisiontracker.database.entity.Vote;
@@ -20,13 +21,19 @@ import com.lydiaralph.decisiontracker.database.viewmodel.VoteViewModel;
 
 import java.time.LocalDate;
 
+import javax.inject.Inject;
+
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import dagger.android.AndroidInjection;
 
 public class VoteActivity extends MenuBasedActivity {
     private static final String LOG = VoteActivity.class.getSimpleName();
     public static final String INPUT_SELECTED_OPTION_ID = "SelectedOptionId";
+
+    @Inject
+    DecisionViewModelFactory viewModelFactory;
 
     private DecisionViewModel decisionViewModel;
     private VoteViewModel voteViewModel;
@@ -34,11 +41,12 @@ public class VoteActivity extends MenuBasedActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         Log.i(LOG, "Starting activity");
         setContentView(R.layout.activity_6_vote);
-        decisionViewModel = ViewModelProviders.of(this).get(DecisionViewModel.class);
-        voteViewModel = ViewModelProviders.of(this).get(VoteViewModel.class);
+        decisionViewModel = ViewModelProviders.of(this, viewModelFactory).get(DecisionViewModel.class);
+        voteViewModel = ViewModelProviders.of(this, viewModelFactory).get(VoteViewModel.class);
 
         Integer selectedDecisionId = (Integer) getIntent().getExtras().get(ViewDecisionsCategoryActivity.VIEW_DECISION_ID);
 

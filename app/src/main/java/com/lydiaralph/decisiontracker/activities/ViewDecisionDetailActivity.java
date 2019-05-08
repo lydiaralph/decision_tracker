@@ -19,6 +19,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.MPPointF;
 import com.lydiaralph.decisiontracker.R;
+import com.lydiaralph.decisiontracker.dagger.DecisionViewModelFactory;
 import com.lydiaralph.decisiontracker.database.entity.DecisionOptions;
 import com.lydiaralph.decisiontracker.database.entity.OptionsVotes;
 import com.lydiaralph.decisiontracker.database.entity.Vote;
@@ -29,9 +30,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import dagger.android.AndroidInjection;
 
 /**
  * Inspired by https://github.com/PhilJay/MPAndroidChart/blob/master/MPChartExample/src/main/java/com/xxmassdeveloper/mpchartexample/PieChartActivity.java
@@ -40,19 +44,23 @@ import androidx.lifecycle.ViewModelProviders;
 public class ViewDecisionDetailActivity extends MenuBasedActivity implements OnChartValueSelectedListener {
     private static final String LOG = ViewDecisionDetailActivity.class.getSimpleName();
 
+    @Inject
+    DecisionViewModelFactory viewModelFactory;
+
     private DecisionViewModel decisionViewModel;
 
     private PieChart chart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         Log.i(LOG, "Starting activity");
         setContentView(R.layout.activity_9_view_decision_detail);
         setReturnToMainMenuButton();
 
         Integer selectedDecisionId = (Integer) getIntent().getExtras().get(ViewDecisionsCategoryActivity.VIEW_DECISION_ID);
-        decisionViewModel = ViewModelProviders.of(this).get(DecisionViewModel.class);
+        decisionViewModel = ViewModelProviders.of(this, viewModelFactory).get(DecisionViewModel.class);
 
         LinearLayout myRoot = findViewById(R.id.display_options);
         LinearLayout optionsHolderView = new LinearLayout(this);

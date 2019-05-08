@@ -10,8 +10,6 @@ public class MainActivity extends MenuBasedActivity {
 
     private static final String LOG = MainActivity.class.getSimpleName();
 
-    private DecisionViewModel decisionViewModel;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
