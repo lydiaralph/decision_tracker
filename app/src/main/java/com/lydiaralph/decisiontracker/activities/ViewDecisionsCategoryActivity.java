@@ -12,8 +12,11 @@ import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModel;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,6 +29,10 @@ public class ViewDecisionsCategoryActivity extends MenuBasedActivity {
     public static final String VIEW = "VIEW";
 
     public static final String VIEW_DECISION_ID = "ViewDecisionId";
+
+    @Inject
+    ViewModelProvider.Factory viewModelFactory;
+
     private DecisionViewModel decisionViewModel;
 
     @Override
@@ -39,7 +46,7 @@ public class ViewDecisionsCategoryActivity extends MenuBasedActivity {
         final RecyclerView recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        decisionViewModel = ViewModelProviders.of(this).get(DecisionViewModel.class);
+        decisionViewModel = ViewModelProviders.of(this, viewModelFactory).get(DecisionViewModel.class);
 
         Intent callingIntent = getIntent();
         if (callingIntent != null && callingIntent.getAction() != null) {

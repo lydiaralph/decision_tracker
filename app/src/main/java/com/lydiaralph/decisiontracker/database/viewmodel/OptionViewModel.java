@@ -29,14 +29,17 @@ import com.lydiaralph.decisiontracker.database.repository.OptionRepository;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class OptionViewModel extends AndroidViewModel {
 
     private OptionRepository mRepository;
     private LiveData<List<Option>> mAllOptions;
 
-    public OptionViewModel(Application application) {
+    @Inject
+    public OptionViewModel(Application application, OptionRepository optionRepository) {
         super(application);
-        mRepository = new OptionRepository(application);
+        mRepository = optionRepository;
         mAllOptions = mRepository.getAllOptions();
     }
 

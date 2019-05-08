@@ -29,14 +29,17 @@ import com.lydiaralph.decisiontracker.database.repository.VoteRepository;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class VoteViewModel extends AndroidViewModel {
 
     private VoteRepository mRepository;
     private LiveData<List<Vote>> mAllVotes;
 
-    public VoteViewModel(Application application) {
+    @Inject
+    public VoteViewModel(Application application, VoteRepository voteRepository) {
         super(application);
-        mRepository = new VoteRepository(application);
+        mRepository = voteRepository;
         mAllVotes = mRepository.getAllVotes();
     }
 

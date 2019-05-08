@@ -30,6 +30,8 @@ import com.lydiaralph.decisiontracker.database.repository.DecisionRepository;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
@@ -38,9 +40,11 @@ public class DecisionViewModel extends AndroidViewModel {
     private DecisionRepository mRepository;
     private LiveData<List<Decision>> mAllDecisions;
 
-    public DecisionViewModel(Application application) {
+    @Inject
+    public DecisionViewModel(Application application,
+                             DecisionRepository decisionRepository) {
         super(application);
-        mRepository = new DecisionRepository(application);
+        mRepository = decisionRepository;
         mAllDecisions = mRepository.getAllDecisions();
     }
 
