@@ -1,5 +1,6 @@
 package com.lydiaralph.decisiontracker.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,9 +21,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import dagger.android.AndroidInjection;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasActivityInjector;
 
-public class ViewDecisionsCategoryActivity extends MenuBasedActivity {
-
+public class ViewDecisionsCategoryActivity extends MenuBasedActivity implements HasActivityInjector {
     private static final String LOG = ViewDecisionsCategoryActivity.class.getSimpleName();
 
     public static final String VOTE = "VOTE";
@@ -31,12 +35,16 @@ public class ViewDecisionsCategoryActivity extends MenuBasedActivity {
     public static final String VIEW_DECISION_ID = "ViewDecisionId";
 
     @Inject
+    DispatchingAndroidInjector<Activity> dispatchingActivityInjector;
+
+    @Inject
     ViewModelProvider.Factory viewModelFactory;
 
     private DecisionViewModel decisionViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         Log.i(LOG, "Starting activity");
 
@@ -84,6 +92,11 @@ public class ViewDecisionsCategoryActivity extends MenuBasedActivity {
             }
         };
         decisionViewModel.getAllDecisions().observe(this, decisionObserver);
+    }
+
+    @Override
+    public AndroidInjector<Activity> activityInjector() {
+        return dispatchingActivityInjector;
     }
 }
 

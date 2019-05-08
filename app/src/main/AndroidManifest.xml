@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
+        android:name=".DecisionTrackerApp"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher_question"
         android:label="@string/app_name"

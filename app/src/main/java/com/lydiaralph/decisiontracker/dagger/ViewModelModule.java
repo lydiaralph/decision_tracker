@@ -1,4 +1,6 @@
-package com.lydiaralph.decisiontracker.database.viewmodel;
+package com.lydiaralph.decisiontracker.dagger;
+
+import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModel;
 
 import androidx.lifecycle.ViewModel;
 import dagger.Binds;
