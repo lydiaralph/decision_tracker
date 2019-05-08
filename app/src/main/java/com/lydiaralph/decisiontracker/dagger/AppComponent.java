@@ -13,13 +13,14 @@ import dagger.android.support.AndroidSupportInjectionModule;
         AndroidSupportInjectionModule.class,
         AppModule.class,
         ViewModelModule.class,
-        BuildersModule.class})
+        BuildersModule.class
+})
 public interface AppComponent {
     @Component.Builder
     interface Builder {
-        @BindsInstance
-        Builder application(DecisionTrackerApp application);
+        @BindsInstance Builder application(DecisionTrackerApp application);
+        Builder appModule(AppModule appModule);
         AppComponent build();
     }
-    void inject(DecisionTrackerApp app);
+    void inject(DecisionTrackerApp application);
 }

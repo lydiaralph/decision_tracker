@@ -15,8 +15,8 @@ public abstract class BuildersModule {
     @ContributesAndroidInjector
     abstract MainActivity bindMainActivity();
 
-//    @ContributesAndroidInjector(modules = ViewModelModule.class)
-//    abstract ViewDecisionsCategoryActivity bindViewDecisionsCategoryActivity();
+    @ContributesAndroidInjector
+    abstract ViewDecisionsCategoryActivity bindViewDecisionsCategoryActivity();
 
     // Add bindings for other sub-components here
 }

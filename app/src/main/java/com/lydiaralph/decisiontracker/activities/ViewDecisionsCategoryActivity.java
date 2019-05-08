@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.lydiaralph.decisiontracker.R;
+import com.lydiaralph.decisiontracker.dagger.DecisionViewModelFactory;
 import com.lydiaralph.decisiontracker.database.adapter.DecisionAdapter;
 import com.lydiaralph.decisiontracker.database.adapter.VoteDecisionAdapter;
 import com.lydiaralph.decisiontracker.database.entity.Decision;
@@ -26,7 +27,7 @@ import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
 
-public class ViewDecisionsCategoryActivity extends MenuBasedActivity implements HasActivityInjector {
+public class ViewDecisionsCategoryActivity extends MenuBasedActivity {
     private static final String LOG = ViewDecisionsCategoryActivity.class.getSimpleName();
 
     public static final String VOTE = "VOTE";
@@ -35,10 +36,7 @@ public class ViewDecisionsCategoryActivity extends MenuBasedActivity implements 
     public static final String VIEW_DECISION_ID = "ViewDecisionId";
 
     @Inject
-    DispatchingAndroidInjector<Activity> dispatchingActivityInjector;
-
-    @Inject
-    ViewModelProvider.Factory viewModelFactory;
+    DecisionViewModelFactory viewModelFactory;
 
     private DecisionViewModel decisionViewModel;
 
@@ -92,11 +90,6 @@ public class ViewDecisionsCategoryActivity extends MenuBasedActivity implements 
             }
         };
         decisionViewModel.getAllDecisions().observe(this, decisionObserver);
-    }
-
-    @Override
-    public AndroidInjector<Activity> activityInjector() {
-        return dispatchingActivityInjector;
     }
 }
 

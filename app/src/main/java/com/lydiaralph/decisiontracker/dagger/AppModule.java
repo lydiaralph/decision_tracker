@@ -1,22 +1,16 @@
 package com.lydiaralph.decisiontracker.dagger;
 
+import android.app.Application;
 import android.content.Context;
-
 
 import com.lydiaralph.decisiontracker.DecisionTrackerApp;
 import com.lydiaralph.decisiontracker.database.AppDatabase;
-import com.lydiaralph.decisiontracker.database.dao.DecisionDao;
-import com.lydiaralph.decisiontracker.database.dao.OptionDao;
-import com.lydiaralph.decisiontracker.database.dao.VoteDao;
+import com.lydiaralph.decisiontracker.database.repository.DecisionRepository;
+import com.lydiaralph.decisiontracker.database.repository.OptionRepository;
+import com.lydiaralph.decisiontracker.database.repository.VoteRepository;
 
 import javax.inject.Singleton;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.room.DatabaseConfiguration;
-import androidx.room.InvalidationTracker;
-import androidx.sqlite.db.SupportSQLiteOpenHelper;
 import dagger.Module;
 import dagger.Provides;
 
@@ -25,6 +19,18 @@ import dagger.Provides;
  */
 @Module
 public class AppModule {
+
+    private Application application;
+
+    public AppModule(Application application) {
+        this.application = application;
+    }
+
+    @Singleton @Provides
+    Application providesApplication() {
+        return application;
+    }
+
 
     @Provides
     Context provideContext(DecisionTrackerApp application) {
@@ -37,6 +43,23 @@ public class AppModule {
         return AppDatabase.getDatabase(application.getApplicationContext());
     }
 
+    @Singleton
+    @Provides
+    DecisionRepository providesDecisionRepository(){
+        return new DecisionRepository(application);
+    }
+
+    @Singleton
+    @Provides
+    VoteRepository providesVoteRepository(){
+        return new VoteRepository(application);
+    }
+
+    @Singleton
+    @Provides
+    OptionRepository providesOptionRepository(){
+        return new OptionRepository(application);
+    }
 
 
 }
