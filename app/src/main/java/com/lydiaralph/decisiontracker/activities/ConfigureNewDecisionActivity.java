@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.lydiaralph.decisiontracker.R;
+import com.lydiaralph.decisiontracker.dagger.DecisionViewModelFactory;
 import com.lydiaralph.decisiontracker.database.entity.DateUtils;
 import com.lydiaralph.decisiontracker.database.entity.DateUtilsImpl;
 import com.lydiaralph.decisiontracker.database.entity.Decision;
@@ -22,7 +23,10 @@ import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModel;
 
 import java.util.Arrays;
 
+import javax.inject.Inject;
+
 import androidx.lifecycle.ViewModelProviders;
+import dagger.android.AndroidInjection;
 
 import static com.lydiaralph.decisiontracker.activities.ViewDecisionsCategoryActivity.VIEW;
 
@@ -30,16 +34,20 @@ public class ConfigureNewDecisionActivity extends MenuBasedActivity {
 
     private static final String LOG = ConfigureNewDecisionActivity.class.getSimpleName();
 
+    @Inject
+    DecisionViewModelFactory viewModelFactory;
+
     private DecisionViewModel decisionViewModel;
     private View persistNewDecisionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         Log.i(LOG, "Starting activity");
         setContentView(R.layout.activity_2_configure_new_decision);
         setReturnToMainMenuButton();
-        decisionViewModel = ViewModelProviders.of(this).get(DecisionViewModel.class);
+        decisionViewModel = ViewModelProviders.of(this, viewModelFactory).get(DecisionViewModel.class);
 
         final EditText decisionTextView = findViewById(R.id.input_decision_text);
         final Spinner trackerPeriodView = findViewById(R.id.input_tracker_period);

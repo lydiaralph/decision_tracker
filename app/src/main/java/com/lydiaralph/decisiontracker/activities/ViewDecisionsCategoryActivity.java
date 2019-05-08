@@ -1,6 +1,5 @@
 package com.lydiaralph.decisiontracker.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,14 +17,10 @@ import javax.inject.Inject;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import dagger.android.AndroidInjection;
-import dagger.android.AndroidInjector;
-import dagger.android.DispatchingAndroidInjector;
-import dagger.android.HasActivityInjector;
 
 public class ViewDecisionsCategoryActivity extends MenuBasedActivity {
     private static final String LOG = ViewDecisionsCategoryActivity.class.getSimpleName();
