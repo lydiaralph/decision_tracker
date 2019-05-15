@@ -22,7 +22,6 @@ import com.lydiaralph.decisiontracker.R;
 import com.lydiaralph.decisiontracker.dagger.DecisionViewModelFactory;
 import com.lydiaralph.decisiontracker.database.entity.DecisionOptions;
 import com.lydiaralph.decisiontracker.database.entity.OptionsVotes;
-import com.lydiaralph.decisiontracker.database.entity.Vote;
 import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -74,15 +73,9 @@ public class ViewDecisionDetailActivity extends MenuBasedActivity implements OnC
 
         TextView editorialTextView = new TextView(this);
 
-        // optionsHolderView not used, replaced by pie chart
-//        LinearLayout optionsHolderView = new LinearLayout(this);
-//        optionsHolderView.setOrientation(LinearLayout.VERTICAL);
-
         return new Observer<DecisionOptions>() {
                 @Override
                 public void onChanged(@Nullable final DecisionOptions decision) {
-    //                TextView decisionTextView = findViewById(R.id.display_decision_text);
-    //                decisionTextView.setText(decision.getDecision().getDecisionText());
 
                     TextView datesView = findViewById(R.id.display_dates);
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
@@ -102,45 +95,15 @@ public class ViewDecisionDetailActivity extends MenuBasedActivity implements OnC
                             editorialTextView.setText(getString(R.string.no_votes_for_this_decision));
                         } else {
                             displayVotesInPieChart(decision);
-    //                    setDecisionOptionsView(optionsHolderView, decision);
     //                        editorialTextView.setText(R.string.you_decided);
                         }
                     }
                     else {
                         editorialTextView.setText(R.string.no_options_placeholder);
                     }
-//                    myRoot.addView(optionsHolderView);
                     myRoot.addView(editorialTextView);
                 }
             };
-    }
-
-    // TODO: Can swap this out with pie chart or other graphic
-    private void setDecisionOptionsView(LinearLayout optionsHolderView,
-                                        final DecisionOptions decision) {
-        for(OptionsVotes option : decision.getOptionsList()){
-            TextView optionTextView = new TextView(this);
-            optionTextView.setText(option.getOption().getOptionText());
-            optionsHolderView.addView(optionTextView);
-
-            TextView voteCountView = new TextView(this);
-            Integer voteCount = option.countVotes();
-            voteCountView.setText(voteCount.toString());
-            optionsHolderView.addView(voteCountView);
-
-// Shows dates on which options were voted for. Perhaps move to separate OptionDetailedActivity?
-//            if(!option.getVotesList().isEmpty()){
-//                setVotesView(optionsHolderView, option);
-//            }
-        }
-    }
-
-    private void setVotesView(LinearLayout a, OptionsVotes option) {
-        for(Vote vote : option.getVotesList()){
-            TextView voteView = new TextView(this);
-            voteView.setText("Voted for this option on " + vote.getVoteDate());
-            a.addView(voteView);
-        }
     }
 
     private void displayVotesInPieChart(DecisionOptions decisionOptions){
