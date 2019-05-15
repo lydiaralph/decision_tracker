@@ -25,6 +25,8 @@ import com.lydiaralph.decisiontracker.database.entity.OptionsVotes;
 import com.lydiaralph.decisiontracker.database.entity.Vote;
 import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModel;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -62,49 +64,55 @@ public class ViewDecisionDetailActivity extends MenuBasedActivity implements OnC
         Integer selectedDecisionId = (Integer) getIntent().getExtras().get(ViewDecisionsCategoryActivity.VIEW_DECISION_ID);
         decisionViewModel = ViewModelProviders.of(this, viewModelFactory).get(DecisionViewModel.class);
 
+        final Observer<DecisionOptions> decisionObserver = getDecisionOptionsObserver();
+        decisionViewModel.getDecisionById(selectedDecisionId).observe(this, decisionObserver);
+    }
+
+    @NotNull
+    private Observer<DecisionOptions> getDecisionOptionsObserver() {
         LinearLayout myRoot = findViewById(R.id.display_options);
-        LinearLayout optionsHolderView = new LinearLayout(this);
-        optionsHolderView.setOrientation(LinearLayout.VERTICAL);
 
         TextView editorialTextView = new TextView(this);
 
-        final Observer<DecisionOptions> decisionObserver = new Observer<DecisionOptions>() {
-            @Override
-            public void onChanged(@Nullable final DecisionOptions decision) {
-                TextView decisionTextView = findViewById(R.id.display_decision_text);
-//                decisionTextView.setText(decision.getDecision().getDecisionText());
+        // optionsHolderView not used, replaced by pie chart
+//        LinearLayout optionsHolderView = new LinearLayout(this);
+//        optionsHolderView.setOrientation(LinearLayout.VERTICAL);
 
-                TextView datesView = findViewById(R.id.display_dates);
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
-                datesView.setText(String.format("%s - %s",
-                        decision.getDecision().getStartDate().format(formatter),
-                        decision.getDecision().getEndDate().format(formatter)));
+        return new Observer<DecisionOptions>() {
+                @Override
+                public void onChanged(@Nullable final DecisionOptions decision) {
+    //                TextView decisionTextView = findViewById(R.id.display_decision_text);
+    //                decisionTextView.setText(decision.getDecision().getDecisionText());
 
-                if(!decision.getOptionsList().isEmpty()) {
-                    // More efficient with lambda? But bootstrap error
-                    boolean hasVotes = false;
-                    for(OptionsVotes optionsVotes : decision.getOptionsList()){
-                        if(optionsVotes.countVotes() > 0){
-                            hasVotes = true;
+                    TextView datesView = findViewById(R.id.display_dates);
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
+                    datesView.setText(String.format("%s - %s",
+                            decision.getDecision().getStartDate().format(formatter),
+                            decision.getDecision().getEndDate().format(formatter)));
+
+                    if(!decision.getOptionsList().isEmpty()) {
+                        // More efficient with lambda? But bootstrap error
+                        boolean hasVotes = false;
+                        for(OptionsVotes optionsVotes : decision.getOptionsList()){
+                            if(optionsVotes.countVotes() > 0){
+                                hasVotes = true;
+                            }
+                        }
+                        if (!hasVotes) {
+                            editorialTextView.setText(getString(R.string.no_votes_for_this_decision));
+                        } else {
+                            displayVotesInPieChart(decision);
+    //                    setDecisionOptionsView(optionsHolderView, decision);
+    //                        editorialTextView.setText(R.string.you_decided);
                         }
                     }
-                    if (!hasVotes) {
-                        editorialTextView.setText(getString(R.string.no_votes_for_this_decision));
-                    } else {
-                        displayVotesInPieChart(decision);
-//                    setDecisionOptionsView(optionsHolderView, decision);
-//                        editorialTextView.setText(R.string.you_decided);
+                    else {
+                        editorialTextView.setText(R.string.no_options_placeholder);
                     }
+//                    myRoot.addView(optionsHolderView);
+                    myRoot.addView(editorialTextView);
                 }
-                else {
-                    editorialTextView.setText(R.string.no_options_placeholder);
-                }
-                myRoot.addView(optionsHolderView);
-            }
-        };
-        myRoot.addView(editorialTextView);
-
-        decisionViewModel.getDecisionById(selectedDecisionId).observe(this, decisionObserver);
+            };
     }
 
     // TODO: Can swap this out with pie chart or other graphic
