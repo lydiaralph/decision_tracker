@@ -104,4 +104,5 @@ limitations under the License. -->
     <string name="configure_at_least_two_options">Must configure at least two options</string>
     <string name="dash">-</string>
     <string name="no_votes_for_this_decision">No votes recorded for any options</string>
+    <string name="decision_has_not_expired_yet">Decision has not expired yet</string>
 </resources>

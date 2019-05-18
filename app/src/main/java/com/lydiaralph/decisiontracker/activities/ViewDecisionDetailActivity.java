@@ -1,9 +1,12 @@
 package com.lydiaralph.decisiontracker.activities;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
@@ -19,6 +22,7 @@ import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import javax.inject.Inject;
@@ -64,12 +68,23 @@ public class ViewDecisionDetailActivity extends MenuBasedActivity implements OnC
         return new Observer<DecisionOptions>() {
                 @Override
                 public void onChanged(@Nullable final DecisionOptions decision) {
+                    if(decision.getDecision().getEndDate().compareTo(LocalDate.now()) > 0){
+                        Log.i(LOG, getString(R.string.decision_has_not_expired_yet));
+                        Toast.makeText(
+                                getApplicationContext(),
+                                getString(R.string.decision_has_not_expired_yet),
+                                Toast.LENGTH_LONG).show();
+
+                        Intent resultIntent = new Intent(ViewDecisionDetailActivity.this, ViewDecisionsCategoryActivity.class);
+                        // TODO: set up a mechanism by which users can choose to expire the decision tracking early
+                        resultIntent.setAction(ViewDecisionsCategoryActivity.VIEW);
+                        setResult(Activity.RESULT_CANCELED, resultIntent);
+                        startActivity(resultIntent);
+                        finish();
+                    }
 
                     TextView datesView = findViewById(R.id.display_dates);
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
-                    datesView.setText(String.format("%s - %s",
-                            decision.getDecision().getStartDate().format(formatter),
-                            decision.getDecision().getEndDate().format(formatter)));
+                    datesView.setText(getFormattedDateString(decision));
 
                     if(!decision.getOptionsList().isEmpty()) {
                         // More efficient with lambda? But bootstrap error
@@ -95,6 +110,13 @@ public class ViewDecisionDetailActivity extends MenuBasedActivity implements OnC
                     myRoot.addView(editorialTextView);
                 }
             };
+    }
+
+    private String getFormattedDateString(@NotNull DecisionOptions decision) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
+        return String.format("%s - %s",
+                decision.getDecision().getStartDate().format(formatter),
+                decision.getDecision().getEndDate().format(formatter));
     }
 
     @Override
