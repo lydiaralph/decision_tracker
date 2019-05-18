@@ -34,7 +34,6 @@ public class MenuBasedActivityTest {
         onView(withId(R.id.page_title)).check(matches(withText(R.string.main_menu_title)));
     }
 
-
     @Test
     public void testSideMenu() {
         openActionBarOverflowOrOptionsMenu(ApplicationProvider.getApplicationContext());
