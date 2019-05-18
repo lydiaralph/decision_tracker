@@ -1,4 +1,4 @@
-package com.lydiaralph.decisiontracker.dagger;
+package com.lydiaralph.decisiontracker.database.viewmodel;
 
 import java.util.Map;
 

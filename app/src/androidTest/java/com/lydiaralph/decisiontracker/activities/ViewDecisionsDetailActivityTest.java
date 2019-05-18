@@ -1,6 +1,13 @@
 package com.lydiaralph.decisiontracker.activities;
 
 import com.lydiaralph.decisiontracker.R;
+import com.lydiaralph.decisiontracker.database.entity.Decision;
+import com.lydiaralph.decisiontracker.database.entity.DecisionOptions;
+import com.lydiaralph.decisiontracker.database.entity.Option;
+import com.lydiaralph.decisiontracker.database.entity.OptionsVotes;
+import com.lydiaralph.decisiontracker.database.utils.TestDateUtilsImpl;
+import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModel;
+import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModelFactory;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

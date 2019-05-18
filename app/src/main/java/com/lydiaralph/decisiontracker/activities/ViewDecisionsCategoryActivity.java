@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.lydiaralph.decisiontracker.R;
-import com.lydiaralph.decisiontracker.dagger.DecisionViewModelFactory;
+import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModelFactory;
 import com.lydiaralph.decisiontracker.database.adapter.DecisionAdapter;
 import com.lydiaralph.decisiontracker.database.adapter.VoteDecisionAdapter;
 import com.lydiaralph.decisiontracker.database.entity.Decision;

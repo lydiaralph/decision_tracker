@@ -14,7 +14,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.lydiaralph.decisiontracker.R;
-import com.lydiaralph.decisiontracker.dagger.DecisionViewModelFactory;
+import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModelFactory;
 import com.lydiaralph.decisiontracker.database.entity.DateUtils;
 import com.lydiaralph.decisiontracker.database.entity.DateUtilsImpl;
 import com.lydiaralph.decisiontracker.database.entity.Decision;

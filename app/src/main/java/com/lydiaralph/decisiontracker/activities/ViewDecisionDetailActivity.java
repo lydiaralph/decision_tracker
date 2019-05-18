@@ -12,7 +12,7 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.lydiaralph.decisiontracker.R;
 import com.lydiaralph.decisiontracker.charts.PieChartDisplay;
-import com.lydiaralph.decisiontracker.dagger.DecisionViewModelFactory;
+import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModelFactory;
 import com.lydiaralph.decisiontracker.database.entity.DecisionOptions;
 import com.lydiaralph.decisiontracker.database.entity.OptionsVotes;
 import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModel;

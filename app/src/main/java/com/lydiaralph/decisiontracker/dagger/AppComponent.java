@@ -1,6 +1,7 @@
 package com.lydiaralph.decisiontracker.dagger;
 
 import com.lydiaralph.decisiontracker.DecisionTrackerApp;
+import com.lydiaralph.decisiontracker.database.viewmodel.ViewModelModule;
 
 import javax.inject.Singleton;
 

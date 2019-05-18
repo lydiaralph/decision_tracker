@@ -1,6 +1,7 @@
-package com.lydiaralph.decisiontracker.dagger;
+package com.lydiaralph.decisiontracker.database.viewmodel;
 
 import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModel;
+import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModelFactory;
 import com.lydiaralph.decisiontracker.database.viewmodel.OptionViewModel;
 import com.lydiaralph.decisiontracker.database.viewmodel.VoteViewModel;
 
@@ -11,7 +12,7 @@ import dagger.Module;
 import dagger.multibindings.IntoMap;
 
 @Module
-abstract class ViewModelModule {
+public abstract class ViewModelModule {
     @Binds
     abstract ViewModelProvider.Factory bindViewModelFactory(DecisionViewModelFactory factory);
 
