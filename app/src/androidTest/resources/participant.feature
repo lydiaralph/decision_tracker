@@ -22,10 +22,14 @@ Scenario: End user is able to track configure decisions to track
     I am able to configure which decisions and options to track
     So that I can track decisions over a period of time
 
-Scenario: End user is able to view results of a decision
+Scenario: End user is able to view results of an expired decision
     As a user of the mobile application
     I am able to view the results of a decision when the tracking period has expired
     So that I know what I decided for that decision
+
+Scenario: End user is not able to view results of a non-expired decision
+    As a user of the mobile application
+    I am not able to view the results of a decision when the tracking period has not expired
 
 Scenario: End user is able to terminate decision tracking early
     As a user of the mobile application
