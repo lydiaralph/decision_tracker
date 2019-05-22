@@ -93,32 +93,35 @@ public class ViewDecisionDetailActivity extends MenuBasedActivity implements OnC
 
                     TerminateDecisionTrackingFragment terminateDecisionTrackingFragment = TerminateDecisionTrackingFragment.newInstance(decision.getDecision().getId());
                     terminateDecisionTrackingFragment.show(getSupportFragmentManager(), "terminateDecision");
-                }
-
-                TextView datesView = findViewById(R.id.display_dates);
-                datesView.setText(getFormattedDateString(decision));
-
-                if (!decision.getOptionsList().isEmpty()) {
-                    // More efficient with lambda? But bootstrap error
-                    boolean hasVotes = false;
-                    for (OptionsVotes optionsVotes : decision.getOptionsList()) {
-                        if (optionsVotes.countVotes() > 0) {
-                            hasVotes = true;
-                        }
-                    }
-                    if (!hasVotes) {
-                        editorialTextView.setText(getString(R.string.no_votes_for_this_decision));
-                    } else {
-                        PieChart chart = findViewById(R.id.chart1);
-                        PieChartDisplay pieChartDisplay = new PieChartDisplay(chart, decision);
-                        pieChartDisplay.displayVotesInPieChart();
-                        pieChartDisplay.getChart().setOnChartValueSelectedListener(ViewDecisionDetailActivity.this);
-                        //                        editorialTextView.setText(R.string.you_decided);
-                    }
                 } else {
-                    editorialTextView.setText(R.string.no_options_placeholder);
+                    TextView title = findViewById(R.id.page_title);
+                    title.setText(getString(R.string.you_decided));
+
+                    TextView datesView = findViewById(R.id.display_dates);
+                    datesView.setText(getFormattedDateString(decision));
+
+                    if (!decision.getOptionsList().isEmpty()) {
+                        // More efficient with lambda? But bootstrap error
+                        boolean hasVotes = false;
+                        for (OptionsVotes optionsVotes : decision.getOptionsList()) {
+                            if (optionsVotes.countVotes() > 0) {
+                                hasVotes = true;
+                            }
+                        }
+                        if (!hasVotes) {
+                            editorialTextView.setText(getString(R.string.no_votes_for_this_decision));
+                        } else {
+                            PieChart chart = findViewById(R.id.chart1);
+                            PieChartDisplay pieChartDisplay = new PieChartDisplay(chart, decision);
+                            pieChartDisplay.displayVotesInPieChart();
+                            pieChartDisplay.getChart().setOnChartValueSelectedListener(ViewDecisionDetailActivity.this);
+                            //                        editorialTextView.setText(R.string.you_decided);
+                        }
+                    } else {
+                        editorialTextView.setText(R.string.no_options_placeholder);
+                    }
+                    myRoot.addView(editorialTextView);
                 }
-                myRoot.addView(editorialTextView);
             }
         };
     }

@@ -8,23 +8,23 @@
         android:id="@+id/page_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/PageTitle"
-        android:text="@string/you_decided" />
+        android:textAppearance="@style/PageTitle" />
+        <!--android:text="@string/you_decided" />-->
 
     <TextView
         android:id="@+id/display_dates"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextStyle"
-        android:text="@string/no_dates_placeholder" />
+        android:textAppearance="@style/TextStyle" />
+        <!--android:text="@string/no_dates_placeholder" />-->
 
     <LinearLayout
         android:id="@+id/display_options"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextStyle"
-        android:text="@string/no_options_placeholder"
         android:orientation="horizontal" />
+        <!--android:text= "@string/no_options_placeholder"-->
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
