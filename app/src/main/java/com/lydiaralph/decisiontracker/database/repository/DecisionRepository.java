@@ -22,6 +22,7 @@ package com.lydiaralph.decisiontracker.database.repository;
 
 import android.app.Application;
 import android.os.AsyncTask;
+import android.os.LocaleList;
 
 import com.lydiaralph.decisiontracker.database.AppDatabase;
 import com.lydiaralph.decisiontracker.database.dao.DecisionDao;
@@ -58,7 +59,7 @@ public class DecisionRepository {
     }
 
     public void updateEndDate(int decisionId, LocalDate newExpiryDate) {
-        decisionDao.updateEndDate(decisionId, newExpiryDate);
+        new updateAsyncTask(decisionDao).execute(new DecisionIdAndEndDate(decisionId, newExpiryDate));
     }
 
     public void insert(DecisionInsert decision) {
@@ -84,6 +85,39 @@ public class DecisionRepository {
                     mAsyncTaskOptionDao.insert(optionWithDecisionId);
                 }
             }
+            return null;
+        }
+    }
+
+    private class DecisionIdAndEndDate {
+        private int decisionId;
+        private LocalDate endDate;
+
+        public DecisionIdAndEndDate(int decisionId, LocalDate endDate){
+            this.decisionId = decisionId;
+            this.endDate = endDate;
+        }
+
+        public int getDecisionId() {
+            return decisionId;
+        }
+
+        public LocalDate getEndDate() {
+            return endDate;
+        }
+    }
+
+    private static class updateAsyncTask extends AsyncTask<DecisionIdAndEndDate, Void, Void> {
+
+        private DecisionDao mAsyncDecisionDao;
+
+        updateAsyncTask(DecisionDao dao) {
+            mAsyncDecisionDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final DecisionIdAndEndDate... params) {
+            mAsyncDecisionDao.updateEndDate(params[0].getDecisionId(), params[0].getEndDate());
             return null;
         }
     }

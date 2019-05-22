@@ -13,9 +13,21 @@ import androidx.fragment.app.DialogFragment;
 
 public class TerminateDecisionTrackingFragment extends DialogFragment {
 
+    private static final String DECISION_ID_ARG = "decisionId";
+
+    public static TerminateDecisionTrackingFragment newInstance(int decisionId) {
+        TerminateDecisionTrackingFragment f = new TerminateDecisionTrackingFragment();
+
+        Bundle args = new Bundle();
+        args.putInt(DECISION_ID_ARG, decisionId);
+        f.setArguments(args);
+
+        return f;
+    }
+
     public interface Listener {
-        public void terminateDecisionTrackingEarly(DialogFragment dialog, int decisionId);
-        public void keepTrackingDecision(DialogFragment dialog);
+        void terminateDecisionTrackingEarly(DialogFragment dialog, int decisionId);
+        void keepTrackingDecision(DialogFragment dialog);
     }
 
     Listener listener;
@@ -32,7 +44,6 @@ public class TerminateDecisionTrackingFragment extends DialogFragment {
         }
     }
 
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -40,7 +51,9 @@ public class TerminateDecisionTrackingFragment extends DialogFragment {
                 .setMessage(getString(R.string.stop_tracking_decision_explanation))
                 .setPositiveButton(getString(R.string.stop_tracking_decision), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        listener.terminateDecisionTrackingEarly(TerminateDecisionTrackingFragment.this, savedInstanceState.getInt("decisionId"));
+                        int decisionId = getArguments().getInt(DECISION_ID_ARG);
+                        listener.terminateDecisionTrackingEarly(TerminateDecisionTrackingFragment.this,
+                                decisionId);
                     }
                 })
                 .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {

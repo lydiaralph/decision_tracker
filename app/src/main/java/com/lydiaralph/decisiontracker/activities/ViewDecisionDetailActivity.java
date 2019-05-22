@@ -64,9 +64,10 @@ public class ViewDecisionDetailActivity extends MenuBasedActivity implements OnC
         // Update decision expiry date to today to stop tracking
         decisionViewModel.updateEndDate(decisionId, LocalDate.now());
         // View results
-        Intent intentViewDecisionDetail = new Intent();
-        intentViewDecisionDetail.putExtra(ViewDecisionsCategoryActivity.VIEW_DECISION_ID, decisionId);
-        this.startActivity(intentViewDecisionDetail);
+        Intent intent = getIntent();
+        intent.putExtra(ViewDecisionsCategoryActivity.VIEW_DECISION_ID, decisionId);
+        finish();
+        this.startActivity(intent);
     }
 
     @Override
@@ -86,44 +87,40 @@ public class ViewDecisionDetailActivity extends MenuBasedActivity implements OnC
         TextView editorialTextView = new TextView(this);
 
         return new Observer<DecisionOptions>() {
-                @Override
-                public void onChanged(@Nullable final DecisionOptions decision) {
-                    if(decision.getDecision().getEndDate().compareTo(LocalDate.now()) > 0){
+            @Override
+            public void onChanged(@Nullable final DecisionOptions decision) {
+                if (decision.getDecision().getEndDate().compareTo(LocalDate.now()) > 0) {
 
-                        TerminateDecisionTrackingFragment terminateDecisionTrackingFragment = new TerminateDecisionTrackingFragment();
-                        Bundle args = new Bundle();
-                        args.putInt("decisionId", decision.getDecision().getId());
-                        terminateDecisionTrackingFragment.setArguments(args);
-                        terminateDecisionTrackingFragment.show(getSupportFragmentManager(), "terminateDecision");
-                    }
-
-                    TextView datesView = findViewById(R.id.display_dates);
-                    datesView.setText(getFormattedDateString(decision));
-
-                    if(!decision.getOptionsList().isEmpty()) {
-                        // More efficient with lambda? But bootstrap error
-                        boolean hasVotes = false;
-                        for(OptionsVotes optionsVotes : decision.getOptionsList()){
-                            if(optionsVotes.countVotes() > 0){
-                                hasVotes = true;
-                            }
-                        }
-                        if (!hasVotes) {
-                            editorialTextView.setText(getString(R.string.no_votes_for_this_decision));
-                        } else {
-                            PieChart chart = findViewById(R.id.chart1);
-                            PieChartDisplay pieChartDisplay = new PieChartDisplay(chart, decision);
-                            pieChartDisplay.displayVotesInPieChart();
-                            pieChartDisplay.getChart().setOnChartValueSelectedListener(ViewDecisionDetailActivity.this);
-    //                        editorialTextView.setText(R.string.you_decided);
-                        }
-                    }
-                    else {
-                        editorialTextView.setText(R.string.no_options_placeholder);
-                    }
-                    myRoot.addView(editorialTextView);
+                    TerminateDecisionTrackingFragment terminateDecisionTrackingFragment = TerminateDecisionTrackingFragment.newInstance(decision.getDecision().getId());
+                    terminateDecisionTrackingFragment.show(getSupportFragmentManager(), "terminateDecision");
                 }
-            };
+
+                TextView datesView = findViewById(R.id.display_dates);
+                datesView.setText(getFormattedDateString(decision));
+
+                if (!decision.getOptionsList().isEmpty()) {
+                    // More efficient with lambda? But bootstrap error
+                    boolean hasVotes = false;
+                    for (OptionsVotes optionsVotes : decision.getOptionsList()) {
+                        if (optionsVotes.countVotes() > 0) {
+                            hasVotes = true;
+                        }
+                    }
+                    if (!hasVotes) {
+                        editorialTextView.setText(getString(R.string.no_votes_for_this_decision));
+                    } else {
+                        PieChart chart = findViewById(R.id.chart1);
+                        PieChartDisplay pieChartDisplay = new PieChartDisplay(chart, decision);
+                        pieChartDisplay.displayVotesInPieChart();
+                        pieChartDisplay.getChart().setOnChartValueSelectedListener(ViewDecisionDetailActivity.this);
+                        //                        editorialTextView.setText(R.string.you_decided);
+                    }
+                } else {
+                    editorialTextView.setText(R.string.no_options_placeholder);
+                }
+                myRoot.addView(editorialTextView);
+            }
+        };
     }
 
     private String getFormattedDateString(@NotNull DecisionOptions decision) {

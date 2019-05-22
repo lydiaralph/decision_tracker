@@ -29,8 +29,10 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Transaction;
+import androidx.room.TypeConverters;
 import androidx.room.Update;
 
+import com.lydiaralph.decisiontracker.database.entity.ConverterUtils;
 import com.lydiaralph.decisiontracker.database.entity.Decision;
 import com.lydiaralph.decisiontracker.database.entity.DecisionOptions;
 
@@ -50,8 +52,8 @@ public interface DecisionDao {
     @Insert
     long insert(Decision decision);
 
-    @Query("UPDATE decisions SET end_date=:newExpiryDate WHERE id=:decisionId")
-    void updateEndDate(int decisionId, LocalDate newExpiryDate);
+    @Query("UPDATE decisions SET end_date=:endDate WHERE id=:decisionId")
+    void updateEndDate(int decisionId, @TypeConverters({ConverterUtils.class}) LocalDate endDate);
 
     @Delete
     void delete(Decision decision);
