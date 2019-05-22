@@ -31,56 +31,62 @@ import com.lydiaralph.decisiontracker.database.entity.DecisionInsert;
 import com.lydiaralph.decisiontracker.database.entity.DecisionOptions;
 import com.lydiaralph.decisiontracker.database.entity.Option;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
 
 public class DecisionRepository {
 
-        private DecisionDao decisionDao;
-        private OptionDao optionDao;
-        private LiveData<List<Decision>> allDecisions;
+    private DecisionDao decisionDao;
+    private OptionDao optionDao;
+    private LiveData<List<Decision>> allDecisions;
 
-        public DecisionRepository(Application application) {
-            AppDatabase db = AppDatabase.getDatabase(application);
-            decisionDao = db.decisionDao();
-            optionDao = db.optionDao();
-            allDecisions = decisionDao.getAll();
+    public DecisionRepository(Application application) {
+        AppDatabase db = AppDatabase.getDatabase(application);
+        decisionDao = db.decisionDao();
+        optionDao = db.optionDao();
+        allDecisions = decisionDao.getAll();
+    }
+
+    public LiveData<List<Decision>> getAllDecisions() {
+        return allDecisions;
+    }
+
+    public LiveData<DecisionOptions> getDecisionById(Integer decisionId) {
+        return decisionDao.getDecisionById(decisionId);
+    }
+
+    public void updateEndDate(int decisionId, LocalDate newExpiryDate) {
+        decisionDao.updateEndDate(decisionId, newExpiryDate);
+    }
+
+    public void insert(DecisionInsert decision) {
+        new insertAsyncTask(decisionDao, optionDao).execute(decision);
+    }
+
+    private static class insertAsyncTask extends AsyncTask<DecisionInsert, Void, Void> {
+
+        private DecisionDao mAsyncTaskDao;
+        private OptionDao mAsyncTaskOptionDao;
+
+        insertAsyncTask(DecisionDao dao, OptionDao optionDao) {
+            mAsyncTaskDao = dao;
+            mAsyncTaskOptionDao = optionDao;
         }
-        public LiveData<List<Decision>> getAllDecisions() {
-            return allDecisions;
-        }
 
-        public LiveData<DecisionOptions> getDecisionById(Integer decisionId) {
-            return decisionDao.getDecisionById(decisionId);
-        }
-
-        public void insert(DecisionInsert decision) {
-            new insertAsyncTask(decisionDao, optionDao).execute(decision);
-        }
-
-        private static class insertAsyncTask extends AsyncTask<DecisionInsert, Void, Void> {
-
-            private DecisionDao mAsyncTaskDao;
-            private OptionDao mAsyncTaskOptionDao;
-
-            insertAsyncTask(DecisionDao dao, OptionDao optionDao) {
-                mAsyncTaskDao = dao;
-                mAsyncTaskOptionDao = optionDao;
-            }
-
-            @Override
-            protected Void doInBackground(final DecisionInsert... params) {
-                long decisionId = mAsyncTaskDao.insert(params[0].getDecision());
-                if(!params[0].getOptionTextList().isEmpty()){
-                    for(String optionText: params[0].getOptionTextList()){
-                        Option optionWithDecisionId = new Option(decisionId, optionText);
-                        mAsyncTaskOptionDao.insert(optionWithDecisionId);
-                    }
+        @Override
+        protected Void doInBackground(final DecisionInsert... params) {
+            long decisionId = mAsyncTaskDao.insert(params[0].getDecision());
+            if (!params[0].getOptionTextList().isEmpty()) {
+                for (String optionText : params[0].getOptionTextList()) {
+                    Option optionWithDecisionId = new Option(decisionId, optionText);
+                    mAsyncTaskOptionDao.insert(optionWithDecisionId);
                 }
-                return null;
             }
+            return null;
         }
+    }
 }
 
 

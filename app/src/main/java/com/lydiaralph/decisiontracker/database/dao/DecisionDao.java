@@ -34,6 +34,7 @@ import androidx.room.Update;
 import com.lydiaralph.decisiontracker.database.entity.Decision;
 import com.lydiaralph.decisiontracker.database.entity.DecisionOptions;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -49,8 +50,8 @@ public interface DecisionDao {
     @Insert
     long insert(Decision decision);
 
-    @Update
-    void update(Decision decision);
+    @Query("UPDATE decisions SET end_date=:newExpiryDate WHERE id=:decisionId")
+    void updateEndDate(int decisionId, LocalDate newExpiryDate);
 
     @Delete
     void delete(Decision decision);

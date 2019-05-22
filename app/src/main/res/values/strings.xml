@@ -105,4 +105,8 @@ limitations under the License. -->
     <string name="dash">-</string>
     <string name="no_votes_for_this_decision">No votes recorded for any options</string>
     <string name="decision_has_not_expired_yet">Decision has not expired yet</string>
+    <string name="stop_tracking_decision">Stop tracking decision</string>
+    <string name="stop_tracking_decision_explanation">This decision is still actively being tracked. Results are not available to view until you are no longer tracking the decision. Stop tracking early?</string>
+    <string name="cancel">Cancel</string>
+    <string name="stop_tracking_decision_question">Stop tracking decision?</string>
 </resources>

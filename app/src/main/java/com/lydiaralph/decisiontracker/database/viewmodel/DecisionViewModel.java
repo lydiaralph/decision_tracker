@@ -28,6 +28,7 @@ import com.lydiaralph.decisiontracker.database.entity.DecisionInsert;
 import com.lydiaralph.decisiontracker.database.entity.DecisionOptions;
 import com.lydiaralph.decisiontracker.database.repository.DecisionRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -58,5 +59,9 @@ public class DecisionViewModel extends AndroidViewModel {
 
     public void insert(DecisionInsert decision) {
         mRepository.insert(decision);
+    }
+
+    public void updateEndDate(int decisionId, LocalDate endDate) {
+        mRepository.updateEndDate(decisionId, endDate);
     }
 }

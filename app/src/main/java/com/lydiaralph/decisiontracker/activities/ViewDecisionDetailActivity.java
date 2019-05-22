@@ -6,19 +6,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.lydiaralph.decisiontracker.R;
 import com.lydiaralph.decisiontracker.charts.PieChartDisplay;
-import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModelFactory;
 import com.lydiaralph.decisiontracker.database.entity.DecisionOptions;
 import com.lydiaralph.decisiontracker.database.entity.OptionsVotes;
 import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModel;
+import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModelFactory;
+import com.lydiaralph.decisiontracker.fragments.TerminateDecisionTrackingFragment;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -28,6 +27,7 @@ import java.time.format.DateTimeFormatter;
 import javax.inject.Inject;
 
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import dagger.android.AndroidInjection;
@@ -36,7 +36,7 @@ import dagger.android.AndroidInjection;
  * Inspired by https://github.com/PhilJay/MPAndroidChart/blob/master/MPChartExample/src/main/java/com/xxmassdeveloper/mpchartexample/PieChartActivity.java
  */
 
-public class ViewDecisionDetailActivity extends MenuBasedActivity implements OnChartValueSelectedListener {
+public class ViewDecisionDetailActivity extends MenuBasedActivity implements OnChartValueSelectedListener, TerminateDecisionTrackingFragment.Listener {
     private static final String LOG = ViewDecisionDetailActivity.class.getSimpleName();
 
     @Inject
@@ -59,6 +59,26 @@ public class ViewDecisionDetailActivity extends MenuBasedActivity implements OnC
         decisionViewModel.getDecisionById(selectedDecisionId).observe(this, decisionObserver);
     }
 
+    @Override
+    public void terminateDecisionTrackingEarly(DialogFragment dialog, int decisionId) {
+        // Update decision expiry date to today to stop tracking
+        decisionViewModel.updateEndDate(decisionId, LocalDate.now());
+        // View results
+        Intent intentViewDecisionDetail = new Intent();
+        intentViewDecisionDetail.putExtra(ViewDecisionsCategoryActivity.VIEW_DECISION_ID, decisionId);
+        this.startActivity(intentViewDecisionDetail);
+    }
+
+    @Override
+    public void keepTrackingDecision(DialogFragment dialog) {
+        // Go back to list of decisions
+        Intent resultIntent = new Intent(ViewDecisionDetailActivity.this, ViewDecisionsCategoryActivity.class);
+        resultIntent.setAction(ViewDecisionsCategoryActivity.VIEW);
+        setResult(Activity.RESULT_CANCELED, resultIntent);
+        startActivity(resultIntent);
+        finish();
+    }
+
     @NotNull
     private Observer<DecisionOptions> getDecisionOptionsObserver() {
         LinearLayout myRoot = findViewById(R.id.display_options);
@@ -69,18 +89,12 @@ public class ViewDecisionDetailActivity extends MenuBasedActivity implements OnC
                 @Override
                 public void onChanged(@Nullable final DecisionOptions decision) {
                     if(decision.getDecision().getEndDate().compareTo(LocalDate.now()) > 0){
-                        Log.i(LOG, getString(R.string.decision_has_not_expired_yet));
-                        Toast.makeText(
-                                getApplicationContext(),
-                                getString(R.string.decision_has_not_expired_yet),
-                                Toast.LENGTH_LONG).show();
 
-                        Intent resultIntent = new Intent(ViewDecisionDetailActivity.this, ViewDecisionsCategoryActivity.class);
-                        // TODO: set up a mechanism by which users can choose to expire the decision tracking early
-                        resultIntent.setAction(ViewDecisionsCategoryActivity.VIEW);
-                        setResult(Activity.RESULT_CANCELED, resultIntent);
-                        startActivity(resultIntent);
-                        finish();
+                        TerminateDecisionTrackingFragment terminateDecisionTrackingFragment = new TerminateDecisionTrackingFragment();
+                        Bundle args = new Bundle();
+                        args.putInt("decisionId", decision.getDecision().getId());
+                        terminateDecisionTrackingFragment.setArguments(args);
+                        terminateDecisionTrackingFragment.show(getSupportFragmentManager(), "terminateDecision");
                     }
 
                     TextView datesView = findViewById(R.id.display_dates);
