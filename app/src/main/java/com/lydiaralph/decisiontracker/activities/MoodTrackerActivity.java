@@ -12,6 +12,7 @@ import com.lydiaralph.decisiontracker.database.entity.Mood;
 import com.lydiaralph.decisiontracker.database.entity.MoodType;
 import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModelFactory;
 import com.lydiaralph.decisiontracker.database.viewmodel.MoodTypeViewModel;
+import com.lydiaralph.decisiontracker.database.viewmodel.MoodViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class MoodTrackerActivity extends MenuBasedActivity {
     DecisionViewModelFactory viewModelFactory;
 
     private MoodTypeViewModel moodTypeViewModel;
+    private MoodViewModel moodViewModel;
 
     private static final String LOG = MoodTrackerActivity.class.getSimpleName();
 
@@ -39,6 +41,7 @@ public class MoodTrackerActivity extends MenuBasedActivity {
         Log.i(LOG, "Starting activity");
         setContentView(R.layout.activity_10_vote_mood);
         moodTypeViewModel = ViewModelProviders.of(this, viewModelFactory).get(MoodTypeViewModel.class);
+        moodViewModel = ViewModelProviders.of(this, viewModelFactory).get(MoodViewModel.class);
 
         LinearLayout moodOptions = findViewById(R.id.mood_options);
 
@@ -83,8 +86,7 @@ public class MoodTrackerActivity extends MenuBasedActivity {
                         moodData.add(mood);
                     }
 
-//                // Persist in mood table
-//                    voteViewModel.insert(moodData);
+                    moodViewModel.insertAll(moodData);
                 }
 //
 //                setResult(Activity.RESULT_OK, resultIntent);

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "82fdcfd98fc83f827eafe2d1b3063232",
+    "identityHash": "73ad32d3f26edc8a59167465bbf0d3fa",
     "entities": [
       {
         "tableName": "decisions",
@@ -173,11 +173,49 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "mood",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `vote_id` INTEGER NOT NULL, `mood_id` INTEGER NOT NULL, `intensity` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "voteId",
+            "columnName": "vote_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "moodId",
+            "columnName": "mood_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "intensity",
+            "columnName": "intensity",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"82fdcfd98fc83f827eafe2d1b3063232\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"73ad32d3f26edc8a59167465bbf0d3fa\")"
     ]
   }
 }

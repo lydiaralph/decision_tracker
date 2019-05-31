@@ -35,4 +35,9 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MoodTypeViewModel.class)
     abstract ViewModel provideMoodTypeViewModel(MoodTypeViewModel moodTypeViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MoodViewModel.class)
+    abstract ViewModel provideMoodViewModel(MoodViewModel moodViewModel);
 }

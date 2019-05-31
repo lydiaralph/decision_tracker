@@ -51,11 +51,10 @@ public class Mood {
         this.intensity = intensity;
     }
 
-    @Ignore
-    public Mood(int id, long voteId, long moodId, Integer intensity) {
+    public Mood(int id, int voteId, int moodId, Integer intensity) {
         this.id = id;
-        this.voteId = toIntExact(voteId);
-        this.moodId = toIntExact(moodId);
+        this.voteId = voteId;
+        this.moodId = moodId;
         this.intensity = intensity;
     }
 
