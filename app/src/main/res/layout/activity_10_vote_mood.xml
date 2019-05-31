@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_margin="30dp"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/page_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/PageTitle"
+        android:text="@string/how_do_you_feel_today" />
+
+    <LinearLayout
+        android:id="@+id/mood_options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextStyle"
+        android:text="@string/no_moods_have_been_configured"
+        android:orientation="vertical" />
+
+    <Button
+        style="@style/GenericButton"
+        android:id="@+id/button_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/save" />
+
+
+</LinearLayout>
