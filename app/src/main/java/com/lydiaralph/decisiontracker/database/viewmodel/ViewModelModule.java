@@ -30,4 +30,9 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(OptionViewModel.class)
     abstract ViewModel provideOptionViewModel(OptionViewModel optionViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MoodTypeViewModel.class)
+    abstract ViewModel provideMoodTypeViewModel(MoodTypeViewModel moodTypeViewModel);
 }

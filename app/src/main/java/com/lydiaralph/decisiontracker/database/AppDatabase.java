@@ -24,17 +24,20 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.lydiaralph.decisiontracker.database.dao.DecisionDao;
+import com.lydiaralph.decisiontracker.database.dao.MoodTypeDao;
 import com.lydiaralph.decisiontracker.database.dao.OptionDao;
 import com.lydiaralph.decisiontracker.database.dao.VoteDao;
 import com.lydiaralph.decisiontracker.database.entity.DateUtils;
 import com.lydiaralph.decisiontracker.database.entity.DateUtilsImpl;
 import com.lydiaralph.decisiontracker.database.entity.Decision;
 import com.lydiaralph.decisiontracker.database.entity.DecisionOptions;
+import com.lydiaralph.decisiontracker.database.entity.MoodType;
 import com.lydiaralph.decisiontracker.database.entity.Option;
 import com.lydiaralph.decisiontracker.database.entity.Vote;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
@@ -44,11 +47,12 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import static java.lang.Math.toIntExact;
 
-@Database(entities = {Decision.class, Option.class, Vote.class}, version = 1)
+@Database(entities = {Decision.class, Option.class, Vote.class, MoodType.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract DecisionDao decisionDao();
     public abstract VoteDao voteDao();
     public abstract OptionDao optionDao();
+    public abstract MoodTypeDao moodTypeDao();
 
     private static volatile AppDatabase INSTANCE;
 
@@ -83,6 +87,7 @@ public abstract class AppDatabase extends RoomDatabase {
         private final DecisionDao decisionDao;
         private final OptionDao optionDao;
         private final VoteDao voteDao;
+        private final MoodTypeDao moodTypeDao;
 
         private final DateUtils dateUtils;
 
@@ -90,6 +95,7 @@ public abstract class AppDatabase extends RoomDatabase {
             decisionDao = db.decisionDao();
             optionDao = db.optionDao();
             voteDao = db.voteDao();
+            moodTypeDao = db.moodTypeDao();
             dateUtils = DateUtilsImpl.getInstance();
         }
 
@@ -122,6 +128,16 @@ public abstract class AppDatabase extends RoomDatabase {
             voteDao.insert(new Vote(optionId3, LocalDate.now()));
         }
 
+        private void insertStaticMoodTypes(){
+            List<MoodType> moodTypes = Arrays.asList(
+                    new MoodType(1, "Angry"),
+                    new MoodType(2, "Sad"),
+                    new MoodType(3, "Happy"),
+                    new MoodType(4, "Relaxed"));
+
+            moodTypeDao.insertAll(moodTypes);
+        }
+
         @Override
         protected Void doInBackground(final Void... params) {
             decisionDao.deleteAll();
@@ -130,6 +146,8 @@ public abstract class AppDatabase extends RoomDatabase {
 
             insertDecisionWithOptionsNoVotes();
             insertDecisionWithOptionsAndVotes();
+
+            insertStaticMoodTypes();
 
             return null;
         }

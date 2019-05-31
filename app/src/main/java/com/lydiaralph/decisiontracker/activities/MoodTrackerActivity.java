@@ -10,48 +10,60 @@ import android.widget.TextView;
 import com.lydiaralph.decisiontracker.R;
 import com.lydiaralph.decisiontracker.database.entity.Mood;
 import com.lydiaralph.decisiontracker.database.entity.MoodType;
+import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModelFactory;
+import com.lydiaralph.decisiontracker.database.viewmodel.MoodTypeViewModel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class MoodTrackerActivity extends MenuBasedActivity{
+import javax.inject.Inject;
+
+import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import dagger.android.AndroidInjection;
+
+public class MoodTrackerActivity extends MenuBasedActivity {
+
+    @Inject
+    DecisionViewModelFactory viewModelFactory;
+
+    private MoodTypeViewModel moodTypeViewModel;
 
     private static final String LOG = MoodTrackerActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        AndroidInjection.inject(this);
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         Log.i(LOG, "Starting activity");
         setContentView(R.layout.activity_10_vote_mood);
+        moodTypeViewModel = ViewModelProviders.of(this, viewModelFactory).get(MoodTypeViewModel.class);
 
         LinearLayout moodOptions = findViewById(R.id.mood_options);
 
-        // TODO: Replace with dynamic database query
-        List<MoodType> moodTypes = Arrays.asList(
-                new MoodType(1, "Angry"),
-                new MoodType(2, "Sad"),
-                new MoodType(3, "Happy"),
-                new MoodType(4, "Relaxed"));
+        final Observer<List<MoodType>> moodTypeObserver = new Observer<List<MoodType>>() {
+            @Override
+            public void onChanged(@Nullable final List<MoodType> moodTypes) {
+                for(MoodType moodType: moodTypes){
+                    TextView textView = new TextView(getApplicationContext());
+                    textView.setText(moodType.getDescription());
+                    textView.setId(moodType.getId());
 
-        for(MoodType moodType: moodTypes){
-            TextView textView = new TextView(this);
-            textView.setText(moodType.getDescription());
-            textView.setId(moodType.getId());
+                    SeekBar intensityMeasure = new SeekBar(getApplicationContext());
+                    intensityMeasure.setMax(100);
+                    intensityMeasure.setMin(0);
+                    intensityMeasure.setId(moodType.getId());
+                    intensityMeasure.setPadding(0,0,0,10);
 
-            SeekBar intensityMeasure = new SeekBar(this);
-            intensityMeasure.setMax(100);
-            intensityMeasure.setMin(0);
-            intensityMeasure.setId(moodType.getId());
-            intensityMeasure.setPadding(0,0,0,10);
+                    moodOptions.addView(textView);
+                    moodOptions.addView(intensityMeasure);
+                }
+            }
+        };
 
-            moodOptions.addView(textView);
-            moodOptions.addView(intensityMeasure);
-        }
+        moodTypeViewModel.getAllMoodTypes().observe(this, moodTypeObserver);
 
-        // On Save button click, get all moods and their associated intensities and persist in Mood table
-        // (vote_id), mood_id, intensity
         View persistVoteButton = findViewById(R.id.button_save);
         persistVoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
