@@ -45,7 +45,7 @@ public interface VoteDao {
     LiveData<Integer> countVoteByDecisionAndOption(Integer optionId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Vote votes);
+    long insert(Vote votes);
 
     @Delete
     void delete(Vote vote);

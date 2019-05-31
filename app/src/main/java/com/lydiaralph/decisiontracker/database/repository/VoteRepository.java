@@ -30,6 +30,7 @@ import com.lydiaralph.decisiontracker.database.entity.Vote;
 import com.lydiaralph.decisiontracker.database.AppDatabase;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class VoteRepository {
 
@@ -46,11 +47,11 @@ public class VoteRepository {
             return allVotes;
         }
 
-        public void insert(Vote vote) {
-            new insertAsyncTask(voteDao).execute(vote);
+        public Long insert(Vote vote) throws ExecutionException, InterruptedException {
+            return new insertAsyncTask(voteDao).execute(vote).get();
         }
 
-        private static class insertAsyncTask extends AsyncTask<Vote, Void, Void> {
+        private static class insertAsyncTask extends AsyncTask<Vote, Void, Long> {
 
             private VoteDao mAsyncTaskDao;
 
@@ -59,9 +60,8 @@ public class VoteRepository {
             }
 
             @Override
-            protected Void doInBackground(final Vote... params) {
-                mAsyncTaskDao.insert(params[0]);
-                return null;
+            protected Long doInBackground(final Vote... params) {
+                return mAsyncTaskDao.insert(params[0]);
             }
         }
 }

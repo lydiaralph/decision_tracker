@@ -1,5 +1,7 @@
 package com.lydiaralph.decisiontracker.activities;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -43,6 +45,8 @@ public class MoodTrackerActivity extends MenuBasedActivity {
         moodTypeViewModel = ViewModelProviders.of(this, viewModelFactory).get(MoodTypeViewModel.class);
         moodViewModel = ViewModelProviders.of(this, viewModelFactory).get(MoodViewModel.class);
 
+        Integer voteId = (Integer) getIntent().getExtras().get(VoteActivity.VOTE_ID);
+
         LinearLayout moodOptions = findViewById(R.id.mood_options);
 
         final Observer<List<MoodType>> moodTypeObserver = new Observer<List<MoodType>>() {
@@ -71,9 +75,6 @@ public class MoodTrackerActivity extends MenuBasedActivity {
         persistVoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Get vote ID from calling intent
-                Integer voteId = 1;
-
                 List<Mood> moodData = new ArrayList<>();
                 int count = moodOptions.getChildCount();
 
@@ -88,14 +89,13 @@ public class MoodTrackerActivity extends MenuBasedActivity {
 
                     moodViewModel.insertAll(moodData);
                 }
-//
-//                setResult(Activity.RESULT_OK, resultIntent);
-//                startActivity(resultIntent);
+
+                Intent resultIntent = new Intent(MoodTrackerActivity.this, ViewDecisionsCategoryActivity.class);
+                resultIntent.setAction(ViewDecisionsCategoryActivity.VIEW);
+                setResult(Activity.RESULT_OK, resultIntent);
+                startActivity(resultIntent);
                 finish();
             }
         });
-
-        // Round 2: get Vote ID from calling intent
-
     }
 }
