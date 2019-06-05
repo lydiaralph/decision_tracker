@@ -14,9 +14,11 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.lydiaralph.decisiontracker.R;
 import com.lydiaralph.decisiontracker.charts.PieChartDisplay;
 import com.lydiaralph.decisiontracker.database.entity.DecisionOptions;
+import com.lydiaralph.decisiontracker.database.entity.MoodDescriptionWithIntensity;
 import com.lydiaralph.decisiontracker.database.entity.OptionsVotes;
 import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModel;
 import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModelFactory;
+import com.lydiaralph.decisiontracker.database.viewmodel.MoodViewModel;
 import com.lydiaralph.decisiontracker.fragments.TerminateDecisionTrackingFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -43,6 +45,7 @@ public class ViewDecisionDetailActivity extends MenuBasedActivity implements OnC
     DecisionViewModelFactory viewModelFactory;
 
     private DecisionViewModel decisionViewModel;
+    private MoodViewModel moodViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +57,13 @@ public class ViewDecisionDetailActivity extends MenuBasedActivity implements OnC
 
         Integer selectedDecisionId = (Integer) getIntent().getExtras().get(ViewDecisionsCategoryActivity.VIEW_DECISION_ID);
         decisionViewModel = ViewModelProviders.of(this, viewModelFactory).get(DecisionViewModel.class);
+        moodViewModel = ViewModelProviders.of(this, viewModelFactory).get(MoodViewModel.class);
 
         final Observer<DecisionOptions> decisionObserver = getDecisionOptionsObserver();
+        final Observer<List<MoodDescriptionWithIntensity>> moodObserver = getMoodObserver();
         decisionViewModel.getDecisionById(selectedDecisionId).observe(this, decisionObserver);
+//        moodViewModel.getAllMoodsByOptionId(option.getOption().getId())
+//                .observe(ViewDecisionDetailActivity.this, moodObserver);
     }
 
     @Override
@@ -117,10 +124,31 @@ public class ViewDecisionDetailActivity extends MenuBasedActivity implements OnC
                             pieChartDisplay.getChart().setOnChartValueSelectedListener(ViewDecisionDetailActivity.this);
                             //                        editorialTextView.setText(R.string.you_decided);
                         }
+
+//                        for (OptionsVotes option : decision.getOptionsList()) {
+//                            moodViewModel.getAllMoodsByOptionId(option.getOption().getId())
+//                                    .observe(ViewDecisionDetailActivity.this, getMoodObserver());
+//                        }
                     } else {
                         editorialTextView.setText(R.string.no_options_placeholder);
                     }
                     myRoot.addView(editorialTextView);
+                }
+            }
+
+
+        };
+    }
+
+    @NotNull
+    private Observer<List<MoodDescriptionWithIntensity>> getMoodObserver() {
+        return new Observer<List<MoodDescriptionWithIntensity>>() {
+            @Override
+            public void onChanged(List<MoodDescriptionWithIntensity> moodDescriptionWithIntensities) {
+
+                for (MoodDescriptionWithIntensity moodEntry : moodDescriptionWithIntensities) {
+                    String moodTypeDescription = moodEntry.getDescription();
+                    Integer intensity = moodEntry.getMoodIntensity();
                 }
             }
         };

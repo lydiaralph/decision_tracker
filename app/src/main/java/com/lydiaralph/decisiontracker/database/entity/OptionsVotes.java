@@ -2,6 +2,7 @@ package com.lydiaralph.decisiontracker.database.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import androidx.room.Embedded;
 import androidx.room.Relation;
@@ -16,6 +17,12 @@ public class OptionsVotes implements Comparable<OptionsVotes> {
 
     public Option getOption() {
         return option;
+    }
+
+    public List<Integer> getVoteIds (){
+        return getVotesList().stream()
+                .map(Vote::getId)
+                .collect(Collectors.toList());
     }
 
     public Integer countVotes() {
