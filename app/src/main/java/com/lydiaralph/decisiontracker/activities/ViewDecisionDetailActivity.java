@@ -130,6 +130,23 @@ public class ViewDecisionDetailActivity extends MenuBasedActivity implements OnC
 //                            moodViewModel.getAllMoodsByOptionId(option.getOption().getId())
 //                                    .observe(ViewDecisionDetailActivity.this, getMoodObserver());
 //                        }
+
+                        // Get the data, then decide what to do with it later
+
+                        // Graph 1:
+                        // Find all moods in this time frame, regardless of decision or option... need to use votes to work out dates
+
+                        // Graph 2:
+                        // Either:
+                        // Add Mood to votes
+                        // OR:
+                        // For each option ID, find all the mood types + intensity scores <-- simpler?
+                        // == for this option ID, find all the vote IDs, then find all the mood scores for this vote ID
+
+                        // So for both of these, I need to query the mood table for any records that have vote IDs that appear in the list
+
+
+                        //                        editorialTextView.setText(R.string.you_decided);
                     } else {
                         editorialTextView.setText(R.string.no_options_placeholder);
                     }
