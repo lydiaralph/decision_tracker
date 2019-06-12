@@ -44,39 +44,37 @@ public class LineChartFragment extends Fragment implements ChartDisplay<List<Moo
     }
 
     public void displayData(List<MoodDescriptionWithIntensity> data) {
-        if(data == null){
+        if (data == null) {
             Log.e(LOG_NAME, "No data supplied for chart");
             return;
         }
 
-        if(chartData == null) {
-            LineData chartData = getChartData(data);
-            this.chartData = chartData;
+        LineData chartData = getChartData(data);
+        this.chartData = chartData;
 
-            Legend l = chart.getLegend();
-            l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-            l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-            l.setOrientation(Legend.LegendOrientation.VERTICAL);
-            l.setDrawInside(false);
+        Legend l = chart.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+        l.setDrawInside(false);
 
-            chart.setAutoScaleMinMaxEnabled(true);
-            XAxis x = chart.getXAxis();
-            x.setValueFormatter(new MyXAxisFormatter());
-            x.setPosition(XAxis.XAxisPosition.BOTTOM);
-            chart.setData(chartData);
-            chart.invalidate();
-        }
+        chart.setAutoScaleMinMaxEnabled(true);
+        XAxis x = chart.getXAxis();
+        x.setValueFormatter(new MyXAxisFormatter());
+        x.setPosition(XAxis.XAxisPosition.BOTTOM);
+        chart.setData(chartData);
+        chart.invalidate();
     }
 
     public class MyXAxisFormatter extends ValueFormatter {
         @Override
-        public String getAxisLabel(float value, AxisBase axis){
+        public String getAxisLabel(float value, AxisBase axis) {
             LocalDate dateValue = LocalDate.ofEpochDay((long) value);
             return dateValue.format(DateTimeFormatter.ofPattern("MMM yy"));
         }
     }
 
-    private static void formatDataSet(int index, LineDataSet individualDataSet){
+    private static void formatDataSet(int index, LineDataSet individualDataSet) {
         individualDataSet.setDrawIcons(false);
 
         // draw dashed line
@@ -134,7 +132,7 @@ public class LineChartFragment extends Fragment implements ChartDisplay<List<Moo
         LineDataSet set = new LineDataSet(values, label);
         dataSets.add(set);
 
-        for(int i = 0; i < dataSets.size(); i++){
+        for (int i = 0; i < dataSets.size(); i++) {
             formatDataSet(i, (LineDataSet) dataSets.get(i));
         }
 

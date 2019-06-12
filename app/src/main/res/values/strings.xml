@@ -111,4 +111,5 @@ limitations under the License. -->
     <string name="stop_tracking_decision_question">Stop tracking decision?</string>
     <string name="how_do_you_feel_today">How do you feel today?</string>
     <string name="no_moods_have_been_configured">No moods have been configured</string>
+    <string name="choose_your_chart">Choose your chart...</string>
 </resources>
