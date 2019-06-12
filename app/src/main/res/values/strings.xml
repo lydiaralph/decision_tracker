@@ -109,4 +109,6 @@ limitations under the License. -->
     <string name="stop_tracking_decision_explanation">This decision is still actively being tracked. Results are not available to view until you are no longer tracking the decision. Stop tracking early?</string>
     <string name="cancel">Cancel</string>
     <string name="stop_tracking_decision_question">Stop tracking decision?</string>
+    <string name="how_do_you_feel_today">How do you feel today?</string>
+    <string name="no_moods_have_been_configured">No moods have been configured</string>
 </resources>

@@ -18,24 +18,36 @@
         android:textAppearance="@style/TextStyle" />
         <!--android:text="@string/no_dates_placeholder" />-->
 
-    <LinearLayout
-        android:id="@+id/display_options"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextStyle"
-        android:orientation="horizontal" />
-        <!--android:text= "@string/no_options_placeholder"-->
-
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <ListView
+        android:id="@+id/mobile_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content" >
+    </ListView>
 
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/chart1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-        />
-    </RelativeLayout>
+    <!--<LinearLayout-->
+        <!--android:id="@+id/display_options"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textAppearance="@style/TextStyle"-->
+        <!--android:orientation="horizontal" />-->
+        <!--&lt;!&ndash;android:text= "@string/no_options_placeholder"&ndash;&gt;-->
+
+    <!--<com.github.mikephil.charting.charts.LineChart-->
+        <!--android:id="@+id/line_chart"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" />-->
+
+
+    <!--<com.github.mikephil.charting.charts.BarChart-->
+        <!--android:id="@+id/barchart"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"/>-->
+
+    <!--<com.github.mikephil.charting.charts.PieChart-->
+        <!--android:id="@+id/chart1"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+    <!--/>-->
 
     <Button
         style="@style/GenericButton"

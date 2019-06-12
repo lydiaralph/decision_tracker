@@ -20,6 +20,7 @@ import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModel;
 import com.lydiaralph.decisiontracker.database.viewmodel.VoteViewModel;
 
 import java.time.LocalDate;
+import java.util.concurrent.ExecutionException;
 
 import javax.inject.Inject;
 
@@ -29,6 +30,7 @@ import androidx.lifecycle.ViewModelProviders;
 import dagger.android.AndroidInjection;
 
 public class VoteActivity extends MenuBasedActivity {
+    public static final String VOTE_ID = "VoteId";
     private static final String LOG = VoteActivity.class.getSimpleName();
     public static final String INPUT_SELECTED_OPTION_ID = "SelectedOptionId";
 
@@ -92,8 +94,6 @@ public class VoteActivity extends MenuBasedActivity {
             @Override
             public void onClick(View v) {
 
-                Intent resultIntent = new Intent(VoteActivity.this, ViewDecisionsCategoryActivity.class);
-                resultIntent.setAction(ViewDecisionsCategoryActivity.VIEW);
 
                 int selectedOptionId = optionsSelection.getCheckedRadioButtonId();
                 if (selectedOptionId == -1 || selectedOptionId == 999) {
@@ -101,17 +101,27 @@ public class VoteActivity extends MenuBasedActivity {
                             getApplicationContext(),
                             R.string.empty_option_not_saved,
                             Toast.LENGTH_LONG).show();
+                    Intent resultIntent = new Intent(VoteActivity.this, ViewDecisionsCategoryActivity.class);
+                    resultIntent.setAction(ViewDecisionsCategoryActivity.VIEW);
                     setResult(Activity.RESULT_CANCELED, resultIntent);
+                    startActivity(resultIntent);
+                    finish();
                 } else {
                     RadioButton selectedOption = findViewById(selectedOptionId);
                     Log.i(LOG, "Voted for : " + selectedOption.getText().toString());
 
-                    voteViewModel.insert(new Vote(selectedOptionId, LocalDate.now()));
+                    try {
+                        Integer voteId = voteViewModel.insert(new Vote(selectedOptionId, LocalDate.now()));
 
-                    setResult(Activity.RESULT_OK, resultIntent);
+                        Intent resultIntent = new Intent(VoteActivity.this, MoodTrackerActivity.class);
+                        resultIntent.putExtra(VOTE_ID, voteId);
+                        setResult(Activity.RESULT_OK, resultIntent);
+                        startActivity(resultIntent);
+                        finish();
+                    } catch (ExecutionException | InterruptedException exception){
+                        Log.e(LOG, "Could not insert vote into database: " + exception.getCause());
+                    }
                 }
-                startActivity(resultIntent);
-                finish();
             }
         });
     }

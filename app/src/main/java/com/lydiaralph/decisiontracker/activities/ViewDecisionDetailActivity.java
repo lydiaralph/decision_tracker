@@ -4,25 +4,30 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.LinearLayout;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
-import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.lydiaralph.decisiontracker.R;
-import com.lydiaralph.decisiontracker.charts.PieChartDisplay;
+import com.lydiaralph.decisiontracker.charts.LineChartDisplay;
+import com.lydiaralph.decisiontracker.charts.SimpleListDisplay;
 import com.lydiaralph.decisiontracker.database.entity.DecisionOptions;
+import com.lydiaralph.decisiontracker.database.entity.MoodDescriptionWithIntensity;
 import com.lydiaralph.decisiontracker.database.entity.OptionsVotes;
 import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModel;
 import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModelFactory;
+import com.lydiaralph.decisiontracker.database.viewmodel.MoodViewModel;
 import com.lydiaralph.decisiontracker.fragments.TerminateDecisionTrackingFragment;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -43,6 +48,9 @@ public class ViewDecisionDetailActivity extends MenuBasedActivity implements OnC
     DecisionViewModelFactory viewModelFactory;
 
     private DecisionViewModel decisionViewModel;
+    private MoodViewModel moodViewModel;
+
+    private LineChartDisplay lineChartDisplay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +62,14 @@ public class ViewDecisionDetailActivity extends MenuBasedActivity implements OnC
 
         Integer selectedDecisionId = (Integer) getIntent().getExtras().get(ViewDecisionsCategoryActivity.VIEW_DECISION_ID);
         decisionViewModel = ViewModelProviders.of(this, viewModelFactory).get(DecisionViewModel.class);
+        moodViewModel = ViewModelProviders.of(this, viewModelFactory).get(MoodViewModel.class);
+//        lineChartDisplay = new LineChartDisplay(findViewById(R.id.line_chart));
 
         final Observer<DecisionOptions> decisionObserver = getDecisionOptionsObserver();
+        final Observer<List<MoodDescriptionWithIntensity>> moodObserver = getMoodObserver();
         decisionViewModel.getDecisionById(selectedDecisionId).observe(this, decisionObserver);
+        moodViewModel.getAllMoodsByDecisionId(selectedDecisionId)
+                .observe(ViewDecisionDetailActivity.this, moodObserver);
     }
 
     @Override
@@ -82,7 +95,7 @@ public class ViewDecisionDetailActivity extends MenuBasedActivity implements OnC
 
     @NotNull
     private Observer<DecisionOptions> getDecisionOptionsObserver() {
-        LinearLayout myRoot = findViewById(R.id.display_options);
+//        LinearLayout myRoot = findViewById(R.id.display_options);
 
         TextView editorialTextView = new TextView(this);
 
@@ -111,20 +124,48 @@ public class ViewDecisionDetailActivity extends MenuBasedActivity implements OnC
                         if (!hasVotes) {
                             editorialTextView.setText(getString(R.string.no_votes_for_this_decision));
                         } else {
-                            PieChart chart = findViewById(R.id.chart1);
-                            PieChartDisplay pieChartDisplay = new PieChartDisplay(chart, decision);
-                            pieChartDisplay.displayVotesInPieChart();
-                            pieChartDisplay.getChart().setOnChartValueSelectedListener(ViewDecisionDetailActivity.this);
+//                            PieChart chart = findViewById(R.id.chart1);
+//                            PieChartDisplay pieChartDisplay = new PieChartDisplay(chart, decision);
+//                            pieChartDisplay.displayVotesInPieChart();
+//                            pieChartDisplay.getChart().setOnChartValueSelectedListener(ViewDecisionDetailActivity.this);
                             //                        editorialTextView.setText(R.string.you_decided);
                         }
+                        //                        editorialTextView.setText(R.string.you_decided);
                     } else {
                         editorialTextView.setText(R.string.no_options_placeholder);
                     }
-                    myRoot.addView(editorialTextView);
+//                    myRoot.addView(editorialTextView);
                 }
+            }
+
+
+        };
+    }
+
+    @NotNull
+    private Observer<List<MoodDescriptionWithIntensity>> getMoodObserver() {
+        return new Observer<List<MoodDescriptionWithIntensity>>() {
+            @Override
+            public void onChanged(List<MoodDescriptionWithIntensity> moodDescriptionWithIntensities) {
+
+                displayMoodsAsSimpleList(moodDescriptionWithIntensities);
+
+//                Log.i(LOG, "Displaying data in line chart");
+//                LineData data = LineChartDisplay.setData(moodDescriptionWithIntensities);
+//                lineChartDisplay.displayData(data);
             }
         };
     }
+
+    private void displayMoodsAsSimpleList(List<MoodDescriptionWithIntensity> moodDescriptionWithIntensities) {
+        List<String> arrayOfMoods = SimpleListDisplay.setData(moodDescriptionWithIntensities);
+        ArrayAdapter adapter = new ArrayAdapter<String>(ViewDecisionDetailActivity.this,
+                R.layout.activity_listview, arrayOfMoods);
+        ListView listView = (ListView) findViewById(R.id.mobile_list);
+        SimpleListDisplay simpleListDisplay = new SimpleListDisplay(adapter, listView);
+        simpleListDisplay.displayData(arrayOfMoods);
+    }
+
 
     private String getFormattedDateString(@NotNull DecisionOptions decision) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");

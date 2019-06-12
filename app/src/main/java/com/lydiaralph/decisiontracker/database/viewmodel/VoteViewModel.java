@@ -28,8 +28,11 @@ import com.lydiaralph.decisiontracker.database.entity.Vote;
 import com.lydiaralph.decisiontracker.database.repository.VoteRepository;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import javax.inject.Inject;
+
+import static java.lang.Math.toIntExact;
 
 public class VoteViewModel extends AndroidViewModel {
 
@@ -47,7 +50,8 @@ public class VoteViewModel extends AndroidViewModel {
         return mAllVotes;
     }
 
-    public void insert(Vote vote) {
-        mRepository.insert(vote);
+    public Integer insert(Vote vote) throws ExecutionException, InterruptedException {
+        long voteId = mRepository.insert(vote);
+        return toIntExact(voteId);
     }
 }
