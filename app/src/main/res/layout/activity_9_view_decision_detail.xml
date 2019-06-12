@@ -10,6 +10,23 @@
         android:layout_height="wrap_content"
         android:textAppearance="@style/PageTitle" />
         <!--android:text="@string/you_decided" />-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/PageTitle"
+        android:text="Choose your fragment" />
+
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="match_parent"
+        android:textAppearance="@style/PageTitle"
+        android:layout_height="60dp" />
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 
     <TextView
         android:id="@+id/display_dates"
@@ -48,13 +65,6 @@
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent"-->
     <!--/>-->
-
-    <Button
-        style="@style/GenericButton"
-        android:id="@+id/button_return_to_main_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/return_to_main_menu" />
 
 </LinearLayout>
 

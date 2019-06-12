@@ -1,20 +1,22 @@
 package com.lydiaralph.decisiontracker.charts;
 
-import android.graphics.Color;
 import android.graphics.DashPathEffect;
+import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
+import com.lydiaralph.decisiontracker.R;
 import com.lydiaralph.decisiontracker.activities.MenuBasedActivity;
 import com.lydiaralph.decisiontracker.database.entity.MoodDescriptionWithIntensity;
 import com.lydiaralph.decisiontracker.utils.MoodDescriptionWithIntensityComparator;
@@ -22,38 +24,48 @@ import com.lydiaralph.decisiontracker.utils.MoodDescriptionWithIntensityComparat
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class LineChartDisplay implements ChartDisplay<LineData> {
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
-    private static final String LOG = MenuBasedActivity.class.getSimpleName();
-
+public class LineChartFragment extends Fragment implements ChartDisplay<List<MoodDescriptionWithIntensity>> {
+    private static final String LOG_NAME = LineChartFragment.class.getSimpleName();
     private LineChart chart;
+    private LineData chartData;
 
-    public LineChartDisplay(LineChart chart) {
-        this.chart = chart;
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.line_chart_view, container, false);
+        chart = view.findViewById(R.id.line_chart);
+        chart.setData(this.chartData);
+        return view;
     }
 
-    public void displayData(LineData data) {
-        if (this.chart.getClass() != LineChart.class) {
-            String errorMessage = "Trying to use incorrect chart type for these datasets";
-            Log.e(LOG, errorMessage);
-            throw new RuntimeException();
+    public void displayData(List<MoodDescriptionWithIntensity> data) {
+        if(data == null){
+            Log.e(LOG_NAME, "No data supplied for chart");
+            return;
         }
 
-        Legend l = chart.getLegend();
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-        l.setOrientation(Legend.LegendOrientation.VERTICAL);
-        l.setDrawInside(false);
+        if(chartData == null) {
+            LineData chartData = getChartData(data);
+            this.chartData = chartData;
 
-        chart.setAutoScaleMinMaxEnabled(true);
-        XAxis x = chart.getXAxis();
-        x.setValueFormatter(new MyXAxisFormatter());
-        x.setPosition(XAxis.XAxisPosition.BOTTOM);
-        chart.setData(data);
-        chart.invalidate();
+            Legend l = chart.getLegend();
+            l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+            l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+            l.setOrientation(Legend.LegendOrientation.VERTICAL);
+            l.setDrawInside(false);
+
+            chart.setAutoScaleMinMaxEnabled(true);
+            XAxis x = chart.getXAxis();
+            x.setValueFormatter(new MyXAxisFormatter());
+            x.setPosition(XAxis.XAxisPosition.BOTTOM);
+            chart.setData(chartData);
+            chart.invalidate();
+        }
     }
 
     public class MyXAxisFormatter extends ValueFormatter {
@@ -62,7 +74,6 @@ public class LineChartDisplay implements ChartDisplay<LineData> {
             LocalDate dateValue = LocalDate.ofEpochDay((long) value);
             return dateValue.format(DateTimeFormatter.ofPattern("MMM yy"));
         }
-
     }
 
     private static void formatDataSet(int index, LineDataSet individualDataSet){
@@ -94,7 +105,7 @@ public class LineChartDisplay implements ChartDisplay<LineData> {
         individualDataSet.enableDashedHighlightLine(10f, 5f, 0f);
     }
 
-    public static LineData setData(List<MoodDescriptionWithIntensity> inputData) {
+    private LineData getChartData(List<MoodDescriptionWithIntensity> inputData) {
         String label = "";
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
 
