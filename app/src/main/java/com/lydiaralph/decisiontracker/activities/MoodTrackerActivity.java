@@ -16,6 +16,8 @@ import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModelFactor
 import com.lydiaralph.decisiontracker.database.viewmodel.MoodTypeViewModel;
 import com.lydiaralph.decisiontracker.database.viewmodel.MoodViewModel;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,25 +51,7 @@ public class MoodTrackerActivity extends MenuBasedActivity {
 
         LinearLayout moodOptions = findViewById(R.id.mood_options);
 
-        final Observer<List<MoodType>> moodTypeObserver = new Observer<List<MoodType>>() {
-            @Override
-            public void onChanged(@Nullable final List<MoodType> moodTypes) {
-                for(MoodType moodType: moodTypes){
-                    TextView textView = new TextView(getApplicationContext());
-                    textView.setText(moodType.getDescription());
-                    textView.setId(moodType.getId());
-
-                    SeekBar intensityMeasure = new SeekBar(getApplicationContext());
-                    intensityMeasure.setMax(100);
-                    intensityMeasure.setMin(0);
-                    intensityMeasure.setId(moodType.getId());
-                    intensityMeasure.setPadding(0,0,0,10);
-
-                    moodOptions.addView(textView);
-                    moodOptions.addView(intensityMeasure);
-                }
-            }
-        };
+        final Observer<List<MoodType>> moodTypeObserver = getMoodObserver(moodOptions);
 
         moodTypeViewModel.getAllMoodTypes().observe(this, moodTypeObserver);
 
@@ -97,5 +81,29 @@ public class MoodTrackerActivity extends MenuBasedActivity {
                 finish();
             }
         });
+    }
+
+    @NotNull
+    private Observer<List<MoodType>> getMoodObserver(LinearLayout moodOptions) {
+        return new Observer<List<MoodType>>() {
+            @Override
+            public void onChanged(List<MoodType> moodTypes) {
+                for(MoodType moodType: moodTypes){
+                    TextView textView = new TextView(getApplicationContext());
+                    textView.setText(moodType.getDescription());
+                    textView.setId(moodType.getId());
+
+                    SeekBar intensityMeasure = new SeekBar(getApplicationContext());
+                    intensityMeasure.setMax(100);
+                    intensityMeasure.setMin(0);
+                    intensityMeasure.setId(moodType.getId());
+                    intensityMeasure.setPadding(0,0,0,10);
+
+                    moodOptions.addView(textView);
+                    moodOptions.addView(intensityMeasure);
+                }
+
+            }
+        };
     }
 }
