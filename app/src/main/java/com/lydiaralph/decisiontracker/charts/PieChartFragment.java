@@ -10,10 +10,13 @@ import android.view.ViewGroup;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.MPPointF;
 import com.lydiaralph.decisiontracker.R;
 import com.lydiaralph.decisiontracker.database.entity.DecisionOptions;
@@ -24,7 +27,7 @@ import java.util.Collections;
 
 import androidx.fragment.app.Fragment;
 
-public class PieChartFragment extends Fragment implements ChartDisplay<DecisionOptions> {
+public class PieChartFragment extends Fragment implements ChartDisplay<DecisionOptions>, OnChartValueSelectedListener {
 
     private static final String LOG_NAME = PieChartFragment.class.getSimpleName();
     private PieChart chart;
@@ -144,4 +147,20 @@ public class PieChartFragment extends Fragment implements ChartDisplay<DecisionO
             return String.valueOf(Math.round(value));
         }
     }
+
+    @Override
+    public void onNothingSelected() {
+        Log.i(LOG_NAME, "nothing selected");
+    }
+
+    @Override
+    public void onValueSelected(Entry e, Highlight h) {
+        if (e == null)
+            return;
+        Log.i("VAL SELECTED",
+                "Value: " + e.getY() + ", index: " + h.getX()
+                        + ", DataSet index: " + h.getDataSetIndex());
+    }
+
+
 }
