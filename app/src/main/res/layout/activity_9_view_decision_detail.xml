@@ -69,12 +69,5 @@
     <!--android:orientation="horizontal" />-->
     <!--&lt;!&ndash;android:text= "@string/no_options_placeholder"&ndash;&gt;-->
 
-    <!--<com.github.mikephil.charting.charts.BarChart-->
-    <!--android:id="@+id/barchart"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"/>-->
-
-
-
 </LinearLayout>
 
