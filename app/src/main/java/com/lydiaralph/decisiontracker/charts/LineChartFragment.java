@@ -17,7 +17,6 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.lydiaralph.decisiontracker.R;
-import com.lydiaralph.decisiontracker.activities.MenuBasedActivity;
 import com.lydiaralph.decisiontracker.database.entity.MoodDescriptionWithIntensity;
 import com.lydiaralph.decisiontracker.utils.MoodDescriptionWithIntensityComparator;
 
@@ -27,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
 public class LineChartFragment extends Fragment implements ChartDisplay<List<MoodDescriptionWithIntensity>> {
     private static final String LOG_NAME = LineChartFragment.class.getSimpleName();
@@ -51,22 +49,30 @@ public class LineChartFragment extends Fragment implements ChartDisplay<List<Moo
 
         LineData chartData = getChartData(data);
         this.chartData = chartData;
+        chart.setData(chartData);
 
-        Legend l = chart.getLegend();
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-        l.setOrientation(Legend.LegendOrientation.VERTICAL);
-        l.setDrawInside(false);
+        formatLegend();
+        formatXAxis();
 
         chart.setAutoScaleMinMaxEnabled(true);
-        XAxis x = chart.getXAxis();
-        x.setValueFormatter(new MyXAxisFormatter());
-        x.setPosition(XAxis.XAxisPosition.BOTTOM);
-        chart.setData(chartData);
         chart.invalidate();
     }
 
-    public class MyXAxisFormatter extends ValueFormatter {
+    private void formatXAxis() {
+        XAxis x = chart.getXAxis();
+        x.setValueFormatter(new MyXAxisFormatter());
+        x.setPosition(XAxis.XAxisPosition.BOTTOM);
+    }
+
+    private void formatLegend() {
+        Legend l = chart.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        l.setDrawInside(false);
+    }
+
+    private class MyXAxisFormatter extends ValueFormatter {
         @Override
         public String getAxisLabel(float value, AxisBase axis) {
             LocalDate dateValue = LocalDate.ofEpochDay((long) value);
@@ -80,9 +86,11 @@ public class LineChartFragment extends Fragment implements ChartDisplay<List<Moo
         // draw dashed line
         individualDataSet.enableDashedLine(10f, 5f, 0f);
 
-        int colorIndexToUse = (index + ChartDisplay.COLORS.length) % ChartDisplay.COLORS.length;
-        individualDataSet.setColor(ChartDisplay.COLORS[colorIndexToUse]);
-        individualDataSet.setCircleColor(ChartDisplay.COLORS[colorIndexToUse]);
+        List<Integer> colors = ChartColors.getColors();
+
+        int colorIndexToUse = (index + colors.size()) % colors.size();
+        individualDataSet.setColor(colors.get(colorIndexToUse));
+        individualDataSet.setCircleColor(colors.get(colorIndexToUse));
 
         // line thickness and point size
         individualDataSet.setLineWidth(1f);

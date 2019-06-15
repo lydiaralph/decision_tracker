@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,15 +16,13 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.lydiaralph.decisiontracker.R;
 import com.lydiaralph.decisiontracker.charts.LineChartFragment;
-import com.lydiaralph.decisiontracker.charts.SimpleListDisplay;
+import com.lydiaralph.decisiontracker.charts.PieChartFragment;
 import com.lydiaralph.decisiontracker.database.entity.DecisionOptions;
 import com.lydiaralph.decisiontracker.database.entity.MoodDescriptionWithIntensity;
 import com.lydiaralph.decisiontracker.database.entity.OptionsVotes;
 import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModel;
 import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModelFactory;
 import com.lydiaralph.decisiontracker.database.viewmodel.MoodViewModel;
-import com.lydiaralph.decisiontracker.fragments.ArticleFragment;
-import com.lydiaralph.decisiontracker.fragments.HeadlinesFragment;
 import com.lydiaralph.decisiontracker.fragments.TerminateDecisionTrackingFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -53,6 +50,7 @@ public class ViewDecisionDetailActivity extends FragmentActivity implements OnCh
     private Spinner chooseChartOptionSpinner;
 
     private LineChartFragment lineChartFragment;
+    private PieChartFragment pieChartFragment;
 
     @Inject
     DecisionViewModelFactory viewModelFactory;
@@ -61,6 +59,7 @@ public class ViewDecisionDetailActivity extends FragmentActivity implements OnCh
     private MoodViewModel moodViewModel;
 
     private List<MoodDescriptionWithIntensity> inputData;
+    private DecisionOptions decisionOptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,12 +86,16 @@ public class ViewDecisionDetailActivity extends FragmentActivity implements OnCh
             }
 
             lineChartFragment = new LineChartFragment();
-//            lineChartFragment.displayData(inputData);
-
             lineChartFragment.setArguments(getIntent().getExtras());
+
+            pieChartFragment = new PieChartFragment();
 
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, lineChartFragment)
+                    .commit();
+
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragment_container, pieChartFragment)
                     .commit();
 
             addItemsOnSpinner();
@@ -101,8 +104,11 @@ public class ViewDecisionDetailActivity extends FragmentActivity implements OnCh
 
     public void addItemsOnSpinner() {
         chooseChartOptionSpinner = findViewById(R.id.spinner1);
+
+        // TODO: Replace these with actual IDs
         List<String> list = new ArrayList<>();
         list.add("Line chart");
+        list.add("Pie chart");
         list.add("Other");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, list);
@@ -115,11 +121,17 @@ public class ViewDecisionDetailActivity extends FragmentActivity implements OnCh
 
                 String chosenItem = parent.getItemAtPosition(position).toString();
 
-                if(chosenItem.equals("Line chart")) {
+                if (chosenItem.equals("Line chart")) {
                     lineChartFragment.displayData(inputData);
 
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.fragment_container, lineChartFragment)
+                            .commit();
+                } else if (chosenItem.equals("Pie chart")) {
+                    pieChartFragment.displayData(decisionOptions);
+
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container, pieChartFragment)
                             .commit();
                 } else {
                     getSupportFragmentManager().beginTransaction()
@@ -192,10 +204,7 @@ public class ViewDecisionDetailActivity extends FragmentActivity implements OnCh
                         if (!hasVotes) {
                             editorialTextView.setText(getString(R.string.no_votes_for_this_decision));
                         } else {
-//                            PieChart chart = findViewById(R.id.chart1);
-//                            PieChartDisplay pieChartDisplay = new PieChartDisplay(chart, decision);
-//                            pieChartDisplay.displayVotesInPieChart();
-//                            pieChartDisplay.getChart().setOnChartValueSelectedListener(ViewDecisionDetailActivity.this);
+                            setDecisionOptions(decision);
                             //                        editorialTextView.setText(R.string.you_decided);
                         }
                         //                        editorialTextView.setText(R.string.you_decided);
@@ -225,7 +234,11 @@ public class ViewDecisionDetailActivity extends FragmentActivity implements OnCh
         };
     }
 
-    private void setChartDataToDisplay(List<MoodDescriptionWithIntensity> data){
+    private void setDecisionOptions(DecisionOptions decisionOptions) {
+        this.decisionOptions = decisionOptions;
+    }
+
+    private void setChartDataToDisplay(List<MoodDescriptionWithIntensity> data) {
         this.inputData = data;
     }
 
