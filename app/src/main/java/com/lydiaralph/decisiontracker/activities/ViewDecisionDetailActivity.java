@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -198,9 +199,7 @@ public class ViewDecisionDetailActivity extends FragmentActivity implements Term
 
     @NotNull
     private Observer<DecisionOptions> getDecisionOptionsObserver() {
-//        LinearLayout myRoot = findViewById(R.id.display_options);
-
-        TextView editorialTextView = new TextView(this);
+        TextView editorialTextView = findViewById(R.id.decision_text);
 
         return new Observer<DecisionOptions>() {
             @Override
@@ -228,18 +227,15 @@ public class ViewDecisionDetailActivity extends FragmentActivity implements Term
                             editorialTextView.setText(getString(R.string.no_votes_for_this_decision));
                         } else {
                             setDecisionOptions(decision);
-                            //                        editorialTextView.setText(R.string.you_decided);
+                            editorialTextView.setText(decision.getDecision().getDecisionText());
                         }
                     }
 
-                    //                        editorialTextView.setText(R.string.you_decided);
                     else {
                         editorialTextView.setText(R.string.no_options_placeholder);
                     }
-//                    myRoot.addView(editorialTextView);
                 }
             }
-
 
         };
     }
@@ -249,12 +245,7 @@ public class ViewDecisionDetailActivity extends FragmentActivity implements Term
         return new Observer<List<MoodDescriptionWithIntensity>>() {
             @Override
             public void onChanged(List<MoodDescriptionWithIntensity> moodDescriptionWithIntensities) {
-
                 setChartDataToDisplay(moodDescriptionWithIntensities);
-//                displayMoodsAsSimpleList(moodDescriptionWithIntensities);
-//
-//                Log.i(LOG_NAME, "Displaying data in line chart");
-//                lineChartDisplay.displayData(moodDescriptionWithIntensities);
             }
         };
     }
