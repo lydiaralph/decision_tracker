@@ -152,6 +152,98 @@ public abstract class AppDatabase extends RoomDatabase {
             moodDao.insertAll(moodListToInsert);
         }
 
+        private void insertSampleDecision1(){
+            LocalDate startDate = LocalDate.of(2019, 1, 3);
+            LocalDate endDate = LocalDate.of(2019, 1, 13);
+            Decision decisionWithOptionsNoVotes = new Decision("What shall I do next year?", startDate, endDate);
+            Long decisionId = decisionDao.insert(decisionWithOptionsNoVotes);
+            Long optionId1 = optionDao.insert(new Option(decisionId, "Train as a hairdresser"));
+            Long optionId2 = optionDao.insert(new Option(decisionId, "Travel the world"));
+            Long optionId3 = optionDao.insert(new Option(decisionId, "Move to Australia and become a surf instructor"));
+            Long optionId4 = optionDao.insert(new Option(decisionId, "Watch loads of TV"));
+
+            List<Long> optionsAvailable = Arrays.asList(optionId1, optionId2, optionId3, optionId4);
+
+            // For each date, insert new Vote, picking random option, with random moods
+            List<Mood> moodListToInsert = new ArrayList<>();
+            int decisionDuration = ((Long) ChronoUnit.DAYS.between(startDate,endDate)).intValue();
+            for(int i = 0; i < decisionDuration; i++){
+                int optionIdToUse = (int)(Math.random() * ((optionsAvailable.size())));
+                Long optionToVoteFor = optionsAvailable.get(optionIdToUse);
+
+                long voteId = voteDao.insert(new Vote(optionToVoteFor, startDate.plus(i, ChronoUnit.DAYS)));
+
+                moodListToInsert.addAll(Arrays.asList(
+                        new Mood(voteId, 1, (int)(Math.random() * 100)), // Angry
+                        new Mood(voteId, 2, (int)(Math.random() * 100)), // Sad
+                        new Mood(voteId, 3, (int)(Math.random() * 100)), // Happy
+                        new Mood(voteId, 4, (int)(Math.random() * 100)))); // Relaxed
+            }
+
+            moodDao.insertAll(moodListToInsert);
+        }
+
+        private void insertSampleDecision2(){
+            LocalDate startDate = LocalDate.of(2019, 6, 4);
+            LocalDate endDate = LocalDate.of(2019, 8, 6);
+            Decision decisionWithOptionsNoVotes = new Decision("Baby names", startDate, endDate);
+            Long decisionId = decisionDao.insert(decisionWithOptionsNoVotes);
+            Long optionId1 = optionDao.insert(new Option(decisionId, "Meredith"));
+            Long optionId2 = optionDao.insert(new Option(decisionId, "Alex"));
+            Long optionId3 = optionDao.insert(new Option(decisionId, "Aubrey"));
+            Long optionId4 = optionDao.insert(new Option(decisionId, "Ashley"));
+
+            List<Long> optionsAvailable = Arrays.asList(optionId1, optionId2, optionId3, optionId4);
+
+            // For each date up till today, insert new Vote, picking random option, with random moods
+            List<Mood> moodListToInsert = new ArrayList<>();
+            int decisionDuration = ((Long) ChronoUnit.DAYS.between(startDate, LocalDate.now())).intValue();
+            for(int i = 0; i < decisionDuration; i++){
+                int optionIdToUse = (int)(Math.random() * ((optionsAvailable.size())));
+                Long optionToVoteFor = optionsAvailable.get(optionIdToUse);
+
+                long voteId = voteDao.insert(new Vote(optionToVoteFor, startDate.plus(i, ChronoUnit.DAYS)));
+
+                moodListToInsert.addAll(Arrays.asList(
+                        new Mood(voteId, 1, (int)(Math.random() * 100)), // Angry
+                        new Mood(voteId, 2, (int)(Math.random() * 100)), // Sad
+                        new Mood(voteId, 3, (int)(Math.random() * 100)), // Happy
+                        new Mood(voteId, 4, (int)(Math.random() * 100)))); // Relaxed
+            }
+
+            moodDao.insertAll(moodListToInsert);
+        }
+
+        private void insertSampleDecision3(){
+            LocalDate startDate = LocalDate.of(2019, 1, 3);
+            LocalDate endDate = LocalDate.of(2019, 1, 13);
+            Decision decisionWithOptionsNoVotes = new Decision("Where shall I live?", startDate, endDate);
+            Long decisionId = decisionDao.insert(decisionWithOptionsNoVotes);
+            Long optionId1 = optionDao.insert(new Option(decisionId, "City"));
+            Long optionId2 = optionDao.insert(new Option(decisionId, "Small town"));
+            Long optionId3 = optionDao.insert(new Option(decisionId, "Countryside"));
+
+            List<Long> optionsAvailable = Arrays.asList(optionId1, optionId2, optionId3);
+
+            // For each date, insert new Vote, picking random option, with random moods
+            List<Mood> moodListToInsert = new ArrayList<>();
+            int decisionDuration = ((Long) ChronoUnit.DAYS.between(startDate,endDate)).intValue();
+            for(int i = 0; i < decisionDuration; i++){
+                int optionIdToUse = (int)(Math.random() * ((optionsAvailable.size())));
+                Long optionToVoteFor = optionsAvailable.get(optionIdToUse);
+
+                long voteId = voteDao.insert(new Vote(optionToVoteFor, startDate.plus(i, ChronoUnit.DAYS)));
+
+                moodListToInsert.addAll(Arrays.asList(
+                        new Mood(voteId, 1, (int)(Math.random() + 1 * 30)), // Angry
+                        new Mood(voteId, 2, (int)(Math.random() + 1 * 40)), // Sad
+                        new Mood(voteId, 3, (int)(Math.random() + 1 * 100)), // Happy
+                        new Mood(voteId, 4, (int)(Math.random() + 1 * 100)))); // Relaxed
+            }
+
+            moodDao.insertAll(moodListToInsert);
+        }
+
         private void insertStaticMoodTypes(){
             List<MoodType> moodTypes = Arrays.asList(
                     new MoodType(1, "Angry"),
@@ -171,6 +263,8 @@ public abstract class AppDatabase extends RoomDatabase {
 
             insertDecisionWithOptionsNoVotes();
             insertDecisionWithOptionsAndVotes();
+            insertSampleDecision1();
+            insertSampleDecision2();
 
             insertStaticMoodTypes();
 
