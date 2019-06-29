@@ -22,17 +22,26 @@
         <!--android:text="@string/you_decided" />-->
 
         <TextView
+            android:id="@+id/decision_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/SubtitleTextStyle"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/page_title" />
+
+        <TextView
             android:id="@+id/display_dates"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextStyle"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/page_title" />
+            app:layout_constraintTop_toBottomOf="@+id/decision_text" />
 
         <TextView
             android:id="@+id/text_prompter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAppearance="@style/TextStyle"
             android:text="@string/choose_your_chart"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/display_dates" />

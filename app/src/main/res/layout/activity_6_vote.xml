@@ -14,7 +14,7 @@
         android:id="@+id/display_decision_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextStyle"
+        android:textAppearance="@style/SubtitleTextStyle"
         android:text="@string/decision_question_hint" />
 
     <TextView
