@@ -130,11 +130,13 @@ public class VoteActivity extends MenuBasedActivity {
                                      final DecisionOptions decision) {
         RadioButton noVoteRadioButton = new RadioButton(this);
         noVoteRadioButton.setText(getString(R.string.no_vote_today));
+        noVoteRadioButton.setTextAppearance(R.style.TextStyle);
         noVoteRadioButton.setId(Integer.valueOf(999));
         radioButtonGroup.addView(noVoteRadioButton);
 
         for(OptionsVotes option : decision.getOptionsList()){
             RadioButton radioButton = new RadioButton(this);
+            radioButton.setTextAppearance(R.style.TextStyle);
             radioButton.setText(option.getOption().getOptionText());
             radioButton.setId(option.getOption().getId());
             radioButtonGroup.addView(radioButton);

@@ -20,13 +20,6 @@
 
     <Button
         style="@style/GenericButton"
-        android:id="@+id/button_view_results"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/view_results" />
-
-    <Button
-        style="@style/GenericButton"
         android:id="@+id/button_configure"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,6 +31,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/vote_on_decision" />
+
+    <Button
+        style="@style/GenericButton"
+        android:id="@+id/button_view_results"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/view_results" />
 
 </LinearLayout>
 

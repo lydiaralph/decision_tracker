@@ -57,7 +57,8 @@ public class ConfigureNewDecisionActivity extends MenuBasedActivity {
         Integer[] trackerPeriodItems = new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
                 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
                 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31};
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, trackerPeriodItems);
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(this, R.layout.spinner, trackerPeriodItems);
+
         trackerPeriodView.setAdapter(adapter);
 
         final RadioGroup radioTrackerPeriodType = findViewById(R.id.radio_tracker_period_type);

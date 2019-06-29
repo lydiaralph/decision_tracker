@@ -1,4 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
     <style name="AppBaseTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/orange</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -20,12 +21,6 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="PageTitle" parent="TextAppearance.AppCompat.Title">
-        <item name="android:textSize">32sp</item>
-        <item name="android:layout_marginBottom">6dp</item>
-        <item name="android:paddingLeft">8dp</item>
-    </style>
-
     <style name="PageStyle">
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_width">fill_parent</item>
@@ -34,27 +29,40 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="decision_title">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">26dp</item>
-        <item name="android:textSize">24sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/black</item>
+    <!-- TEXT SIZES -->
+    <style name="PageTitle" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textSize">60sp</item>
         <item name="android:layout_marginBottom">6dp</item>
         <item name="android:paddingLeft">8dp</item>
     </style>
 
-    <style name="TextStyle" parent="TextAppearance.AppCompat">
+    <style name="SubtitleTextStyle" parent="TextAppearance.AppCompat.Title">
         <item name="android:textColor">?android:textColorPrimary</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textSize">40sp</item>
+        <item name="android:paddingLeft">8dp</item>
+    </style>
+
+    <style name="TextStyle" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:textSize">30sp</item>
         <item name="android:layout_marginBottom">6dp</item>
         <item name="android:paddingLeft">8dp</item>
     </style>
 
-    <style name="GenericButton" parent="Widget.AppCompat.Button.Colored">
-        <item name="android:width">250dp</item>
-        <item name="android:textSize">20sp</item>
+    <style name="GenericButton" parent="@android:style/Widget.DeviceDefault.Button.Colored">
+        <item name="android:width">450dp</item>
+        <item name="android:textSize">30sp</item>
         <item name="android:gravity">center</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:layout_margin">6dp</item>
+    </style>
+
+    <style name="MenuItems">MenuItems>
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:textSize">60sp</item>
+        <!--<item name="android:layout_marginBottom">6dp</item>-->
+        <!--<item name="android:paddingLeft">8dp</item>-->
     </style>
 
 </resources>

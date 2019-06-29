@@ -3,6 +3,7 @@ package com.lydiaralph.decisiontracker.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.lydiaralph.decisiontracker.R;
 import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModelFactory;
@@ -53,12 +54,19 @@ public class ViewDecisionsCategoryActivity extends MenuBasedActivity {
         if (callingIntent != null && callingIntent.getAction() != null) {
             if (callingIntent.getAction().equals(ViewDecisionsCategoryActivity.VIEW)) {
                 setOnClickToViewDetailedResult(recyclerView);
+                setPageTitle(findViewById(R.id.page_title), getString(R.string.view_results));
             } else if (callingIntent.getAction().equals(VOTE)) {
                 setOnClickToVote(recyclerView);
+                setPageTitle(findViewById(R.id.page_title), getString(R.string.vote_on_decision));
             } else {
                 Log.e(LOG, "Unrecognised calling intent: " + callingIntent.getAction());
             }
         }
+    }
+
+    private void setPageTitle(TextView recyclerView, String title){
+        recyclerView.setText(title);
+
     }
 
     private void setOnClickToVote(RecyclerView recyclerView) {
