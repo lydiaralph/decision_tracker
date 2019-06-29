@@ -39,6 +39,7 @@ public class LineChartFragment extends Fragment implements ChartDisplay<List<Moo
         View view = inflater.inflate(R.layout.line_chart_view, container, false);
         chart = view.findViewById(R.id.line_chart);
         chart.setData(this.chartData);
+        configureChart();
         return view;
     }
 
@@ -56,6 +57,11 @@ public class LineChartFragment extends Fragment implements ChartDisplay<List<Moo
         formatXAxis();
         formatYAxis();
 
+        configureChart();
+    }
+
+    private void configureChart() {
+        chart.getDescription().setText("Moods vs. time");
         chart.setAutoScaleMinMaxEnabled(true);
         chart.setTouchEnabled(true);
         chart.setPinchZoom(true);
@@ -82,6 +88,8 @@ public class LineChartFragment extends Fragment implements ChartDisplay<List<Moo
         l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         l.setWordWrapEnabled(true);
         l.setDrawInside(false);
+        l.setXEntrySpace(5f);
+        l.setStackSpace(5f);
     }
 
     private class MyXAxisFormatter extends ValueFormatter {

@@ -35,10 +35,11 @@ public class PieChartFragment extends Fragment implements ChartDisplay<DecisionO
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.pie_chart_view, container, false);
         chart = view.findViewById(R.id.pie_chart);
         chart.setData(this.chartData);
+        configureChart();
         return view;
     }
 
@@ -54,7 +55,7 @@ public class PieChartFragment extends Fragment implements ChartDisplay<DecisionO
     }
 
     private void configureChart() {
-        chart.getDescription().setEnabled(false);
+        chart.getDescription().setText("Votes per option");
         chart.setExtraOffsets(5, 10, 5, 5);
         chart.setDragDecelerationFrictionCoef(0.95f);
         chart.setDrawHoleEnabled(true);
@@ -75,11 +76,19 @@ public class PieChartFragment extends Fragment implements ChartDisplay<DecisionO
         l.setOrientation(Legend.LegendOrientation.VERTICAL);
         l.setDrawInside(false);
         l.setXEntrySpace(7f);
+        l.setTextSize(15f);
         l.setYEntrySpace(0f);
         l.setYOffset(0f);
 
         chart.setEntryLabelColor(Color.BLACK);
         chart.setEntryLabelTextSize(15f);
+
+        if(chartData != null) {
+            chartData.setValueFormatter(new IntegerFormatter());
+            chartData.setValueTextSize(15f);
+            chartData.setValueTextColor(Color.BLACK);
+            chart.setData(this.chartData);
+        }
     }
 
     private void setData(DecisionOptions decisionOptions) {
@@ -99,9 +108,6 @@ public class PieChartFragment extends Fragment implements ChartDisplay<DecisionO
         dataSet.setSelectionShift(5f);
 
         PieData data = new PieData(dataSet);
-        data.setValueFormatter(new IntegerFormatter());
-        data.setValueTextSize(11f);
-        data.setValueTextColor(Color.BLACK);
 
         this.chartData = data;
         this.chart.setData(data);
@@ -110,9 +116,9 @@ public class PieChartFragment extends Fragment implements ChartDisplay<DecisionO
     }
 
     private void generateCenterText(DecisionOptions decisionOptions) {
-        if(decisionOptions == null ||
+        if (decisionOptions == null ||
                 decisionOptions.getDecision() == null ||
-                decisionOptions.getDecision().getDecisionText() == null){
+                decisionOptions.getDecision().getDecisionText() == null) {
             chart.setCenterText("");
             return;
         }
@@ -146,6 +152,7 @@ public class PieChartFragment extends Fragment implements ChartDisplay<DecisionO
 
             return String.valueOf(Math.round(value));
         }
+
     }
 
     @Override
