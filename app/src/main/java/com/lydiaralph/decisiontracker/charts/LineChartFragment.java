@@ -11,6 +11,7 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -53,22 +54,33 @@ public class LineChartFragment extends Fragment implements ChartDisplay<List<Moo
 
         formatLegend();
         formatXAxis();
+        formatYAxis();
 
         chart.setAutoScaleMinMaxEnabled(true);
+        chart.setTouchEnabled(true);
+        chart.setPinchZoom(true);
         chart.invalidate();
+    }
+
+    private void formatYAxis(){
+        YAxis y = chart.getAxisLeft();
+        y.setTextSize(15f);
     }
 
     private void formatXAxis() {
         XAxis x = chart.getXAxis();
         x.setValueFormatter(new MyXAxisFormatter());
+        x.setTextSize(15f);
         x.setPosition(XAxis.XAxisPosition.BOTTOM);
     }
 
     private void formatLegend() {
         Legend l = chart.getLegend();
+        l.setTextSize(15f);
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
         l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
         l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        l.setWordWrapEnabled(true);
         l.setDrawInside(false);
     }
 
@@ -93,19 +105,19 @@ public class LineChartFragment extends Fragment implements ChartDisplay<List<Moo
         individualDataSet.setCircleColor(colors.get(colorIndexToUse));
 
         // line thickness and point size
-        individualDataSet.setLineWidth(1f);
-        individualDataSet.setCircleRadius(3f);
+        individualDataSet.setLineWidth(4f);
+        individualDataSet.setCircleRadius(6f);
 
         // draw points as solid circles
         individualDataSet.setDrawCircleHole(false);
 
         // customize legend entry
-        individualDataSet.setFormLineWidth(1f);
+        individualDataSet.setFormLineWidth(4f);
         individualDataSet.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
         individualDataSet.setFormSize(15.f);
 
         // text size of values
-        individualDataSet.setValueTextSize(9f);
+        individualDataSet.setValueTextSize(15f);
 
         // draw selection line as dashed
         individualDataSet.enableDashedHighlightLine(10f, 5f, 0f);

@@ -38,6 +38,8 @@ import com.lydiaralph.decisiontracker.database.entity.Option;
 import com.lydiaralph.decisiontracker.database.entity.Vote;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -86,6 +88,7 @@ public abstract class AppDatabase extends RoomDatabase {
             };
 
     // To populate the database with static data
+    // Currently used to insert test data. TODO: Remove most test data
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
 
         private final DecisionDao decisionDao;
@@ -120,41 +123,33 @@ public abstract class AppDatabase extends RoomDatabase {
 
         private void insertDecisionWithOptionsAndVotes(){
             LocalDate startDate = LocalDate.of(2019, 2, 1);
-            LocalDate endDate = LocalDate.of(2019, 2, 5);
+            LocalDate endDate = LocalDate.of(2019, 3, 5);
             Decision decisionWithOptionsNoVotes = new Decision("Decision with options and votes", startDate, endDate);
-            long decisionId = decisionDao.insert(decisionWithOptionsNoVotes);
-            long optionId1 = optionDao.insert(new Option(decisionId, "Option with three votes"));
-            long voteId_1_1 = voteDao.insert(new Vote(optionId1, LocalDate.of(2019, 2, 5)));
-            List<Mood> moods = new ArrayList<>(Arrays.asList(
-                    new Mood(voteId_1_1, 1, 74), // Angry
-                    new Mood(voteId_1_1, 2, 26), // Sad
-                    new Mood(voteId_1_1, 3, 54), // Happy
-                    new Mood(voteId_1_1, 4, 11))); // Relaxed
+            Long decisionId = decisionDao.insert(decisionWithOptionsNoVotes);
+            Long optionId1 = optionDao.insert(new Option(decisionId, "Option one"));
+            Long optionId2 = optionDao.insert(new Option(decisionId, "Option two"));
+            Long optionId3 = optionDao.insert(new Option(decisionId, "Option three"));
+            Long optionId4 = optionDao.insert(new Option(decisionId, "Option four"));
 
-            long voteId_1_2 = voteDao.insert(new Vote(optionId1, LocalDate.of(2019, 2, 7)));
-            moods.addAll(Arrays.asList(
-                    new Mood(voteId_1_2, 1, 87), // Angry
-                    new Mood(voteId_1_2, 2, 3), // Sad
-                    new Mood(voteId_1_2, 3, 26), // Happy
-                    new Mood(voteId_1_2, 4, 74))); // Relaxed
+            List<Long> optionsAvailable = Arrays.asList(optionId1, optionId2, optionId3, optionId4);
 
-            long voteId_1_3 = voteDao.insert(new Vote(optionId1, LocalDate.of(2019, 4, 1)));
-            moods.addAll(Arrays.asList(
-                    new Mood(voteId_1_3, 1, 19), // Angry
-                    new Mood(voteId_1_3, 2, 1), // Sad
-                    new Mood(voteId_1_3, 3, 39), // Happy
-                    new Mood(voteId_1_3, 4, 84))); // Relaxed
+            // For each date, insert new Vote, picking random option, with random moods
+            List<Mood> moodListToInsert = new ArrayList<>();
+            int decisionDuration = ((Long) ChronoUnit.DAYS.between(startDate,endDate)).intValue();
+            for(int i = 0; i < decisionDuration; i++){
+                int optionIdToUse = (int)(Math.random() * ((optionsAvailable.size())));
+                Long optionToVoteFor = optionsAvailable.get(optionIdToUse);
 
-            optionDao.insert(new Option(decisionId, "Option with no votes"));
-            long optionId3 = optionDao.insert(new Option(decisionId, "Option with one vote"));
-            long voteId_3_1 = voteDao.insert(new Vote(optionId3, LocalDate.of(2019, 3, 15)));
-            moods.addAll(Arrays.asList(
-                    new Mood(voteId_3_1, 1, 62), // Angry
-                    new Mood(voteId_3_1, 2, 16), // Sad
-                    new Mood(voteId_3_1, 3, 37), // Happy
-                    new Mood(voteId_3_1, 4, 93))); // Relaxed
+                long voteId = voteDao.insert(new Vote(optionToVoteFor, startDate.plus(i, ChronoUnit.DAYS)));
 
-            moodDao.insertAll(moods);
+                moodListToInsert.addAll(Arrays.asList(
+                        new Mood(voteId, 1, (int)(Math.random() * 100)), // Angry
+                        new Mood(voteId, 2, (int)(Math.random() * 100)), // Sad
+                        new Mood(voteId, 3, (int)(Math.random() * 100)), // Happy
+                        new Mood(voteId, 4, (int)(Math.random() * 100)))); // Relaxed
+            }
+
+            moodDao.insertAll(moodListToInsert);
         }
 
         private void insertStaticMoodTypes(){
