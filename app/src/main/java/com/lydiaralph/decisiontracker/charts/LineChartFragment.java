@@ -30,16 +30,20 @@ import androidx.fragment.app.Fragment;
 
 public class LineChartFragment extends Fragment implements ChartDisplay<List<MoodDescriptionWithIntensity>> {
     private static final String LOG_NAME = LineChartFragment.class.getSimpleName();
-    private LineChart chart;
+    private LineChart mChart;
     private LineData chartData;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.line_chart_view, container, false);
-        chart = view.findViewById(R.id.line_chart);
-        chart.setData(this.chartData);
+        mChart = view.findViewById(R.id.line_chart);
+        mChart.setData(this.chartData);
         configureChart();
+        formatLegend();
+        formatXAxis();
+        formatYAxis();
+
         return view;
     }
 
@@ -51,7 +55,7 @@ public class LineChartFragment extends Fragment implements ChartDisplay<List<Moo
 
         LineData chartData = getChartData(data);
         this.chartData = chartData;
-        chart.setData(chartData);
+        mChart.setData(chartData);
 
         formatLegend();
         formatXAxis();
@@ -61,28 +65,30 @@ public class LineChartFragment extends Fragment implements ChartDisplay<List<Moo
     }
 
     private void configureChart() {
-        chart.getDescription().setText("Moods vs. time");
-        chart.setAutoScaleMinMaxEnabled(true);
-        chart.setTouchEnabled(true);
-        chart.setPinchZoom(true);
-        chart.invalidate();
+        mChart.getDescription().setText("Moods vs. time");
+        mChart.getDescription().setTextSize(10f);
+        mChart.setAutoScaleMinMaxEnabled(true);
+        mChart.setTouchEnabled(true);
+        mChart.setPinchZoom(true);
+        mChart.invalidate();
+        mChart.setExtraBottomOffset(30);
     }
 
     private void formatYAxis(){
-        YAxis y = chart.getAxisLeft();
-        y.setTextSize(15f);
+        mChart.getAxisLeft().setTextSize(30f);
+        mChart.getAxisRight().setEnabled(false);
     }
 
     private void formatXAxis() {
-        XAxis x = chart.getXAxis();
+        XAxis x = mChart.getXAxis();
         x.setValueFormatter(new MyXAxisFormatter());
         x.setTextSize(15f);
         x.setPosition(XAxis.XAxisPosition.BOTTOM);
     }
 
     private void formatLegend() {
-        Legend l = chart.getLegend();
-        l.setTextSize(15f);
+        Legend l = mChart.getLegend();
+        l.setTextSize(30f);
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
         l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
         l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
@@ -90,13 +96,14 @@ public class LineChartFragment extends Fragment implements ChartDisplay<List<Moo
         l.setDrawInside(false);
         l.setXEntrySpace(5f);
         l.setStackSpace(5f);
+
     }
 
     private class MyXAxisFormatter extends ValueFormatter {
         @Override
         public String getAxisLabel(float value, AxisBase axis) {
             LocalDate dateValue = LocalDate.ofEpochDay((long) value);
-            return dateValue.format(DateTimeFormatter.ofPattern("MMM yy"));
+            return dateValue.format(DateTimeFormatter.ofPattern("dd/MM/yy"));
         }
     }
 

@@ -2,6 +2,9 @@ package com.lydiaralph.decisiontracker.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +27,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import dagger.android.AndroidInjection;
@@ -91,6 +95,8 @@ public class MoodTrackerActivity extends MenuBasedActivity {
                 for(MoodType moodType: moodTypes){
                     TextView textView = new TextView(getApplicationContext());
                     textView.setText(moodType.getDescription());
+                    textView.setTextAppearance(R.style.TextStyle);
+                    textView.setPadding(0, 15, 0, 15);
                     textView.setId(moodType.getId());
 
                     SeekBar intensityMeasure = new SeekBar(getApplicationContext());
@@ -98,6 +104,13 @@ public class MoodTrackerActivity extends MenuBasedActivity {
                     intensityMeasure.setMin(0);
                     intensityMeasure.setId(moodType.getId());
                     intensityMeasure.setPadding(0,0,0,10);
+
+                    ShapeDrawable th = new ShapeDrawable(new OvalShape());
+                    th.setIntrinsicWidth(40);
+                    th.setIntrinsicHeight(40);
+
+                    th.getPaint().setColor(ContextCompat.getColor(getApplicationContext(), R.color.orange));
+                    intensityMeasure.setThumb(th);
 
                     moodOptions.addView(textView);
                     moodOptions.addView(intensityMeasure);

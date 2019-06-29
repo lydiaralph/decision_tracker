@@ -65,6 +65,7 @@ public class VoteDecisionAdapter extends RecyclerView.Adapter<VoteDecisionAdapte
         if (decisions != null) {
             Decision current = decisions.get(position);
             holder.decisionItemView.setText(current.getDecisionText());
+            holder.decisionItemView.setTextAppearance(holder.decisionItemView.getContext(), R.style.TextStyle);
 
             holder.decisionItemView.setOnClickListener(new View.OnClickListener() {
                 @Override

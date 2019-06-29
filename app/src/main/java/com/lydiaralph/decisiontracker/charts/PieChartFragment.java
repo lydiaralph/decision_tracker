@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -30,15 +29,17 @@ import androidx.fragment.app.Fragment;
 public class PieChartFragment extends Fragment implements ChartDisplay<DecisionOptions>, OnChartValueSelectedListener {
 
     private static final String LOG_NAME = PieChartFragment.class.getSimpleName();
-    private PieChart chart;
+    private PieChart mChart;
     private PieData chartData;
+    private String centreText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.pie_chart_view, container, false);
-        chart = view.findViewById(R.id.pie_chart);
-        chart.setData(this.chartData);
+        mChart = view.findViewById(R.id.pie_chart);
+        mChart.setData(this.chartData);
+        mChart.setCenterText(this.centreText);
         configureChart();
         return view;
     }
@@ -55,39 +56,43 @@ public class PieChartFragment extends Fragment implements ChartDisplay<DecisionO
     }
 
     private void configureChart() {
-        chart.getDescription().setText("Votes per option");
-        chart.setExtraOffsets(5, 10, 5, 5);
-        chart.setDragDecelerationFrictionCoef(0.95f);
-        chart.setDrawHoleEnabled(true);
-        chart.setHoleColor(Color.WHITE);
-        chart.setTransparentCircleColor(Color.WHITE);
-        chart.setTransparentCircleAlpha(110);
-        chart.setHoleRadius(58f);
-        chart.setTransparentCircleRadius(61f);
-        chart.setDrawCenterText(true);
-        chart.setRotationAngle(0);
-        chart.setRotationEnabled(true);
-        chart.setHighlightPerTapEnabled(true);
-        chart.animateY(1400, Easing.EaseInOutQuad);
+        mChart.getDescription().setText("Votes per option");
+        mChart.setExtraOffsets(5, 10, 5, 5);
+        mChart.setDragDecelerationFrictionCoef(0.95f);
+        mChart.setDrawHoleEnabled(true);
+        mChart.setHoleColor(Color.WHITE);
+        mChart.setTransparentCircleColor(Color.WHITE);
+        mChart.setTransparentCircleAlpha(110);
+        mChart.setHoleRadius(58f);
+        mChart.setTransparentCircleRadius(61f);
+        mChart.setDrawCenterText(true);
+        mChart.setRotationAngle(0);
+        mChart.setRotationEnabled(true);
+        mChart.setHighlightPerTapEnabled(true);
+        mChart.animateY(1400, Easing.EaseInOutQuad);
 
-        Legend l = chart.getLegend();
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-        l.setOrientation(Legend.LegendOrientation.VERTICAL);
-        l.setDrawInside(false);
-        l.setXEntrySpace(7f);
-        l.setTextSize(15f);
-        l.setYEntrySpace(0f);
-        l.setYOffset(0f);
+        mChart.setCenterTextSize(30f);
 
-        chart.setEntryLabelColor(Color.BLACK);
-        chart.setEntryLabelTextSize(15f);
+        mChart.getLegend().setEnabled(false);
+//        Legend l = mChart.getLegend();
+//        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+//        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+//        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+//        l.setWordWrapEnabled(true);
+//        l.setDrawInside(false);
+//        l.setXEntrySpace(7f);
+//        l.setTextSize(15f);
+//        l.setYEntrySpace(0f);
+//        l.setYOffset(0f);
+
+        mChart.setEntryLabelColor(Color.BLACK);
+        mChart.setEntryLabelTextSize(15f);
 
         if(chartData != null) {
             chartData.setValueFormatter(new IntegerFormatter());
             chartData.setValueTextSize(15f);
             chartData.setValueTextColor(Color.BLACK);
-            chart.setData(this.chartData);
+            mChart.setData(this.chartData);
         }
     }
 
@@ -110,16 +115,17 @@ public class PieChartFragment extends Fragment implements ChartDisplay<DecisionO
         PieData data = new PieData(dataSet);
 
         this.chartData = data;
-        this.chart.setData(data);
-        chart.highlightValues(null);
-        chart.invalidate();
+        this.mChart.setData(data);
+        mChart.highlightValues(null);
+        mChart.invalidate();
     }
 
     private void generateCenterText(DecisionOptions decisionOptions) {
         if (decisionOptions == null ||
                 decisionOptions.getDecision() == null ||
                 decisionOptions.getDecision().getDecisionText() == null) {
-            chart.setCenterText("");
+            this.centreText = "";
+            mChart.setCenterText(centreText);
             return;
         }
         String centerText = "";
@@ -142,7 +148,8 @@ public class PieChartFragment extends Fragment implements ChartDisplay<DecisionO
             centerText = first + "\n" + second;
         }
 
-        chart.setCenterText(centerText);
+        this.centreText = centerText;
+        mChart.setCenterText(centerText);
     }
 
     private class IntegerFormatter extends ValueFormatter {

@@ -10,18 +10,13 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
-import com.github.mikephil.charting.model.GradientColor;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.lydiaralph.decisiontracker.R;
 import com.lydiaralph.decisiontracker.database.entity.DecisionOptions;
 import com.lydiaralph.decisiontracker.database.entity.OptionsVotes;
@@ -29,7 +24,6 @@ import com.lydiaralph.decisiontracker.database.entity.OptionsVotes;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 /**
@@ -41,7 +35,7 @@ import androidx.fragment.app.Fragment;
 public class BarChartFragment extends Fragment implements ChartDisplay<DecisionOptions>, SeekBar.OnSeekBarChangeListener {
 
     private static final String LOG_NAME = BarChartFragment.class.getSimpleName();
-    private BarChart chart;
+    private BarChart mChart;
     private BarData chartData;
 
     private SeekBar seekBarX, seekBarY;
@@ -51,14 +45,15 @@ public class BarChartFragment extends Fragment implements ChartDisplay<DecisionO
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.bar_chart_view, container, false);
-        chart = view.findViewById(R.id.barchart);
-        chart.setData(this.chartData);
+        mChart = view.findViewById(R.id.barchart);
+        mChart.setData(this.chartData);
+        configureChart();
         return view;
     }
 
     public void displayData(DecisionOptions decisionOptions) {
         if (decisionOptions == null) {
-            Log.e(LOG_NAME, "No data supplied for chart");
+            Log.e(LOG_NAME, "No data supplied for mChart");
             return;
         }
 
@@ -67,26 +62,13 @@ public class BarChartFragment extends Fragment implements ChartDisplay<DecisionO
     }
 
     private void configureChart() {
-        chart.setDrawBarShadow(false);
-//        chart.setDrawValueAboveBar(true);
+        mChart.setDrawBarShadow(false);
+        mChart.getDescription().setText("");
+        mChart.setMaxVisibleValueCount(60);
+        mChart.setPinchZoom(false);
+        mChart.setDrawGridBackground(false);
 
-        chart.getDescription().setEnabled(false);
-
-        // if more than 60 entries are displayed in the chart, no values will be drawn
-        chart.setMaxVisibleValueCount(60);
-
-        // scaling can now only be done on x- and y-axis separately
-        chart.setPinchZoom(false);
-
-        chart.setDrawGridBackground(false);
-
-//        XAxis xAxis = chart.getXAxis();
-//        xAxis.setDrawLabels(false);
-//        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-//        xAxis.setDrawGridLines(false);
-//        xAxis.setTextSize(30f);
-
-        YAxis leftAxis = chart.getAxisLeft();
+        YAxis leftAxis = mChart.getAxisLeft();
         leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         leftAxis.setSpaceTop(15f);
         leftAxis.setTextSize(30f);
@@ -99,21 +81,18 @@ public class BarChartFragment extends Fragment implements ChartDisplay<DecisionO
             }
         });
 
-        Legend l = chart.getLegend();
+        mChart.getAxisRight().setDrawLabels(false);
+        mChart.getXAxis().setDrawLabels(false);
+
+        Legend l = mChart.getLegend();
         l.setFormSize(15f);
-        l.setTextSize(50f);
+        l.setTextSize(30f);
         l.setXEntrySpace(34f);
+        l.setWordWrapEnabled(true);
 
-//        XYMarkerView mv = new XYMarkerView(getContext(), xAxisFormatter);
-//        mv.setChartView(chart); // For bounds control
-//        chart.setMarker(mv); // Set the marker to the chart
-
-        // setting data
-//        seekBarY.setProgress(50);
-//        seekBarX.setProgress(12);
-        chart.getAxisLeft().setDrawGridLines(false);
-        chart.getXAxis().setDrawGridLines(false);
-        chart.getAxisRight().setDrawGridLines(false);
+        mChart.getAxisLeft().setDrawGridLines(false);
+        mChart.getXAxis().setDrawGridLines(false);
+        mChart.getAxisRight().setDrawGridLines(false);
     }
 
     private void setData(DecisionOptions decisionOptions){
@@ -133,14 +112,14 @@ public class BarChartFragment extends Fragment implements ChartDisplay<DecisionO
         }
 
         // TODO: Really not sure about this clause!
-        if (chart.getData() != null &&
-                chart.getData().getDataSetCount() > 0) {
+        if (mChart.getData() != null &&
+                mChart.getData().getDataSetCount() > 0) {
             ArrayList<BarEntry> values = new ArrayList<>();
-            BarDataSet dataSet = (BarDataSet) chart.getData().getDataSetByIndex(0);
+            BarDataSet dataSet = (BarDataSet) mChart.getData().getDataSetByIndex(0);
             dataSet.setValues(values);
             dataSets.add(dataSet);
-            chart.getData().notifyDataChanged();
-            chart.notifyDataSetChanged();
+            mChart.getData().notifyDataChanged();
+            mChart.notifyDataSetChanged();
 
         } else {
             BarData data = new BarData(dataSets);
@@ -153,7 +132,7 @@ public class BarChartFragment extends Fragment implements ChartDisplay<DecisionO
                 }
             });
 
-            chart.setData(data);
+            mChart.setData(data);
             chartData = data;
         }
     }
@@ -165,7 +144,7 @@ public class BarChartFragment extends Fragment implements ChartDisplay<DecisionO
         tvY.setText(String.valueOf(seekBarY.getProgress()));
 
 //        setData(seekBarX.getProgress(), seekBarY.getProgress());
-        chart.invalidate();
+        mChart.invalidate();
     }
 
     @Override
