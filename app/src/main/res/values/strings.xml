@@ -112,4 +112,12 @@ limitations under the License. -->
     <string name="how_do_you_feel_today">How do you feel today?</string>
     <string name="no_moods_have_been_configured">No moods have been configured</string>
     <string name="choose_your_chart">Choose your chart...</string>
+
+    <string name="delete_all_data">Delete all data</string>
+    <string name="delete_all_data_please_confirm">Do you really want to delete all data?</string>
+    <string name="delete_all_data_explanation">This action will delete all data from the database. The data cannot be recovered.</string>
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
 </resources>

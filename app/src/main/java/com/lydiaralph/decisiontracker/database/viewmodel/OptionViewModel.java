@@ -50,4 +50,9 @@ public class OptionViewModel extends AndroidViewModel {
     void insert(Option option) {
         mRepository.insert(option);
     }
+
+    public void deleteAll() {
+        mRepository.deleteAll();
+    }
+
 }

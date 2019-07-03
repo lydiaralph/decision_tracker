@@ -1,6 +1,7 @@
 package com.lydiaralph.decisiontracker.dagger;
 
 import com.lydiaralph.decisiontracker.activities.ConfigureNewDecisionActivity;
+import com.lydiaralph.decisiontracker.activities.DeleteDataActivity;
 import com.lydiaralph.decisiontracker.activities.MainActivity;
 import com.lydiaralph.decisiontracker.activities.MoodTrackerActivity;
 import com.lydiaralph.decisiontracker.activities.ViewDecisionDetailActivity;
@@ -33,4 +34,7 @@ public abstract class BuildersModule {
 
     @ContributesAndroidInjector
     abstract ConfigureNewDecisionActivity bindConfigureNewDecisionActivity();
+
+    @ContributesAndroidInjector
+    abstract DeleteDataActivity bindDeleteDataActivity();
 }

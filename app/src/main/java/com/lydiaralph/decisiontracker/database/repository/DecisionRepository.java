@@ -50,6 +50,22 @@ public class DecisionRepository {
         allDecisions = decisionDao.getAll();
     }
 
+    public void deleteAll(){
+        new deleteAsyncTask(decisionDao).execute();
+    }
+
+    private static class deleteAsyncTask extends AsyncTask<Decision, Void, Void> {
+        private DecisionDao mAsyncTaskDao;
+
+        deleteAsyncTask(DecisionDao dao) { mAsyncTaskDao = dao; }
+
+        @Override
+        protected Void doInBackground(final Decision... params) {
+            mAsyncTaskDao.deleteAll();
+            return null;
+        }
+    }
+
     public LiveData<List<Decision>> getAllDecisions() {
         return allDecisions;
     }

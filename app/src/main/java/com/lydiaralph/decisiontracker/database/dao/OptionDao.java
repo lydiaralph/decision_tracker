@@ -48,4 +48,7 @@ public interface OptionDao {
 
     @Delete
     void delete(Option option);
+
+    @Query("DELETE FROM options")
+    void deleteAll();
 }
