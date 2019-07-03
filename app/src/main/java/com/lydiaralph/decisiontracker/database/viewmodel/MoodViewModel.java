@@ -34,4 +34,8 @@ public class MoodViewModel extends AndroidViewModel {
     public LiveData<List<MoodDescriptionWithIntensity>> getAllMoodsByDecisionId(Integer decisionId) {
         return mRepository.getAllMoodsByDecisionId(decisionId);
     }
+    public void deleteAll() {
+        mRepository.deleteAll();
+    }
+
 }

@@ -28,7 +28,13 @@ public class MoodTypeRepository {
             return allMoodTypes;
         }
 
-        public void insert(MoodType moodType) {
+
+    public void deleteAll(){
+        dao.deleteAll();
+    }
+
+
+    public void insert(MoodType moodType) {
             new insertAsyncTask(dao).execute(moodType);
         }
 

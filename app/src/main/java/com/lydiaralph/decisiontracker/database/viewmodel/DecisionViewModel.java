@@ -57,6 +57,10 @@ public class DecisionViewModel extends AndroidViewModel {
         return mRepository.getDecisionById(decisionId);
     }
 
+    public void deleteAll() {
+        mRepository.deleteAll();
+    }
+
     public void insert(DecisionInsert decision) {
         mRepository.insert(decision);
     }

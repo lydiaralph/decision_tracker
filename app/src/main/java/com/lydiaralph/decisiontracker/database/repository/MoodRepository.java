@@ -27,6 +27,23 @@ public class MoodRepository {
         return dao.getAllMoodsByDecisionId(decisionId);
     }
 
+
+    public void deleteAll(){
+        dao.deleteAll();
+    }
+
+    private static class deleteAsyncTask extends AsyncTask<Mood, Void, Void> {
+        private MoodDao mAsyncTaskDao;
+
+        deleteAllAsync(MoodDao dao) { mAsyncTaskDao = dao; }
+
+        @Override
+        protected Void doInBackground(final Mood... params) {
+            mAsyncTaskDao.deleteAll();
+            return null;
+        }       
+    }
+
     public void insert(Mood mood) {
         new insertAsyncTask(dao).execute(mood);
     }

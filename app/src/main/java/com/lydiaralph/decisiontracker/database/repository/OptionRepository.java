@@ -42,6 +42,10 @@ public class OptionRepository {
         allOptions = optionDao.getAll();
     }
 
+    public void deleteAll(){
+        optionDao.deleteAll();
+    }
+
     public LiveData<List<Option>> getAllOptions() {
         return allOptions;
     }

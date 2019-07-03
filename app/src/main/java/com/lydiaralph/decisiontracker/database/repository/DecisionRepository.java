@@ -58,6 +58,10 @@ public class DecisionRepository {
         return decisionDao.getDecisionById(decisionId);
     }
 
+    public void deleteAll(){
+        decisionDao.deleteAll();
+    }
+
     public void updateEndDate(int decisionId, LocalDate newExpiryDate) {
         new updateAsyncTask(decisionDao).execute(new DecisionIdAndEndDate(decisionId, newExpiryDate));
     }

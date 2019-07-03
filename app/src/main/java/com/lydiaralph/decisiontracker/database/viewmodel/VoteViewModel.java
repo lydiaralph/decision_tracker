@@ -54,4 +54,9 @@ public class VoteViewModel extends AndroidViewModel {
         long voteId = mRepository.insert(vote);
         return toIntExact(voteId);
     }
+
+    public void deleteAll() {
+        mRepository.deleteAll();
+    }
+
 }

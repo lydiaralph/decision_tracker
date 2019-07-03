@@ -34,4 +34,8 @@ public class MoodTypeViewModel extends AndroidViewModel {
         return mAllMoodTypes;
     }
 
+    public void deleteAll() {
+        mRepository.deleteAll();
+    }
+
 }

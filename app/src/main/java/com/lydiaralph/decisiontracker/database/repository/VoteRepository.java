@@ -22,7 +22,9 @@ package com.lydiaralph.decisiontracker.database.repository;
 
 
 import android.app.Application;
+
 import androidx.lifecycle.LiveData;
+
 import android.os.AsyncTask;
 
 import com.lydiaralph.decisiontracker.database.dao.VoteDao;
@@ -34,36 +36,40 @@ import java.util.concurrent.ExecutionException;
 
 public class VoteRepository {
 
-        private VoteDao voteDao;
-        private LiveData<List<Vote>> allVotes;
+    private VoteDao voteDao;
+    private LiveData<List<Vote>> allVotes;
 
-        public VoteRepository(Application application) {
-            AppDatabase db = AppDatabase.getDatabase(application);
-            voteDao = db.voteDao();
-            allVotes = voteDao.getAll();
+    public VoteRepository(Application application) {
+        AppDatabase db = AppDatabase.getDatabase(application);
+        voteDao = db.voteDao();
+        allVotes = voteDao.getAll();
+    }
+
+    public void deleteAll() {
+        voteDao.deleteAll();
+    }
+
+    public LiveData<List<Vote>> getAllVotes() {
+        return allVotes;
+    }
+
+    public Long insert(Vote vote) throws ExecutionException, InterruptedException {
+        return new insertAsyncTask(voteDao).execute(vote).get();
+    }
+
+    private static class insertAsyncTask extends AsyncTask<Vote, Void, Long> {
+
+        private VoteDao mAsyncTaskDao;
+
+        insertAsyncTask(VoteDao dao) {
+            mAsyncTaskDao = dao;
         }
 
-        public LiveData<List<Vote>> getAllVotes() {
-            return allVotes;
+        @Override
+        protected Long doInBackground(final Vote... params) {
+            return mAsyncTaskDao.insert(params[0]);
         }
-
-        public Long insert(Vote vote) throws ExecutionException, InterruptedException {
-            return new insertAsyncTask(voteDao).execute(vote).get();
-        }
-
-        private static class insertAsyncTask extends AsyncTask<Vote, Void, Long> {
-
-            private VoteDao mAsyncTaskDao;
-
-            insertAsyncTask(VoteDao dao) {
-                mAsyncTaskDao = dao;
-            }
-
-            @Override
-            protected Long doInBackground(final Vote... params) {
-                return mAsyncTaskDao.insert(params[0]);
-            }
-        }
+    }
 }
 
 
