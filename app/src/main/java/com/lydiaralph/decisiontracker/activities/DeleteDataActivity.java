@@ -69,7 +69,7 @@ public class DeleteDataActivity extends FragmentActivity implements DeleteDataFr
         moodTypeViewModel = ViewModelProviders.of(this, viewModelFactory).get(MoodTypeViewModel.class);
 
         DeleteDataFragment deleteDataFragment = DeleteDataFragment.newInstance();
-        deleteDataFragment.show(getSupportFragmentManager(), "terminateDecision");
+        deleteDataFragment.show(getSupportFragmentManager(), "deleteData");
     }
 
     @Override

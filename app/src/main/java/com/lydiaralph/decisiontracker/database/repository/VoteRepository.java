@@ -45,8 +45,20 @@ public class VoteRepository {
         allVotes = voteDao.getAll();
     }
 
-    public void deleteAll() {
-        voteDao.deleteAll();
+    public void deleteAll(){
+        new deleteAsyncTask(voteDao).execute();
+    }
+
+    private static class deleteAsyncTask extends AsyncTask<Vote, Void, Void> {
+        private VoteDao mAsyncTaskDao;
+
+        deleteAsyncTask(VoteDao dao) { mAsyncTaskDao = dao; }
+
+        @Override
+        protected Void doInBackground(final Vote... params) {
+            mAsyncTaskDao.deleteAll();
+            return null;
+        }
     }
 
     public LiveData<List<Vote>> getAllVotes() {

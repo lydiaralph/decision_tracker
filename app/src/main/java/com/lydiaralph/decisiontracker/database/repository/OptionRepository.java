@@ -43,8 +43,21 @@ public class OptionRepository {
     }
 
     public void deleteAll(){
-        optionDao.deleteAll();
+        new deleteAsyncTask(optionDao).execute();
     }
+
+    private static class deleteAsyncTask extends AsyncTask<Option, Void, Void> {
+        private OptionDao mAsyncTaskDao;
+
+        deleteAsyncTask(OptionDao dao) { mAsyncTaskDao = dao; }
+
+        @Override
+        protected Void doInBackground(final Option... params) {
+            mAsyncTaskDao.deleteAll();
+            return null;
+        }
+    }
+
 
     public LiveData<List<Option>> getAllOptions() {
         return allOptions;

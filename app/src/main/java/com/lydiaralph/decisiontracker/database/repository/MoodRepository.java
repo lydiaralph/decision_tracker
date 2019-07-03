@@ -29,13 +29,13 @@ public class MoodRepository {
 
 
     public void deleteAll(){
-        dao.deleteAll();
+        new deleteAsyncTask(dao).execute();
     }
 
     private static class deleteAsyncTask extends AsyncTask<Mood, Void, Void> {
         private MoodDao mAsyncTaskDao;
 
-        deleteAllAsync(MoodDao dao) { mAsyncTaskDao = dao; }
+        deleteAsyncTask(MoodDao dao) { mAsyncTaskDao = dao; }
 
         @Override
         protected Void doInBackground(final Mood... params) {

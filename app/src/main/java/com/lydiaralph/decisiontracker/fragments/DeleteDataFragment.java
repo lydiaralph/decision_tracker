@@ -40,7 +40,7 @@ public class DeleteDataFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(getString(R.string.delete_all_data_please_confirm))
-                .setMessage(getString(R.string.stop_tracking_decision_explanation))
+                .setMessage(getString(R.string.delete_all_data_explanation))
                 .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         listener.deleteAllData(DeleteDataFragment.this);
