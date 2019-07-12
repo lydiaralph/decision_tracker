@@ -1,4 +1,4 @@
-package com.lydiaralph.decisiontracker.database.viewmodel;
+package com.lydiaralph.decisiontracker.dagger;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
