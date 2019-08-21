@@ -20,6 +20,8 @@ import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModel;
 import com.lydiaralph.decisiontracker.database.viewmodel.VoteViewModel;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 import javax.inject.Inject;
@@ -28,6 +30,8 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import dagger.android.AndroidInjection;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 public class VoteActivity extends MenuBasedActivity {
     public static final String VOTE_ID = "VoteId";
@@ -73,11 +77,14 @@ public class VoteActivity extends MenuBasedActivity {
                 TextView decisionTextView = findViewById(R.id.display_decision_text);
                 decisionTextView.setText(decision.getDecision().getDecisionText());
 
-//                TextView datesView = findViewById(R.id.display_dates);
-//                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
-//                datesView.setText(String.format("%s - %s",
-//                        decision.getDecision().getStartDate().format(formatter),
-//                        decision.getDecision().getEndDate().format(formatter)));
+                TextView datesView = findViewById(R.id.display_dates);
+                long daysBetween = DAYS.between(decision.getDecision().getEndDate(), LocalDate.now());
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
+                datesView.setText(String.format(Locale.ENGLISH,"%s: %d days\n%s - %s",
+                        getString(R.string.time_remaining), daysBetween,
+                        decision.getDecision().getStartDate().format(formatter),
+                        decision.getDecision().getEndDate().format(formatter)));
 
                 if(!decision.getOptionsList().isEmpty()){
                     setOptionsSelection(optionsSelection, decision);
@@ -93,8 +100,6 @@ public class VoteActivity extends MenuBasedActivity {
         persistVoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 int selectedOptionId = optionsSelection.getCheckedRadioButtonId();
                 if (selectedOptionId == -1 || selectedOptionId == 999) {
                     Toast.makeText(

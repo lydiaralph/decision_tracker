@@ -119,5 +119,6 @@ limitations under the License. -->
 
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="time_remaining">Time remaining</string>
 
 </resources>
