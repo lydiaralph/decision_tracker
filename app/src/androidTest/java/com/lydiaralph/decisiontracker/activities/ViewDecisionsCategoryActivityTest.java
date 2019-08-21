@@ -13,6 +13,7 @@ import androidx.test.runner.AndroidJUnit4;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
@@ -32,7 +33,7 @@ public class ViewDecisionsCategoryActivityTest {
     @Test
     public void testMainMenuButton() {
         onView(withId(R.id.button_return_to_main_menu)).check(matches(withText(R.string.return_to_main_menu)));
-        onView(withId(R.id.button_return_to_main_menu)).perform(click());
+        onView(withId(R.id.button_return_to_main_menu)).perform(closeSoftKeyboard()).perform(click());
         onView(withId(R.id.page_title)).check(matches(withText(R.string.main_menu_title)));
     }
 

@@ -41,16 +41,8 @@ public class ConfigureNewDecisionActivityTest {
     @Test
     public void testMainMenuButton() {
         onView(withId(R.id.button_return_to_main_menu)).check(matches(withText(R.string.return_to_main_menu)));
-        onView(withId(R.id.button_return_to_main_menu)).perform(click());
+        onView(withId(R.id.button_return_to_main_menu)).perform(closeSoftKeyboard()).perform(click());
         onView(withId(R.id.page_title)).check(matches(withText(R.string.main_menu_title)));
-    }
-
-    @Test
-    public void testConfigureNewDecisionButton() {
-        onView(withId(R.id.page_title)).check(matches(withText(R.string.configure_decision)));
-        onView(withId(R.id.button_submit_new_decision)).check(matches(withText(R.string.save)));
-        onView(withId(R.id.button_submit_new_decision)).perform(click());
-        onView(withId(R.id.page_title)).check(matches(withText(R.string.view_results)));
     }
 
     @Test
@@ -67,7 +59,7 @@ public class ConfigureNewDecisionActivityTest {
         Thread.sleep(250);
 
         // When
-        onView(withId(R.id.button_submit_new_decision)).perform(click());
+        onView(withId(R.id.button_submit_new_decision)).perform(closeSoftKeyboard()).perform(click());
 
         // Then
         onView(withId(R.id.page_title)).check(matches(withText(R.string.success_announcement)));
@@ -83,7 +75,7 @@ public class ConfigureNewDecisionActivityTest {
         Thread.sleep(250);
 
         // When
-        onView(withId(R.id.button_submit_new_decision)).perform(click());
+        onView(withId(R.id.button_submit_new_decision)).perform(closeSoftKeyboard()).perform(click());
 
         // Then
         onView(withId(R.id.page_title)).check(matches(withText(R.string.configure_decision)));
@@ -99,11 +91,11 @@ public class ConfigureNewDecisionActivityTest {
         Thread.sleep(250);
 
         // When
-        onView(withId(R.id.button_submit_new_decision)).perform(click());
+        onView(withId(R.id.button_submit_new_decision)).perform(closeSoftKeyboard()).perform(click());
 
         // Then
         onView(withId(R.id.page_title)).check(matches(withText(R.string.configure_decision)));
-        onView(withId(R.id.input_option_2)).check(matches(hasFocus()));
+        onView(withId(R.id.input_option_1)).check(matches(hasFocus()));
     }
 
     @Test
@@ -123,7 +115,7 @@ public class ConfigureNewDecisionActivityTest {
         Thread.sleep(250);
 
         // When
-        onView(withId(R.id.button_submit_new_decision)).perform(click());
+        onView(withId(R.id.button_submit_new_decision)).perform(closeSoftKeyboard()).perform(click());
 
         // Then
         onView(withId(R.id.page_title)).check(matches(withText(R.string.configure_decision)));
