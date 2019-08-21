@@ -78,7 +78,7 @@ public class VoteActivity extends MenuBasedActivity {
                 decisionTextView.setText(decision.getDecision().getDecisionText());
 
                 TextView datesView = findViewById(R.id.display_dates);
-                long daysBetween = DAYS.between(decision.getDecision().getEndDate(), LocalDate.now());
+                long daysBetween = DAYS.between(LocalDate.now(), decision.getDecision().getEndDate());
 
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
                 datesView.setText(String.format(Locale.ENGLISH,"%s: %d days\n%s - %s",

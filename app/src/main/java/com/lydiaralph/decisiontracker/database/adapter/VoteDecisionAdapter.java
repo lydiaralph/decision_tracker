@@ -33,7 +33,9 @@ import com.lydiaralph.decisiontracker.activities.VoteActivity;
 import com.lydiaralph.decisiontracker.database.entity.Decision;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -66,22 +68,18 @@ public class VoteDecisionAdapter extends RecyclerView.Adapter<VoteDecisionAdapte
         if (decisions != null) {
             Decision current = decisions.get(position);
 
-            // Decision has not expired
-            if(current.getEndDate().isBefore(LocalDate.now())) {
-                holder.decisionItemView.setText(current.getDecisionText());
-                holder.decisionItemView.setTextAppearance(holder.decisionItemView.getContext(), R.style.TextStyle);
+            holder.decisionItemView.setText(current.getDecisionText());
+            holder.decisionItemView.setTextAppearance(holder.decisionItemView.getContext(), R.style.TextStyle);
 
-                holder.decisionItemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intentViewDecisionDetail = new Intent(holder.decisionItemView.getContext(),
-                                VoteActivity.class);
-                        intentViewDecisionDetail.putExtra(ViewDecisionsCategoryActivity.VIEW_DECISION_ID, current.getId());
-                        holder.decisionItemView.getContext().startActivity(intentViewDecisionDetail);
-                    }
-                });
-            }
-
+            holder.decisionItemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intentViewDecisionDetail = new Intent(holder.decisionItemView.getContext(),
+                            VoteActivity.class);
+                    intentViewDecisionDetail.putExtra(ViewDecisionsCategoryActivity.VIEW_DECISION_ID, current.getId());
+                    holder.decisionItemView.getContext().startActivity(intentViewDecisionDetail);
+                }
+            });
         } else {
             // Covers the case of data not being ready yet.
             holder.decisionItemView.setText("No decision");
@@ -89,14 +87,31 @@ public class VoteDecisionAdapter extends RecyclerView.Adapter<VoteDecisionAdapte
     }
 
     public void setDecisions(List<Decision> decisions) {
-        this.decisions = decisions;
+        if (decisions != null) {
+            List<Decision> notExpiredDecisions = new ArrayList<>();
+            for (Decision decision : decisions) {
+                if (LocalDate.now().isBefore(decision.getEndDate())) {
+                    notExpiredDecisions.add(decision);
+                }
+            }
+            this.decisions = notExpiredDecisions;
+        } else {
+            this.decisions = decisions;
+        }
+
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        if (decisions != null)
-            return decisions.size();
-        else return 0;
+        if (decisions != null) {
+            int count = 0;
+            for (Decision decision : decisions) {
+                if (LocalDate.now().isBefore(decision.getEndDate())) {
+                    count++;
+                }
+            }
+            return count;
+        } else return 0;
     }
 }

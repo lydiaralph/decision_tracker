@@ -1,34 +1,34 @@
 package com.lydiaralph.decisiontracker.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lydiaralph.decisiontracker.R;
-import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModelFactory;
 import com.lydiaralph.decisiontracker.database.entity.DateUtils;
 import com.lydiaralph.decisiontracker.database.entity.DateUtilsImpl;
 import com.lydiaralph.decisiontracker.database.entity.Decision;
 import com.lydiaralph.decisiontracker.database.entity.DecisionInsert;
 import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModel;
+import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModelFactory;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 import javax.inject.Inject;
 
 import androidx.lifecycle.ViewModelProviders;
 import dagger.android.AndroidInjection;
-
-import static com.lydiaralph.decisiontracker.activities.ViewDecisionsCategoryActivity.VIEW;
 
 public class ConfigureNewDecisionActivity extends MenuBasedActivity {
 
@@ -50,66 +50,98 @@ public class ConfigureNewDecisionActivity extends MenuBasedActivity {
         decisionViewModel = ViewModelProviders.of(this, viewModelFactory).get(DecisionViewModel.class);
 
         final EditText decisionTextView = findViewById(R.id.input_decision_text);
-        final Spinner trackerPeriodView = findViewById(R.id.input_tracker_period);
         final EditText option1View = findViewById(R.id.input_option_1);
         final EditText option2View = findViewById(R.id.input_option_2);
 
-        Integer[] trackerPeriodItems = new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-                11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-                21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31};
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(this, R.layout.spinner, trackerPeriodItems);
-
-        trackerPeriodView.setAdapter(adapter);
-
-        final RadioGroup radioTrackerPeriodType = findViewById(R.id.radio_tracker_period_type);
+        DatePicker picker = findViewById(R.id.datePicker1);
 
         persistNewDecisionButton = findViewById(R.id.button_submit_new_decision);
         persistNewDecisionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent resultIntent = new Intent(ConfigureNewDecisionActivity.this, ViewDecisionsCategoryActivity.class);
-                resultIntent.setAction(VIEW);
+                Intent resultIntent = new Intent(ConfigureNewDecisionActivity.this, MainActivity.class);
 
-                if (TextUtils.isEmpty(decisionTextView.getText())) {
-                    setResult(Activity.RESULT_CANCELED, resultIntent);
-                } else {
-                    String decisionText = decisionTextView.getText().toString();
-                    String option1Text = option1View.getText().toString();
-                    String option2Text = option2View.getText().toString();
-                    String trackerPeriodType = getTrackerPeriodType(radioTrackerPeriodType);
-                    Integer trackerPeriod = Integer.parseInt(trackerPeriodView.getSelectedItem().toString());
+                    Optional<DecisionInsert> toPersist = createObjectToPersist(decisionTextView, option1View, option2View, picker);
 
-                    Log.i(LOG, "Input decision text: " + decisionText);
-
-                    if (decisionText != null) {
-                        if(option1Text.isEmpty() || option2Text.isEmpty()){
-                            Toast.makeText(
-                                    getApplicationContext(),
-                                    getString(R.string.configure_at_least_two_options),
-                                    Toast.LENGTH_LONG).show();
-                        }
-                        DateUtils dateUtils = DateUtilsImpl.getInstance();
-                        Decision decision = new Decision(dateUtils, decisionText);
-                        decision.setDates(dateUtils, trackerPeriodType, trackerPeriod);
-
-                        DecisionInsert toPersist = new DecisionInsert(decision, Arrays.asList(option1Text, option2Text));
-                        decisionViewModel.insert(toPersist);
-                    } else {
-                        Toast.makeText(
-                                getApplicationContext(),
-                                R.string.empty_not_saved,
-                                Toast.LENGTH_LONG).show();
+                    // Only finish the activity if everything is fine
+                    if(toPersist.isPresent()){
+                        decisionViewModel.insert(toPersist.get());
+                        startActivity(resultIntent);
+                        finish();
                     }
-                }
-                startActivity(resultIntent);
-                finish();
+//                }
             }
         });
     }
 
-    private String getTrackerPeriodType(RadioGroup radioTrackerPeriodType) {
-        int selectedId = radioTrackerPeriodType.getCheckedRadioButtonId();
-        RadioButton radioTrackerPeriodTypeButton = findViewById(selectedId);
-        return radioTrackerPeriodTypeButton.getText().toString();
+    @NotNull
+    private Optional<DecisionInsert> createObjectToPersist(EditText decisionTextView, EditText option1View, EditText option2View, DatePicker picker) {
+        Optional<String> decisionText = getDecisionText(decisionTextView);
+
+        if(!decisionText.isPresent()){
+            return Optional.empty();
+        }
+
+        Optional<LocalDate> endDate = getEndDate(picker);
+        if(!endDate.isPresent()){
+            return Optional.empty();
+        }
+
+        Optional<List<String>> optionTextList = getOptionTexts(Arrays.asList(option1View, option2View));
+        if(!optionTextList.isPresent()){
+            return Optional.empty();
+        }
+
+        DateUtils dateUtils = DateUtilsImpl.getInstance();
+        Decision decision = new Decision(dateUtils, decisionText.get(), endDate.get());
+
+        return Optional.of(new DecisionInsert(decision, optionTextList.get()));
+    }
+
+    private Optional<String> getDecisionText(EditText decisionTextView) {
+        if (decisionTextView.getText() == null || decisionTextView.getText().toString().isEmpty()) {
+            decisionTextView.setError(getString(R.string.empty_not_saved));
+            decisionTextView.requestFocus();
+            return Optional.empty();
+        }
+        return Optional.of(decisionTextView.getText().toString());
+    }
+
+    private Optional<LocalDate> getEndDate(DatePicker picker) {
+        LocalDate endDate = LocalDate.of(picker.getYear(), picker.getMonth() + 1, picker.getDayOfMonth());
+        if (endDate.isBefore(LocalDate.now())) {
+
+            final TextView calendarPrompter = findViewById(R.id.prompt_tracker_period);
+            calendarPrompter.requestFocus();
+            calendarPrompter.setError(getString(R.string.end_date_should_be_after_today));
+
+            Toast.makeText(
+                    getApplicationContext(),
+                    getString(R.string.end_date_should_be_after_today),
+                    Toast.LENGTH_LONG).show();
+            return Optional.empty();
+        }
+        return Optional.of(endDate);
+    }
+
+    private Optional<List<String>> getOptionTexts(List<EditText> optionsViewList) {
+        List<String> optionTextList = new ArrayList<>();
+
+        for(EditText option : optionsViewList ) {
+            if(option.getText() != null && ! option.getText().toString().isEmpty()) {
+                optionTextList.add(option.getText().toString());
+            }
+        }
+
+        if (optionTextList.size() < 2 ) {
+                Toast.makeText(
+                        getApplicationContext(),
+                        getString(R.string.configure_at_least_two_options),
+                        Toast.LENGTH_LONG).show();
+                optionsViewList.get(0).requestFocus();
+                optionsViewList.get(0).setError(getString(R.string.configure_at_least_two_options));
+                return Optional.empty();
+        }
+        return Optional.of(optionTextList);
     }
 }
