@@ -85,6 +85,8 @@ limitations under the License. -->
     <string name="empty_not_saved">Decision not saved because it is empty.</string>
 
     <string name="empty_option_not_saved">No option was voted for. Returning to view decisions... </string>
+    <string name="successful_save">Vote was successfully saved in the database. \n\nReturning to main menu...</string>
+
     <string name="bye">Bye!</string>
     <string name="main_menu_subtext">Be decisive, track your votes</string>
     <string name="return_to_main_menu">Return to main menu</string>

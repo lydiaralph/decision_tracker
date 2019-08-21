@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/PageStyle"
+    tools:context=".activities.MainActivity">
+
+    <TextView
+        android:id="@+id/page_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/PageTitle"
+        android:text="@string/success_announcement" />
+
+    <TextView
+        style="@style/TextStyle"
+        android:id="@+id/greeting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/successful_save" />
+
+    <!--<TextView-->
+        <!--style="@style/TextStyle"-->
+        <!--android:id="@+id/answer_submitted"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@string/successful_save" />-->
+
+    <Button
+        style="@style/GenericButton"
+        android:id="@+id/button_finish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_finish" />
+
+</LinearLayout>
+

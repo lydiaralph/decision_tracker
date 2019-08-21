@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lydiaralph.decisiontracker.R;
 import com.lydiaralph.decisiontracker.database.entity.Mood;
@@ -78,9 +79,7 @@ public class MoodTrackerActivity extends MenuBasedActivity {
                     moodViewModel.insertAll(moodData);
                 }
 
-                Intent resultIntent = new Intent(MoodTrackerActivity.this, ViewDecisionsCategoryActivity.class);
-                resultIntent.setAction(ViewDecisionsCategoryActivity.VIEW);
-                setResult(Activity.RESULT_OK, resultIntent);
+                Intent resultIntent = new Intent(MoodTrackerActivity.this, SuccessActivity.class);
                 startActivity(resultIntent);
                 finish();
             }

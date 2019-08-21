@@ -69,6 +69,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.lydiaralph.decisiontracker.activities.MainActivity" />
         </activity>
+
+        <activity
+            android:name=".activities.SuccessActivity"
+            android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.lydiaralph.decisiontracker.activities.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
