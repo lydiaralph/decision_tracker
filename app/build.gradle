@@ -32,7 +32,6 @@ android {
         debug {
             debuggable true
             minifyEnabled true
-            useProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
         }
     }
@@ -86,11 +85,13 @@ dependencies {
     testImplementation "androidx.room:room-testing:${property('androidx.lifecycle.version')}"
     testImplementation "androidx.arch.core:core-testing:${property('androidx.lifecycle.version')}"
 
-    androidTestImplementation "androidx.test.ext:junit:${property('androidx.test.version')}"
+    androidTestImplementation "androidx.test.ext:junit:${property('androidx.junit.version')}"
+
     androidTestImplementation "androidx.test:rules:${property('androidx.test.version')}"
     androidTestImplementation "androidx.test:runner:${property('androidx.test.version')}"
     androidTestImplementation "androidx.test:core:${property('androidx.test.version')}"
     androidTestImplementation "androidx.test.espresso:espresso-core:${property('espresso.version')}"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:${property('espresso.version')}"
     androidTestImplementation "androidx.arch.core:core-testing:${property('androidx.lifecycle.version')}"
 }
 

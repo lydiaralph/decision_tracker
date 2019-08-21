@@ -19,17 +19,15 @@ public class DecisionTest {
     }
 
     @Test
-    public void setDatesWithTrackerPeriodTypeTest(){
+    public void setDatesWithSpecifiedEndDate(){
         String decisionText = "Test 123";
-        String trackerPeriodType = "days";
-        Integer trackerPeriodUnits = 5;
-        Decision decision = new Decision(dateUtils, decisionText);
-        decision.setDates(dateUtils, trackerPeriodType, trackerPeriodUnits);
+        LocalDate endDate = LocalDate.of(TestDateUtilsImpl.YEAR, TestDateUtilsImpl.MONTH, TestDateUtilsImpl.DAY + 5);
+        Decision decision = new Decision(dateUtils, decisionText, endDate);
 
         assertEquals("Test 123", decision.getDecisionText());
         assertEquals(LocalDate.of(TestDateUtilsImpl.YEAR, TestDateUtilsImpl.MONTH, TestDateUtilsImpl.DAY),
                 decision.getStartDate());
-        assertEquals(LocalDate.of(TestDateUtilsImpl.YEAR, TestDateUtilsImpl.MONTH, TestDateUtilsImpl.DAY + 5),
+        assertEquals(endDate,
                 decision.getEndDate());
     }
 
