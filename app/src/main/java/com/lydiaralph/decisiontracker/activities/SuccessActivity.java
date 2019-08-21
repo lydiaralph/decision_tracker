@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.lydiaralph.decisiontracker.R;
 
 public class SuccessActivity extends MenuBasedActivity {
+
+    public static final String SUCCESS_MESSAGE = "SuccessMessage";
 
     private static final String LOG = SuccessActivity.class.getSimpleName();
     private View finishButton;
@@ -18,6 +21,13 @@ public class SuccessActivity extends MenuBasedActivity {
         super.onCreate(savedInstanceState);
         Log.i(LOG, "Starting activity");
         setContentView(R.layout.activity_success);
+
+        String successMessage = getIntent().getStringExtra(SUCCESS_MESSAGE);
+        if (successMessage.isEmpty()){
+            successMessage = "";
+        }
+        TextView successText = findViewById(R.id.successful_save);
+        successText.setText(successMessage);
 
         finishButton = findViewById(R.id.button_finish);
         finishButton.setOnClickListener(new View.OnClickListener() {

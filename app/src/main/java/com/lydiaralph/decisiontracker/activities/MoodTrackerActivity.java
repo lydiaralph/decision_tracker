@@ -80,6 +80,7 @@ public class MoodTrackerActivity extends MenuBasedActivity {
                 }
 
                 Intent resultIntent = new Intent(MoodTrackerActivity.this, SuccessActivity.class);
+                resultIntent.putExtra(SuccessActivity.SUCCESS_MESSAGE, getString(R.string.successful_vote_save));
                 startActivity(resultIntent);
                 finish();
             }

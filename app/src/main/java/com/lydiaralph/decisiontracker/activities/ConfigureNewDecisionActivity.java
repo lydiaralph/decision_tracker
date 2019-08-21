@@ -59,17 +59,17 @@ public class ConfigureNewDecisionActivity extends MenuBasedActivity {
         persistNewDecisionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent resultIntent = new Intent(ConfigureNewDecisionActivity.this, MainActivity.class);
+                Intent resultIntent = new Intent(ConfigureNewDecisionActivity.this, SuccessActivity.class);
 
-                    Optional<DecisionInsert> toPersist = createObjectToPersist(decisionTextView, option1View, option2View, picker);
+                Optional<DecisionInsert> toPersist = createObjectToPersist(decisionTextView, option1View, option2View, picker);
 
-                    // Only finish the activity if everything is fine
-                    if(toPersist.isPresent()){
-                        decisionViewModel.insert(toPersist.get());
-                        startActivity(resultIntent);
-                        finish();
-                    }
-//                }
+                // Only finish the activity if everything is fine
+                if (toPersist.isPresent()) {
+                    decisionViewModel.insert(toPersist.get());
+                    resultIntent.putExtra(SuccessActivity.SUCCESS_MESSAGE, getString(R.string.successful_decision_save));
+                    startActivity(resultIntent);
+                    finish();
+                }
             }
         });
     }
@@ -78,17 +78,17 @@ public class ConfigureNewDecisionActivity extends MenuBasedActivity {
     private Optional<DecisionInsert> createObjectToPersist(EditText decisionTextView, EditText option1View, EditText option2View, DatePicker picker) {
         Optional<String> decisionText = getDecisionText(decisionTextView);
 
-        if(!decisionText.isPresent()){
+        if (!decisionText.isPresent()) {
             return Optional.empty();
         }
 
         Optional<LocalDate> endDate = getEndDate(picker);
-        if(!endDate.isPresent()){
+        if (!endDate.isPresent()) {
             return Optional.empty();
         }
 
         Optional<List<String>> optionTextList = getOptionTexts(Arrays.asList(option1View, option2View));
-        if(!optionTextList.isPresent()){
+        if (!optionTextList.isPresent()) {
             return Optional.empty();
         }
 
@@ -127,20 +127,20 @@ public class ConfigureNewDecisionActivity extends MenuBasedActivity {
     private Optional<List<String>> getOptionTexts(List<EditText> optionsViewList) {
         List<String> optionTextList = new ArrayList<>();
 
-        for(EditText option : optionsViewList ) {
-            if(option.getText() != null && ! option.getText().toString().isEmpty()) {
+        for (EditText option : optionsViewList) {
+            if (option.getText() != null && !option.getText().toString().isEmpty()) {
                 optionTextList.add(option.getText().toString());
             }
         }
 
-        if (optionTextList.size() < 2 ) {
-                Toast.makeText(
-                        getApplicationContext(),
-                        getString(R.string.configure_at_least_two_options),
-                        Toast.LENGTH_LONG).show();
-                optionsViewList.get(0).requestFocus();
-                optionsViewList.get(0).setError(getString(R.string.configure_at_least_two_options));
-                return Optional.empty();
+        if (optionTextList.size() < 2) {
+            Toast.makeText(
+                    getApplicationContext(),
+                    getString(R.string.configure_at_least_two_options),
+                    Toast.LENGTH_LONG).show();
+            optionsViewList.get(0).requestFocus();
+            optionsViewList.get(0).setError(getString(R.string.configure_at_least_two_options));
+            return Optional.empty();
         }
         return Optional.of(optionTextList);
     }

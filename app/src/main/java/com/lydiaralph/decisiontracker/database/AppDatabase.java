@@ -97,15 +97,12 @@ public abstract class AppDatabase extends RoomDatabase {
         private final MoodTypeDao moodTypeDao;
         private final MoodDao moodDao;
 
-        private final DateUtils dateUtils;
-
         PopulateDbAsync(AppDatabase db) {
             decisionDao = db.decisionDao();
             optionDao = db.optionDao();
             voteDao = db.voteDao();
             moodTypeDao = db.moodTypeDao();
             moodDao = db.moodDao();
-            dateUtils = DateUtilsImpl.getInstance();
         }
 
         private void insertDecisionWithOptionsNoVotes(){
@@ -154,7 +151,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
         private void insertSampleDecision1(){
             LocalDate startDate = LocalDate.of(2019, 1, 3);
-            LocalDate endDate = LocalDate.of(2019, 1, 13);
+            LocalDate endDate = LocalDate.of(2019, 10, 13);
             Decision decisionWithOptionsNoVotes = new Decision("What shall I do next year?", startDate, endDate);
             Long decisionId = decisionDao.insert(decisionWithOptionsNoVotes);
             Long optionId1 = optionDao.insert(new Option(decisionId, "Train as a hairdresser"));
@@ -185,7 +182,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
         private void insertSampleDecision2(){
             LocalDate startDate = LocalDate.of(2019, 6, 4);
-            LocalDate endDate = LocalDate.of(2019, 8, 6);
+            LocalDate endDate = LocalDate.of(2019, 11, 6);
             Decision decisionWithOptionsNoVotes = new Decision("Baby names", startDate, endDate);
             Long decisionId = decisionDao.insert(decisionWithOptionsNoVotes);
             Long optionId1 = optionDao.insert(new Option(decisionId, "Meredith"));
@@ -258,13 +255,11 @@ public abstract class AppDatabase extends RoomDatabase {
         protected Void doInBackground(final Void... params) {
             decisionDao.deleteAll();
             moodDao.deleteAll();
-            Decision decisionWithNoOptions = new Decision(dateUtils, "Decision with no options");
-            decisionDao.insert(decisionWithNoOptions);
-
             insertDecisionWithOptionsNoVotes();
             insertDecisionWithOptionsAndVotes();
             insertSampleDecision1();
             insertSampleDecision2();
+            insertSampleDecision3();
 
             insertStaticMoodTypes();
 

@@ -36,7 +36,6 @@ import static java.time.temporal.ChronoUnit.DAYS;
 public class VoteActivity extends MenuBasedActivity {
     public static final String VOTE_ID = "VoteId";
     private static final String LOG = VoteActivity.class.getSimpleName();
-    public static final String INPUT_SELECTED_OPTION_ID = "SelectedOptionId";
 
     @Inject
     DecisionViewModelFactory viewModelFactory;
