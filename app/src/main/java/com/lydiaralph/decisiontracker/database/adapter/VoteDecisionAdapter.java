@@ -32,6 +32,7 @@ import com.lydiaralph.decisiontracker.activities.ViewDecisionsCategoryActivity;
 import com.lydiaralph.decisiontracker.activities.VoteActivity;
 import com.lydiaralph.decisiontracker.database.entity.Decision;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -64,18 +65,22 @@ public class VoteDecisionAdapter extends RecyclerView.Adapter<VoteDecisionAdapte
     public void onBindViewHolder(DecisionViewHolder holder, int position) {
         if (decisions != null) {
             Decision current = decisions.get(position);
-            holder.decisionItemView.setText(current.getDecisionText());
-            holder.decisionItemView.setTextAppearance(holder.decisionItemView.getContext(), R.style.TextStyle);
 
-            holder.decisionItemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intentViewDecisionDetail = new Intent(holder.decisionItemView.getContext(),
-                            VoteActivity.class);
-                    intentViewDecisionDetail.putExtra(ViewDecisionsCategoryActivity.VIEW_DECISION_ID, current.getId());
-                    holder.decisionItemView.getContext().startActivity(intentViewDecisionDetail);
-                }
-            });
+            // Decision has not expired
+            if(current.getEndDate().isBefore(LocalDate.now())) {
+                holder.decisionItemView.setText(current.getDecisionText());
+                holder.decisionItemView.setTextAppearance(holder.decisionItemView.getContext(), R.style.TextStyle);
+
+                holder.decisionItemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intentViewDecisionDetail = new Intent(holder.decisionItemView.getContext(),
+                                VoteActivity.class);
+                        intentViewDecisionDetail.putExtra(ViewDecisionsCategoryActivity.VIEW_DECISION_ID, current.getId());
+                        holder.decisionItemView.getContext().startActivity(intentViewDecisionDetail);
+                    }
+                });
+            }
 
         } else {
             // Covers the case of data not being ready yet.
