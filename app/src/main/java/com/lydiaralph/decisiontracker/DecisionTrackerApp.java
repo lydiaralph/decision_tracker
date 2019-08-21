@@ -5,6 +5,7 @@ import android.app.Application;
 
 import com.lydiaralph.decisiontracker.dagger.AppModule;
 import com.lydiaralph.decisiontracker.dagger.DaggerAppComponent;
+import com.lydiaralph.decisiontracker.dagger.DatabaseModule;
 
 import javax.inject.Inject;
 
@@ -35,6 +36,7 @@ public class DecisionTrackerApp extends Application implements HasActivityInject
                 .builder()
                 .application(this)
                 .appModule(new AppModule(this))
+                .databaseModule(new DatabaseModule(this))
                 .build()
                 .inject(this);
     }

@@ -1,7 +1,9 @@
-package com.lydiaralph.decisiontracker.database.viewmodel;
+package com.lydiaralph.decisiontracker.dagger;
 
 import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModel;
 import com.lydiaralph.decisiontracker.database.viewmodel.DecisionViewModelFactory;
+import com.lydiaralph.decisiontracker.database.viewmodel.MoodTypeViewModel;
+import com.lydiaralph.decisiontracker.database.viewmodel.MoodViewModel;
 import com.lydiaralph.decisiontracker.database.viewmodel.OptionViewModel;
 import com.lydiaralph.decisiontracker.database.viewmodel.VoteViewModel;
 

@@ -1,7 +1,6 @@
 package com.lydiaralph.decisiontracker.dagger;
 
 import com.lydiaralph.decisiontracker.DecisionTrackerApp;
-import com.lydiaralph.decisiontracker.database.viewmodel.ViewModelModule;
 
 import javax.inject.Singleton;
 
@@ -13,6 +12,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
 @Component(modules = {
         AndroidSupportInjectionModule.class,
         AppModule.class,
+        DatabaseModule.class,
         ViewModelModule.class,
         BuildersModule.class
 })
@@ -21,6 +21,7 @@ public interface AppComponent {
     interface Builder {
         @BindsInstance Builder application(DecisionTrackerApp application);
         Builder appModule(AppModule appModule);
+        Builder databaseModule(DatabaseModule databaseModule);
         AppComponent build();
     }
     void inject(DecisionTrackerApp application);
