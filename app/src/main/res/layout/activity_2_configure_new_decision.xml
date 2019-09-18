@@ -62,41 +62,12 @@
         android:layout_gravity="left"
         android:text="@string/prompt_tracker_period" />
 
-    <Spinner
-        android:id="@+id/input_tracker_period"
+    <DatePicker
+        android:id="@+id/datePicker1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:padding="6dp"
-        android:layout_margin="10dp" />
-
-    <RadioGroup android:id="@+id/radio_tracker_period_type"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="horizontal">
-        <RadioButton android:id="@+id/radio_day"
-            style="@style/TextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp"
-            android:text="@string/days" />
-        <RadioButton android:id="@+id/radio_week"
-            style="@style/TextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp"
-            android:text="@string/weeks" />
-        <RadioButton android:id="@+id/radio_month"
-            style="@style/TextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp"
-            android:text="@string/months" />
-    </RadioGroup>
+        android:datePickerMode="spinner"
+        android:calendarViewShown="false"/>
 
     <Button
         style="@style/GenericButton"

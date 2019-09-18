@@ -77,11 +77,22 @@ public class Decision {
      * Start date defaults to today's date. End date defaults to start date + whatever default is set to.
      * @param decisionText
      */
-    @Ignore
+//    @Ignore
     public Decision (DateUtils dateUtils, String decisionText){
         this.decisionText = decisionText;
         this.startDate = dateUtils.getCurrentDate();
         this.endDate = startDate.plus(DEFAULT_TRACKER_PERIOD_UNITS, ChronoUnit.DAYS);
+    }
+
+    /**
+     * Start date defaults to today's date.
+     * @param decisionText
+     */
+    @Ignore
+    public Decision (DateUtils dateUtils, String decisionText, LocalDate endDate){
+        this.decisionText = decisionText;
+        this.startDate = dateUtils.getCurrentDate();
+        this.endDate = endDate;
     }
 
     // For Room constructor
@@ -91,15 +102,4 @@ public class Decision {
         this.endDate = endDate;
     }
 
-    public Decision setDates(DateUtils dateUtils, String trackerPeriodType, Integer trackerPeriodUnits){
-        if(trackerPeriodUnits.equals(0)){
-            trackerPeriodUnits = DEFAULT_TRACKER_PERIOD_UNITS;
-            trackerPeriodType = ChronoUnit.DAYS.name();
-        }
-        LocalDate startDate = dateUtils.getCurrentDate();
-
-        this.startDate = startDate;
-        this.endDate = startDate.plus(trackerPeriodUnits, ChronoUnit.valueOf(trackerPeriodType.toUpperCase()));
-        return this;
-    }
 }

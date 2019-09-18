@@ -82,16 +82,19 @@ limitations under the License. -->
     <string name="action_share">Share</string>
     <string name="action_reply">Reply</string>
     <string name="button_save">Save</string>
-    <string name="empty_not_saved">Decision not saved because it is empty.</string>
+    <string name="empty_not_saved">No decision text was entered.</string>
 
     <string name="empty_option_not_saved">No option was voted for. Returning to view decisions... </string>
+    <string name="successful_decision_save">New decision was successfully saved in the database. \n\nReturning to main menu...</string>
+    <string name="successful_vote_save">Vote was successfully saved in the database. \n\nReturning to main menu...</string>
+
     <string name="bye">Bye!</string>
     <string name="main_menu_subtext">Be decisive, track your votes</string>
     <string name="return_to_main_menu">Return to main menu</string>
     <string name="page_title">Placeholder page title</string>
     <string name="main_menu_title">You decide</string>
     <string name="configure_new_decision">Configure new decision</string>
-    <string name="prompt_tracker_period">Track this decision for...</string>
+    <string name="prompt_tracker_period">Track this decision until...</string>
     <string name="days">days</string>
     <string name="weeks">weeks</string>
     <string name="months">months</string>
@@ -102,6 +105,7 @@ limitations under the License. -->
     <string name="what_is_your_decision_today">What is your decision today?</string>
     <string name="no_vote_today">No vote today</string>
     <string name="configure_at_least_two_options">Must configure at least two options</string>
+    <string name="end_date_should_be_after_today">Please pick an end date after today</string>
     <string name="dash">-</string>
     <string name="no_votes_for_this_decision">No votes recorded for any options</string>
     <string name="decision_has_not_expired_yet">Decision has not expired yet</string>
@@ -119,5 +123,6 @@ limitations under the License. -->
 
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="time_remaining">Time remaining</string>
 
 </resources>

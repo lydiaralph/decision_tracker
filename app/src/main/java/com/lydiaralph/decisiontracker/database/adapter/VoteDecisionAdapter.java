@@ -32,7 +32,10 @@ import com.lydiaralph.decisiontracker.activities.ViewDecisionsCategoryActivity;
 import com.lydiaralph.decisiontracker.activities.VoteActivity;
 import com.lydiaralph.decisiontracker.database.entity.Decision;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -64,6 +67,7 @@ public class VoteDecisionAdapter extends RecyclerView.Adapter<VoteDecisionAdapte
     public void onBindViewHolder(DecisionViewHolder holder, int position) {
         if (decisions != null) {
             Decision current = decisions.get(position);
+
             holder.decisionItemView.setText(current.getDecisionText());
             holder.decisionItemView.setTextAppearance(holder.decisionItemView.getContext(), R.style.TextStyle);
 
@@ -76,7 +80,6 @@ public class VoteDecisionAdapter extends RecyclerView.Adapter<VoteDecisionAdapte
                     holder.decisionItemView.getContext().startActivity(intentViewDecisionDetail);
                 }
             });
-
         } else {
             // Covers the case of data not being ready yet.
             holder.decisionItemView.setText("No decision");
@@ -84,14 +87,31 @@ public class VoteDecisionAdapter extends RecyclerView.Adapter<VoteDecisionAdapte
     }
 
     public void setDecisions(List<Decision> decisions) {
-        this.decisions = decisions;
+        if (decisions != null) {
+            List<Decision> notExpiredDecisions = new ArrayList<>();
+            for (Decision decision : decisions) {
+                if (LocalDate.now().isBefore(decision.getEndDate())) {
+                    notExpiredDecisions.add(decision);
+                }
+            }
+            this.decisions = notExpiredDecisions;
+        } else {
+            this.decisions = decisions;
+        }
+
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        if (decisions != null)
-            return decisions.size();
-        else return 0;
+        if (decisions != null) {
+            int count = 0;
+            for (Decision decision : decisions) {
+                if (LocalDate.now().isBefore(decision.getEndDate())) {
+                    count++;
+                }
+            }
+            return count;
+        } else return 0;
     }
 }

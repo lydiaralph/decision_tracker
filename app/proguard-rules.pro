@@ -1,12 +1,6 @@
 -dontoptimize
 -dontobfuscate
 
-# If 'Class not found' error is thrown, keep the classes instead of discarding
-
-# TODO: work out if it should be a **
-
-
-
 -dontnote android.net.http.*
 -dontnote com.google.apphosting.api.*
 -dontnote com.google.auto.common.*
