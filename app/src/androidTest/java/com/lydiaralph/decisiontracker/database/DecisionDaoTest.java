@@ -53,7 +53,8 @@ import static org.junit.Assert.assertEquals;
 public class DecisionDaoTest {
 
     @Rule
-    public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
+    public InstantTaskExecutorRule instantTaskExecutorRule =
+            new InstantTaskExecutorRule();
 
     private DecisionDao mDecisionDao;
     private AppDatabase mDb;
@@ -89,10 +90,13 @@ public class DecisionDaoTest {
         Option option = new Option(decisionId, "test option");
         mDb.optionDao().insert(option);
 
-        DecisionOptions fetchedDecision = LiveDataTestUtil.getValue(mDecisionDao.getDecisionById(toIntExact(decisionId)));
-        assertEquals(decision.getDecisionText(), fetchedDecision.getDecision().getDecisionText());
+        DecisionOptions fetchedDecision = LiveDataTestUtil.getValue
+                (mDecisionDao.getDecisionById(toIntExact(decisionId)));
+        assertEquals(decision.getDecisionText(),
+                fetchedDecision.getDecision().getDecisionText());
         assertEquals(1, fetchedDecision.getOptionsList().size());
-        assertEquals(option.getOptionText(), fetchedDecision.getOptionsList().get(0).getOption().getOptionText());
+        assertEquals(option.getOptionText(),
+                fetchedDecision.getOptionsList().get(0).getOption().getOptionText());
     }
 
     @Test
@@ -108,12 +112,14 @@ public class DecisionDaoTest {
     }
 
     @Test
-    public void decisionInsertedWithNoDatesHasDefaultDates() throws Exception {
+    public void decisionInsertedWithNoDatesHasDefaultDates()
+            throws Exception {
         Decision decision = new Decision(dateUtils, "decision");
         mDecisionDao.insert(decision);
         List<Decision> allDecisions = LiveDataTestUtil.getValue(mDecisionDao.getAll());
         assertEquals(decision.getDecisionText(), allDecisions.get(0).getDecisionText());
-        assertEquals(TestDateUtilsImpl.MONTH, allDecisions.get(0).getStartDate().getMonthValue());
+        assertEquals(TestDateUtilsImpl.MONTH,
+                allDecisions.get(0).getStartDate().getMonthValue());
         assertEquals(dateUtils.getCurrentDate().getMonthValue() + 3,
                 allDecisions.get(0).getEndDate().getMonthValue());
     }

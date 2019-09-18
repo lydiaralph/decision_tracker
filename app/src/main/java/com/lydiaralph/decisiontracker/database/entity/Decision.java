@@ -77,7 +77,7 @@ public class Decision {
      * Start date defaults to today's date. End date defaults to start date + whatever default is set to.
      * @param decisionText
      */
-    @Ignore
+//    @Ignore
     public Decision (DateUtils dateUtils, String decisionText){
         this.decisionText = decisionText;
         this.startDate = dateUtils.getCurrentDate();

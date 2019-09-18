@@ -35,47 +35,41 @@ public class ConfigureNewDecisionActivityTest {
 
     @Test
     public void pageTitle() {
-        onView(ViewMatchers.withId(R.id.page_title)).check(matches(withText(R.string.configure_decision)));
+        onView(ViewMatchers.withId(R.id.page_title))
+                .check(matches(withText(R.string.configure_decision)));
     }
 
     @Test
     public void testMainMenuButton() {
-        onView(withId(R.id.button_return_to_main_menu)).check(matches(withText(R.string.return_to_main_menu)));
-        onView(withId(R.id.button_return_to_main_menu)).perform(closeSoftKeyboard()).perform(click());
+        onView(withId(R.id.button_return_to_main_menu))
+                .check(matches(withText(R.string.return_to_main_menu)));
+        onView(withId(R.id.button_return_to_main_menu))
+                .perform(closeSoftKeyboard()).perform(click());
         onView(withId(R.id.page_title)).check(matches(withText(R.string.main_menu_title)));
     }
 
     @Test
     public void testDecisionInputFields() {
-        onView(withId(R.id.prompt_decision_text)).check(matches(withText(R.string.ask_this_question)));
+        onView(withId(R.id.prompt_decision_text))
+                .check(matches(withText(R.string.ask_this_question)));
     }
 
-    @Test
-    public void withPopulatedFieldsShouldLoadSuccess() throws InterruptedException {
-        // Given
-        onView(withId(R.id.input_decision_text)).perform(typeText("Decision Text"));
-        onView(withId(R.id.input_option_1)).perform(typeText("Option 1"));
-        onView(withId(R.id.input_option_2)).perform(typeText("Option 2")).perform(closeSoftKeyboard());
-        Thread.sleep(250);
-
-        // When
-        onView(withId(R.id.button_submit_new_decision)).perform(closeSoftKeyboard()).perform(click());
-
-        // Then
-        onView(withId(R.id.page_title)).check(matches(withText(R.string.success_announcement)));
-        onView(withId(R.id.successful_save)).check(matches(withText(R.string.successful_decision_save)));
-    }
 
     @Test
-    public void testWithMissingDecisionTextShouldWaitOnConfigurationPage() throws InterruptedException {
+    public void testWithMissingDecisionTextShouldWaitOnConfigurationPage()
+            throws InterruptedException {
         // Given
         // Nothing for decision text
-        onView(withId(R.id.input_option_1)).perform(typeText("Option 1"));
-        onView(withId(R.id.input_option_2)).perform(typeText("Option 2")).perform(closeSoftKeyboard());
+        onView(withId(R.id.input_option_1))
+                .perform(typeText("Option 1"));
+        onView(withId(R.id.input_option_2))
+                .perform(typeText("Option 2"))
+                .perform(closeSoftKeyboard());
         Thread.sleep(250);
 
         // When
-        onView(withId(R.id.button_submit_new_decision)).perform(closeSoftKeyboard()).perform(click());
+        onView(withId(R.id.button_submit_new_decision))
+                .perform(closeSoftKeyboard()).perform(click());
 
         // Then
         onView(withId(R.id.page_title)).check(matches(withText(R.string.configure_decision)));
@@ -83,15 +77,20 @@ public class ConfigureNewDecisionActivityTest {
     }
 
     @Test
-    public void testWithMissingOptionTextShouldWaitOnConfigurationPage() throws InterruptedException {
+    public void testWithMissingOptionTextShouldWaitOnConfigurationPage()
+            throws InterruptedException {
         // Given
-        onView(withId(R.id.input_decision_text)).perform(typeText("Decision Text"));
+        onView(withId(R.id.input_decision_text))
+                .perform(typeText("Decision Text"));
         // Nothing for decision text
-        onView(withId(R.id.input_option_2)).perform(typeText("Option 2")).perform(closeSoftKeyboard());
+        onView(withId(R.id.input_option_2))
+                .perform(typeText("Option 2"))
+                .perform(closeSoftKeyboard());
         Thread.sleep(250);
 
         // When
-        onView(withId(R.id.button_submit_new_decision)).perform(closeSoftKeyboard()).perform(click());
+        onView(withId(R.id.button_submit_new_decision))
+                .perform(closeSoftKeyboard()).perform(click());
 
         // Then
         onView(withId(R.id.page_title)).check(matches(withText(R.string.configure_decision)));
@@ -99,9 +98,11 @@ public class ConfigureNewDecisionActivityTest {
     }
 
     @Test
-    public void testWithEndDateBeforeCurrentDateShouldWaitOnConfigurationPage() throws InterruptedException {
+    public void testWithEndDateBeforeCurrentDateShouldWaitOnConfigurationPage()
+            throws InterruptedException {
         // Given
-        onView(withId(R.id.input_decision_text)).perform(typeText("Decision Text"));
+        onView(withId(R.id.input_decision_text))
+                .perform(typeText("Decision Text"));
 
         LocalDate today = LocalDate.now();
         onView(withClassName(equalTo(DatePicker.class.getName())))
@@ -110,15 +111,41 @@ public class ConfigureNewDecisionActivityTest {
                         today.getMonthValue() - 1,
                         today.getDayOfMonth()));
 
-        onView(withId(R.id.input_option_1)).perform(typeText("Option 1"));
-        onView(withId(R.id.input_option_2)).perform(typeText("Option 2")).perform(closeSoftKeyboard());
+        onView(withId(R.id.input_option_1))
+                .perform(typeText("Option 1"));
+        onView(withId(R.id.input_option_2))
+                .perform(typeText("Option 2")).perform(closeSoftKeyboard());
         Thread.sleep(250);
 
         // When
-        onView(withId(R.id.button_submit_new_decision)).perform(closeSoftKeyboard()).perform(click());
+        onView(withId(R.id.button_submit_new_decision))
+                .perform(closeSoftKeyboard()).perform(click());
 
         // Then
         onView(withId(R.id.page_title)).check(matches(withText(R.string.configure_decision)));
     }
+
+    @Test
+    public void withPopulatedFieldsShouldLoadSuccess() throws InterruptedException {
+        // Given
+        onView(withId(R.id.input_decision_text))
+                .perform(typeText("Decision Text"));
+        onView(withId(R.id.input_option_1))
+                .perform(typeText("Option 1"));
+        onView(withId(R.id.input_option_2))
+                .perform(typeText("Option 2"))
+                .perform(closeSoftKeyboard());
+        Thread.sleep(250);
+
+        // When
+        onView(withId(R.id.button_submit_new_decision)).perform(closeSoftKeyboard())
+                .perform(click());
+
+        // Then
+        onView(withId(R.id.page_title)).check(matches(withText(R.string.success_announcement)));
+        onView(withId(R.id.successful_save)).check(matches(
+                withText(R.string.successful_decision_save)));
+    }
+
 
 }

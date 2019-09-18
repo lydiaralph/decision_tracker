@@ -21,11 +21,13 @@ public class DecisionTest {
     @Test
     public void setDatesWithSpecifiedEndDate(){
         String decisionText = "Test 123";
-        LocalDate endDate = LocalDate.of(TestDateUtilsImpl.YEAR, TestDateUtilsImpl.MONTH, TestDateUtilsImpl.DAY + 5);
+        LocalDate endDate = LocalDate.of(TestDateUtilsImpl.YEAR,
+                TestDateUtilsImpl.MONTH, TestDateUtilsImpl.DAY + 5);
         Decision decision = new Decision(dateUtils, decisionText, endDate);
 
         assertEquals("Test 123", decision.getDecisionText());
-        assertEquals(LocalDate.of(TestDateUtilsImpl.YEAR, TestDateUtilsImpl.MONTH, TestDateUtilsImpl.DAY),
+        assertEquals(LocalDate.of(TestDateUtilsImpl.YEAR,
+                TestDateUtilsImpl.MONTH, TestDateUtilsImpl.DAY),
                 decision.getStartDate());
         assertEquals(endDate,
                 decision.getEndDate());
@@ -37,9 +39,11 @@ public class DecisionTest {
         Decision decision = new Decision(dateUtils, decisionText);
 
         assertEquals("Test 123", decision.getDecisionText());
-        assertEquals(LocalDate.of(TestDateUtilsImpl.YEAR, TestDateUtilsImpl.MONTH, TestDateUtilsImpl.DAY),
+        assertEquals(LocalDate.of(TestDateUtilsImpl.YEAR,
+                TestDateUtilsImpl.MONTH, TestDateUtilsImpl.DAY),
                 decision.getStartDate());
-        assertEquals(LocalDate.of(TestDateUtilsImpl.YEAR, TestDateUtilsImpl.MONTH,
+        assertEquals(LocalDate.of(TestDateUtilsImpl.YEAR,
+                TestDateUtilsImpl.MONTH,
                 TestDateUtilsImpl.DAY).plusDays(90),
                 decision.getEndDate());
     }
